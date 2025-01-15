@@ -20,7 +20,10 @@ const Title = (props: iProps) => {
           className="object-contain transition group-hover:rotate-90"
         />
       </div>
-      <span className={twMerge("font-semibold text-primary", fontSize)}>
+      <span
+        data-testid="title"
+        className={twMerge("font-semibold text-primary", fontSize)}
+      >
         Waroeng Us
       </span>
     </div>
