@@ -3,11 +3,13 @@ import Sidebar from "@/components/sidebar/sidebar";
 
 const AdminPage = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="flex">
-      <Sidebar />
-      <section className="flex h-screen flex-1 flex-col">
-        <Header />
-        <div className="h-4/5 w-[97%] rounded-xl bg-white p-4">{children}</div>
+    <main className="flex min-h-screen flex-col bg-white">
+      <Header />
+      <section className="flex flex-1">
+        <Sidebar />
+        <div className="mb-12 mr-12 flex flex-1 rounded-xl bg-background p-8">
+          {children}
+        </div>
       </section>
     </main>
   );

@@ -1,7 +1,11 @@
+import Title from "@/components/title/title";
+
 const Header = () => {
   return (
-    <div className="flex items-center px-3 pb-3 pt-6 text-2xl font-semibold">
-      Header Page
+    <div className="flex items-center py-4">
+      <div className="w-64 py-2">
+        <Title />
+      </div>
     </div>
   );
 };
