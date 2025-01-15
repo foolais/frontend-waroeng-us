@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Icon from "@/public/icon.svg";
+import Logo from "@/public/logo.png";
 import { twMerge } from "tailwind-merge";
 
 interface iProps {
@@ -14,8 +14,8 @@ const Title = (props: iProps) => {
     <div className="flex-center group gap-3 hover:cursor-pointer">
       <div className={twMerge("relative", iconClassName)}>
         <Image
-          src={Icon}
-          alt="Icon"
+          src={Logo}
+          alt="Logo"
           fill
           className="object-contain transition group-hover:rotate-90"
         />
