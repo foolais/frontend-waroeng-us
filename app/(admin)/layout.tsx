@@ -1,7 +1,11 @@
 import Header from "@/components/header/header";
 import Sidebar from "@/components/sidebar/sidebar";
 
-const AdminPage = ({ children }: { children: React.ReactNode }) => {
+interface iProps {
+  children: React.ReactNode;
+}
+
+const AdminPage = async ({ children }: iProps) => {
   return (
     <main className="flex min-h-screen flex-col bg-white">
       <Header />

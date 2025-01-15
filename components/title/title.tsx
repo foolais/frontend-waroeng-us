@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Logo from "@/public/logo.png";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils";
 
 interface iProps {
   fontSize?: string;
@@ -12,7 +12,7 @@ const Title = (props: iProps) => {
 
   return (
     <div className="flex-center group gap-3 hover:cursor-pointer">
-      <div className={twMerge("relative", iconClassName)}>
+      <div className={cn("relative", iconClassName)}>
         <Image
           src={Logo}
           alt="Logo"
@@ -22,7 +22,7 @@ const Title = (props: iProps) => {
       </div>
       <span
         data-testid="title"
-        className={twMerge("font-semibold text-primary", fontSize)}
+        className={cn("font-semibold text-primary", fontSize)}
       >
         Waroeng Us
       </span>
