@@ -2,7 +2,6 @@ import Title from "@/components/title/title";
 import SearchBar from "./searchBar";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import User from "@/public/user.png";
-// import PathHeading from "./pathHeading";
 import Image from "next/image";
 import HamburgerMenu from "@/public/hamburger-menu.png";
 import { Separator } from "../ui/separator";
@@ -23,7 +22,6 @@ const Header = () => {
       </div>
       <div className="mr-8 flex flex-1 justify-between lg:mr-12">
         <div className="flex flex-1 items-center">
-          {/* <PathHeading className="text-xl lg:text-2xl" /> */}
           <Separator orientation="vertical" className="mx-4" />
           <SearchBar />
         </div>
