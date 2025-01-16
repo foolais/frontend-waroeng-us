@@ -24,8 +24,8 @@ body {
     --accent-foreground: 164 52% 47%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
+    --border: 195 50% 95%;
+    --input: 195 50% 95%;
     --ring: 0 0% 3.9%;
   }
   .dark {
@@ -66,5 +66,11 @@ body {
   }
   .transition {
     @apply transition-all duration-300 ease-in-out;
+  }
+  .sidebar {
+    @apply min-w-28 max-w-28 bg-red-200 lg:min-w-72 lg:max-w-72;
+  }
+  .button-padding {
+    @apply px-4 py-2;
   }
 }

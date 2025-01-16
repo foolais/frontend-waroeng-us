@@ -22,7 +22,7 @@ const Title = (props: iProps) => {
       </div>
       <span
         data-testid="title"
-        className={cn("font-semibold text-primary", fontSize)}
+        className={cn("hidden font-semibold text-primary lg:block", fontSize)}
       >
         Waroeng Us
       </span>

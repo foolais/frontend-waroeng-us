@@ -3,14 +3,14 @@ import { Search } from "lucide-react";
 
 const SearchBar = () => {
   return (
-    <div className="flex w-1/2">
+    <div className="flex w-3/4 lg:w-2/3">
       <Input
         type="text"
         placeholder="Search"
-        className="h-14 rounded-r-none text-lg"
+        className="h-10 rounded-r-none text-lg lg:h-14"
         icon={Search}
       />
-      <div className="flex-center cursor-pointer rounded-r-xl bg-primary px-6 hover:opacity-80">
+      <div className="flex-center button-padding cursor-pointer rounded-r-xl bg-primary hover:opacity-80">
         <Search className="h-5 w-5 text-white" data-testid="search-icon" />
       </div>
     </div>
