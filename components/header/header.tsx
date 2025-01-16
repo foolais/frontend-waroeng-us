@@ -7,12 +7,12 @@ import MobileSidebar from "@/components/sidebar/mobile-sidebar";
 
 const Header = () => {
   return (
-    <header className="flex items-center py-4">
+    <header className="flex items-center px-8 py-4 md:px-0">
       <div className="sidebar flex-center py-2">
         <MobileSidebar />
         <Title className="ml-4 md:ml-0" textClassName="hidden lg:block" />
       </div>
-      <div className="mr-8 flex flex-1 justify-between lg:mr-12">
+      <div className="mr-4 flex flex-1 justify-between md:mr-8 lg:mr-12">
         <div className="flex flex-1 items-center">
           <Separator orientation="vertical" className="mx-4" />
           <SearchBar />
