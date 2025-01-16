@@ -68,7 +68,7 @@ body {
     @apply transition-all duration-300 ease-in-out;
   }
   .sidebar {
-    @apply min-w-28 max-w-28 bg-red-200 lg:min-w-72 lg:max-w-72;
+    @apply min-w-20 max-w-24 lg:min-w-60 lg:max-w-60;
   }
   .button-padding {
     @apply px-4 py-2;

@@ -2,23 +2,15 @@ import Title from "@/components/title/title";
 import SearchBar from "./searchBar";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import User from "@/public/user.png";
-import Image from "next/image";
-import HamburgerMenu from "@/public/hamburger-menu.png";
 import { Separator } from "../ui/separator";
+import MobileSidebar from "../sidebar/mobileSidebar";
 
 const Header = () => {
   return (
     <header className="flex items-center py-4">
-      <div className="sidebar flex-center gap-4 py-2">
-        <div className="rotate-180 cursor-pointer rounded-full p-1.5 transition hover:bg-background">
-          <Image
-            src={HamburgerMenu}
-            alt="Hamburger Menu"
-            width={24}
-            height={24}
-          />
-        </div>
-        <Title />
+      <div className="sidebar flex-center py-2">
+        <MobileSidebar />
+        <Title className="ml-4 md:ml-0" textClassName="hidden lg:block" />
       </div>
       <div className="mr-8 flex flex-1 justify-between lg:mr-12">
         <div className="flex flex-1 items-center">

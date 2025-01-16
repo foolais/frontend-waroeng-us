@@ -3,16 +3,18 @@ import Logo from "@/public/logo.png";
 import { cn } from "@/lib/utils";
 
 interface iProps {
-  fontSize?: string;
-  iconClassName?: string;
+  className?: string;
+  textClassName?: string;
 }
 
 const Title = (props: iProps) => {
-  const { fontSize = "text-2xl", iconClassName = "w-12 h-12" } = props;
+  const { className, textClassName } = props;
 
   return (
-    <div className="flex-center group gap-3 hover:cursor-pointer">
-      <div className={cn("relative", iconClassName)}>
+    <div
+      className={cn("flex-center group gap-3 hover:cursor-pointer", className)}
+    >
+      <div className="relative h-12 w-12">
         <Image
           src={Logo}
           alt="Logo"
@@ -22,7 +24,7 @@ const Title = (props: iProps) => {
       </div>
       <span
         data-testid="title"
-        className={cn("hidden font-semibold text-primary lg:block", fontSize)}
+        className={cn("text-2xl font-semibold text-primary", textClassName)}
       >
         Waroeng Us
       </span>
