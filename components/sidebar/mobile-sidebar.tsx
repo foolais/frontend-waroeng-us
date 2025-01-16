@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import HamburgerMenu from "@/public/hamburger-menu.png";
-import Title from "../title/title";
+import Title from "@/components/title/title";
 import { useWindowSize } from "@/hooks/useWindowsSize";
+import NavItem from "@/components/nav/nav-item";
+import { Separator } from "@/components/ui/separator";
 
 const MobileSidebar = () => {
   const { width } = useWindowSize();
@@ -23,11 +25,9 @@ const MobileSidebar = () => {
         <SheetTitle>
           <Title />
         </SheetTitle>
-        <div>
-          <p>a</p>
-          <p>b</p>
-          <p>c</p>
-          <p>d</p>
+        <div className="flex-center flex-col gap-4 p-4">
+          <Separator className="w-3/4" />
+          <NavItem isMobile={true} />
         </div>
       </SheetContent>
     </Sheet>

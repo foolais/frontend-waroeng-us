@@ -1,9 +1,9 @@
 import Title from "@/components/title/title";
-import SearchBar from "./searchBar";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import SearchBar from "./search-bar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import User from "@/public/user.png";
-import { Separator } from "../ui/separator";
-import MobileSidebar from "../sidebar/mobileSidebar";
+import { Separator } from "@/components/ui/separator";
+import MobileSidebar from "@/components/sidebar/mobile-sidebar";
 
 const Header = () => {
   return (
