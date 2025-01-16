@@ -4,12 +4,12 @@ import { LayoutDashboard, Users } from "lucide-react";
 export const adminNavItem: iNavItem[] = [
   {
     name: "Dashboard",
-    routes: "/dashboard",
+    routes: "/admin/dashboard",
     icon: LayoutDashboard,
   },
   {
-    name: "Users",
-    routes: "/users",
+    name: "User",
+    routes: "/admin/user",
     icon: Users,
   },
 ];
