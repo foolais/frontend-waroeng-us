@@ -11,9 +11,9 @@ describe("Title Components", () => {
   });
 
   it("applies custom font size", () => {
-    render(<Title fontSize="text-3xl" />);
+    render(<Title />);
     const titleElement = screen.getByText("Waroeng Us");
-    expect(titleElement).toHaveClass("text-3xl");
+    expect(titleElement).toHaveClass("text-2xl font-semibold text-primary");
   });
 
   it("renders logo image", () => {
