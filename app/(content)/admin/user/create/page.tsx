@@ -1,7 +1,9 @@
+import NavBack from "@/components/nav/nav-back";
+
 const CreateUserPage = () => {
   return (
     <main>
-      <h2 className="text-sub-heading">Create New User</h2>
+      <NavBack text="Go Back" />
     </main>
   );
 };
