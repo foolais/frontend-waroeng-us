@@ -18,9 +18,10 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
               <Link
                 href={routes}
                 className={cn(
-                  path?.startsWith(routes) ? "bg-background" : "bg-white",
-                  "flex items-center gap-4 rounded-xl p-2 text-primary transition",
-                  "hover:bg-background hover:text-primary",
+                  path?.startsWith(routes)
+                    ? "bg-primary text-white hover:opacity-80"
+                    : "bg-white hover:bg-background hover:text-primary",
+                  "flex items-center gap-4 rounded-xl p-2 transition",
                 )}
               >
                 {Icon && (

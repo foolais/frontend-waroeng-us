@@ -48,6 +48,6 @@ describe("NavItem Component", () => {
 
     const dashboardLink = screen.getByRole("link", { name: "Dashboard" });
 
-    expect(dashboardLink).toHaveClass("bg-background");
+    expect(dashboardLink).toHaveClass("bg-primary text-white");
   });
 });
