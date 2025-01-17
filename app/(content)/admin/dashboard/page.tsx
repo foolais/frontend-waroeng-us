@@ -6,7 +6,7 @@ export const metadata = {
 const DashboardPage = () => {
   return (
     <main>
-      <h1 className="text-heading">Dashboard</h1>
+      <h2 className="text-sub-heading">Dashboard</h2>
     </main>
   );
 };

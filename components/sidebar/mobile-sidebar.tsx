@@ -12,8 +12,6 @@ const MobileSidebar = () => {
   const { width } = useWindowSize();
   const isMobile = width !== null && width <= 768;
 
-  console.log({ width, isMobile });
-
   if (!isMobile) return <></>;
 
   return (

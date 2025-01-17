@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
 export const metadata = {
   title: "User - Waroeng Us",
   description: "Dashboard Waroeng Us",
@@ -5,8 +8,13 @@ export const metadata = {
 
 const UserPage = () => {
   return (
-    <main>
-      <h1 className="text-heading">User</h1>
+    <main className="w-full">
+      <div className="flex flex-1 items-center justify-between">
+        <h2 className="text-sub-heading">All Users</h2>
+        <Button className="flex-center rounded-xl" asChild>
+          <Link href="/admin/user/create">Create New User</Link>
+        </Button>
+      </div>
     </main>
   );
 };

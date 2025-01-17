@@ -1,13 +1,8 @@
-import { cn } from "@/lib/utils";
 import NavItem from "@/components/nav/nav-item";
 
-interface iProps {
-  className?: string;
-}
-
-const Sidebar = ({ className }: iProps) => {
+const Sidebar = () => {
   return (
-    <div className={cn("sidebar", className)}>
+    <div className="sidebar hidden md:flex md:justify-center">
       <NavItem />
     </div>
   );

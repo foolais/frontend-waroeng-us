@@ -5,13 +5,13 @@ interface iProps {
   children: React.ReactNode;
 }
 
-const AdminPage = async ({ children }: iProps) => {
+const AdminPage = ({ children }: iProps) => {
   return (
-    <main className="flex min-h-screen flex-col bg-white">
+    <main className="flex min-h-screen flex-col bg-background">
       <Header />
       <section className="flex flex-1">
-        <Sidebar className="hidden md:block" />
-        <div className="mx-8 mb-8 flex flex-1 rounded-xl bg-background p-8 md:ml-0 lg:mb-12 lg:mr-12">
+        <Sidebar />
+        <div className="mx-8 mb-8 flex flex-1 rounded-xl bg-white p-8 lg:mb-12 lg:mr-12">
           {children}
         </div>
       </section>

@@ -5,3 +5,9 @@ export interface iNavItem {
   routes: string;
   icon: LucideIcon;
 }
+
+export interface iHeadingItem {
+  name: string;
+  description: string;
+  routes: string;
+}

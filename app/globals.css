@@ -68,12 +68,21 @@ body {
     @apply transition-all duration-300 ease-in-out;
   }
   .sidebar {
-    @apply min-w-20 max-w-24 lg:min-w-60 lg:max-w-60;
+    @apply min-w-20 max-w-24 bg-white lg:min-w-60 lg:max-w-60;
+  }
+  .sidebar-title {
+    @apply min-w-20 max-w-24 md:bg-white lg:min-w-60 lg:max-w-60;
   }
   .button-padding {
     @apply px-4 py-2;
   }
   .text-heading {
-    @apply text-xl font-bold capitalize lg:text-2xl;
+    @apply text-xl font-bold capitalize md:text-2xl lg:text-3xl;
+  }
+  .text-sub-heading {
+    @apply text-lg font-bold capitalize md:text-xl lg:text-2xl;
+  }
+  .text-span {
+    @apply text-xs font-semibold text-slate-400 md:text-sm;
   }
 }
