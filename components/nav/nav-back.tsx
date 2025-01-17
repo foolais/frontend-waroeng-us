@@ -3,12 +3,17 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-const NavBack = ({ text }: { text: string }) => {
+const NavBack = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   return (
-    <Button variant={"secondary"} onClick={() => router.back()}>
-      {text}
+    <Button
+      size={"sm"}
+      variant={"secondary"}
+      className="w-max rounded-xl"
+      onClick={() => router.back()}
+    >
+      {children}
     </Button>
   );
 };
