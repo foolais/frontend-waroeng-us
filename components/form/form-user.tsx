@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { createUser } from "@/lib/actions";
 import { useActionState, useState } from "react";
 import { iFormUser } from "@/types/types";
 import { FormFieldImage, FormFieldInput, FormFieldSelect } from "./form-field";
+import ActionButton from "../button/action-button";
 
 const defaultValue = {
   firstName: "John Doe",
@@ -32,7 +32,7 @@ const defaultValue = {
 
 const FormUser = () => {
   const [formValues, setFormValues] = useState<iFormUser>(defaultValue);
-  const [state, formAction] = useActionState(createUser, null);
+  const [state, formAction, isPending] = useActionState(createUser, null);
 
   const hadleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -134,9 +134,12 @@ const FormUser = () => {
         onChange={hadleInputChange}
         error={state?.error?.confirmPassword}
       />
-      <Button type="submit" className="mt-4">
-        Submit
-      </Button>
+      <ActionButton
+        className="mt-4"
+        text="Create User"
+        textLoading="Creating..."
+        pending={isPending}
+      />
     </form>
   );
 };

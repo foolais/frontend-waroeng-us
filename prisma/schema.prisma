@@ -49,6 +49,7 @@ model User {
   lastName  String?
   address   String?
   phone     String?
+  gender    String?
   email     String?   @unique
   image     String?
   role      String?   @default("user")

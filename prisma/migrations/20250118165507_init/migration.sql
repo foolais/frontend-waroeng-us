@@ -33,6 +33,7 @@ CREATE TABLE "users" (
     "lastName" TEXT,
     "address" TEXT,
     "phone" TEXT,
+    "gender" TEXT,
     "email" TEXT,
     "image" TEXT,
     "role" TEXT DEFAULT 'user',
