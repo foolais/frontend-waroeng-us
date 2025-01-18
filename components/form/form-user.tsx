@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { createUser } from "@/lib/actions";
 import { useActionState, useState } from "react";
 import { iFormUser } from "@/types/types";
-import FormField from "../form-field";
+import FormField from "./form-field";
 
 const FormUser = () => {
   const [formValues, setFormValues] = useState<iFormUser>({
@@ -24,7 +24,7 @@ const FormUser = () => {
 
   return (
     <form action={formAction} className="flex flex-col gap-2">
-      <div className="flex-center gap-4">
+      <div className="flex-center flex-col gap-4 sm:flex-row">
         <FormField
           label="First Name"
           type="text"
@@ -38,7 +38,7 @@ const FormUser = () => {
           label="Last Name"
           type="text"
           name="lastName"
-          placeholder="John Doe"
+          placeholder="Smith"
           value={formValues.lastName}
           onChange={handleChange}
           error={state?.error?.lastName}
@@ -57,7 +57,7 @@ const FormUser = () => {
         label="Address"
         type="text"
         name="address"
-        placeholder="johndoe@me.com"
+        placeholder="yogyakarta"
         value={formValues.address}
         onChange={handleChange}
         error={state?.error?.address}
@@ -66,7 +66,7 @@ const FormUser = () => {
         label="Phone Number"
         type="number"
         name="phone"
-        placeholder="johndoe@me.com"
+        placeholder="0123456789"
         value={formValues.phone}
         onChange={handleChange}
         error={state?.error?.phone}

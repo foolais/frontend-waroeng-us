@@ -1,15 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 
-const NavBack = ({ children }: { children: React.ReactNode }) => {
+const NavBackButton = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-
   return (
     <Button
       size={"sm"}
-      variant={"secondary"}
+      variant={"ghost"}
       className="w-max rounded-xl"
       onClick={() => router.back()}
     >
@@ -18,4 +17,4 @@ const NavBack = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default NavBack;
+export default NavBackButton;

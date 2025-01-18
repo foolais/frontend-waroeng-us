@@ -30,12 +30,12 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
                 {Icon && (
                   <Icon
                     data-testid={`nav-icon-${name}`}
-                    className="h-7 w-7 lg:h-8 lg:w-8"
+                    className="h-6 w-6 lg:h-7 lg:w-7"
                   />
                 )}
                 <span
                   className={cn(
-                    "hidden font-semibold lg:block",
+                    "hidden text-sm font-semibold lg:block",
                     isMobile ? "block" : "",
                   )}
                 >
