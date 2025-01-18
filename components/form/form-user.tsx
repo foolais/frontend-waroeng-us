@@ -5,33 +5,23 @@ import { useActionState, useState } from "react";
 import { iFormUser } from "@/types/types";
 import { FormFieldImage, FormFieldInput, FormFieldSelect } from "./form-field";
 import ActionButton from "../button/action-button";
+import Image from "next/image";
 
 const defaultValue = {
-  firstName: "John Doe",
-  lastName: "Smith",
+  firstName: "",
+  lastName: "",
+  address: "",
+  phone: "",
   gender: "male",
-  address: "Yogyakarta",
-  phone: "014812481241",
-  email: "john@doe.com",
   role: "user",
-  password: "123",
-  confirmPassword: "123",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
-
-// const emptyValue = {
-//   firstName: "",
-//   lastName: "",
-//   address: "",
-//   phone: "",
-//   gender: "male",
-//   role: "user",
-//   email: "",
-//   password: "",
-//   confirmPassword: "",
-// };
 
 const FormUser = () => {
   const [formValues, setFormValues] = useState<iFormUser>(defaultValue);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [state, formAction, isPending] = useActionState(createUser, null);
 
   const hadleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,9 +32,42 @@ const FormUser = () => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file?.size > 5 * 1024 * 1024) {
+      // add alert in future
+      return alert("Image must be less than 5MB");
+    }
+    if (file && file?.size < 5 * 1024 * 1024) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <form action={formAction} className="overflow-form flex flex-col gap-2">
-      <FormFieldImage error={state?.error?.image} />
+    <form
+      action={formAction}
+      className="overflow-form relative flex flex-col gap-2"
+    >
+      <div className="flex-center relative w-full flex-col gap-4">
+        <FormFieldImage
+          error={state?.error?.image}
+          onChange={handleImageChange}
+        />
+        {imagePreview && (
+          <div className="relative mb-4 aspect-square h-60 w-60">
+            <Image
+              src={imagePreview}
+              alt="Preview"
+              fill
+              className="rounded-xl object-cover"
+            />
+          </div>
+        )}
+      </div>
       <div className="flex-center flex-col gap-4 sm:flex-row">
         <FormFieldInput
           label="First Name"

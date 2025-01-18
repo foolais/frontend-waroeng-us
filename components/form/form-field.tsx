@@ -57,14 +57,15 @@ export const FormFieldSelect = (props: iPropsSelect) => {
 
 interface iPropsFile {
   error?: string[];
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const FormFieldImage = (props: iPropsFile) => {
-  const { error } = props;
+  const { error, onChange } = props;
   return (
     <div className="w-full">
       <Label htmlFor="image">Image</Label>
-      <Input type="file" id="image" name="image" />
+      <Input type="file" id="image" name="image" onChange={onChange} />
       {error && (
         <div aria-live="polite" aria-atomic="true">
           <span className="mt-2 text-sm text-red-500">{error.join(" & ")}</span>
