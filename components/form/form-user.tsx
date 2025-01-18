@@ -4,91 +4,133 @@ import { Button } from "@/components/ui/button";
 import { createUser } from "@/lib/actions";
 import { useActionState, useState } from "react";
 import { iFormUser } from "@/types/types";
-import FormField from "./form-field";
+import { FormFieldInput, FormFieldSelect } from "./form-field";
+
+const defaultValue = {
+  firstName: "John Doe",
+  lastName: "Smith",
+  gender: "male",
+  address: "Yogyakarta",
+  phone: "014812481241",
+  email: "john@doe.com",
+  role: "user",
+  password: "123",
+  confirmPassword: "123",
+};
+
+// const emptyValue = {
+//   firstName: "",
+//   lastName: "",
+//   address: "",
+//   phone: "",
+//   gender: "male",
+//   role: "user",
+//   email: "",
+//   password: "",
+//   confirmPassword: "",
+// };
 
 const FormUser = () => {
-  const [formValues, setFormValues] = useState<iFormUser>({
-    firstName: "",
-    lastName: "",
-    address: "",
-    phone: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [formValues, setFormValues] = useState<iFormUser>(defaultValue);
   const [state, formAction] = useActionState(createUser, null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const hadleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSelect = (name: string, value: string) => {
+    setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <form action={formAction} className="overflow-form flex flex-col gap-2">
       <div className="flex-center flex-col gap-4 sm:flex-row">
-        <FormField
+        <FormFieldInput
           label="First Name"
           type="text"
           name="firstName"
           placeholder="John Doe"
           value={formValues.firstName}
-          onChange={handleChange}
+          onChange={hadleInputChange}
           error={state?.error?.firstName}
         />
-        <FormField
+
+        <FormFieldInput
           label="Last Name"
           type="text"
           name="lastName"
           placeholder="Smith"
           value={formValues.lastName}
-          onChange={handleChange}
+          onChange={hadleInputChange}
           error={state?.error?.lastName}
         />
       </div>
-      <FormField
-        label="Email"
-        type="email"
-        name="email"
-        placeholder="johndoe@me.com"
-        value={formValues.email}
-        onChange={handleChange}
-        error={state?.error?.email}
+      <FormFieldSelect
+        label="Gender"
+        name="gender"
+        placeholder="Male"
+        value={formValues?.gender}
+        options={[
+          { label: "Male", value: "male" },
+          { label: "Female", value: "female" },
+        ]}
+        onChange={(value) => handleSelect("gender", value)}
       />
-      <FormField
+      <FormFieldInput
         label="Address"
         type="text"
         name="address"
         placeholder="yogyakarta"
         value={formValues.address}
-        onChange={handleChange}
+        onChange={hadleInputChange}
         error={state?.error?.address}
       />
-      <FormField
+      <FormFieldInput
         label="Phone Number"
         type="number"
         name="phone"
         placeholder="0123456789"
         value={formValues.phone}
-        onChange={handleChange}
+        onChange={hadleInputChange}
         error={state?.error?.phone}
       />
-
-      <FormField
+      <FormFieldInput
+        label="Email"
+        type="email"
+        name="email"
+        placeholder="johndoe@me.com"
+        value={formValues.email}
+        onChange={hadleInputChange}
+        error={state?.error?.email}
+      />
+      <FormFieldSelect
+        label="Role"
+        name="role"
+        placeholder="User"
+        value={formValues?.role}
+        options={[
+          { label: "User", value: "user" },
+          { label: "Admin", value: "admin" },
+        ]}
+        onChange={(value) => handleSelect("user", value)}
+      />
+      <FormFieldInput
         label="Password"
         type="password"
         name="password"
         placeholder="*******"
         value={formValues.password}
-        onChange={handleChange}
+        onChange={hadleInputChange}
         error={state?.error?.password}
       />
 
-      <FormField
+      <FormFieldInput
         label="Confirm Password"
         type="password"
         name="confirmPassword"
         placeholder="*******"
         value={formValues.confirmPassword}
-        onChange={handleChange}
+        onChange={hadleInputChange}
         error={state?.error?.confirmPassword}
       />
       <Button type="submit" className="mt-4">

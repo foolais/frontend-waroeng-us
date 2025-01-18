@@ -13,7 +13,7 @@ export const createUser = async (prevState: unknown, formData: FormData) => {
     };
   }
 
-  const { firstName, lastName, address, phone, email, password } =
+  const { firstName, lastName, gender, address, phone, email, role, password } =
     validatedFields.data;
   const hashedPassword = hashSync(password, 10);
 
@@ -22,9 +22,11 @@ export const createUser = async (prevState: unknown, formData: FormData) => {
     const data = {
       firstName,
       lastName,
+      gender,
       address,
       phone,
       email,
+      role,
       password: hashedPassword,
     };
     console.log({ data });
