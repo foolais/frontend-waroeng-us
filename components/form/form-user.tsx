@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { createUser } from "@/lib/actions";
 import { useActionState, useState } from "react";
 import { iFormUser } from "@/types/types";
-import { FormFieldInput, FormFieldSelect } from "./form-field";
+import { FormFieldImage, FormFieldInput, FormFieldSelect } from "./form-field";
 
 const defaultValue = {
   firstName: "John Doe",
@@ -44,6 +44,7 @@ const FormUser = () => {
 
   return (
     <form action={formAction} className="overflow-form flex flex-col gap-2">
+      <FormFieldImage error={state?.error?.image} />
       <div className="flex-center flex-col gap-4 sm:flex-row">
         <FormFieldInput
           label="First Name"

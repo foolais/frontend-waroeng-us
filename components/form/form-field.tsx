@@ -54,3 +54,22 @@ export const FormFieldSelect = (props: iPropsSelect) => {
     </div>
   );
 };
+
+interface iPropsFile {
+  error?: string[];
+}
+
+export const FormFieldImage = (props: iPropsFile) => {
+  const { error } = props;
+  return (
+    <div className="w-full">
+      <Label htmlFor="image">Image</Label>
+      <Input type="file" id="image" name="image" />
+      {error && (
+        <div aria-live="polite" aria-atomic="true">
+          <span className="mt-2 text-sm text-red-500">{error.join(" & ")}</span>
+        </div>
+      )}
+    </div>
+  );
+};
