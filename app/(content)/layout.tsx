@@ -11,7 +11,7 @@ const AdminPage = ({ children }: iProps) => {
       <Header />
       <section className="flex flex-1">
         <Sidebar />
-        <div className="mx-8 mb-8 flex flex-1 rounded-xl bg-white p-8 lg:mb-12 lg:mr-12">
+        <div className="no-scrollbar mx-8 mb-8 flex max-h-[calc(100vh-150px)] flex-1 overflow-y-hidden rounded-xl bg-white p-8 lg:mb-12 lg:mr-12">
           {children}
         </div>
       </section>

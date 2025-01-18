@@ -23,7 +23,7 @@ const FormUser = () => {
   };
 
   return (
-    <form action={formAction} className="flex flex-col gap-2">
+    <form action={formAction} className="overflow-form flex flex-col gap-2">
       <div className="flex-center flex-col gap-4 sm:flex-row">
         <FormField
           label="First Name"

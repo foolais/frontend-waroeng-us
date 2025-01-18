@@ -4,8 +4,8 @@ import { ArrowLeft } from "lucide-react";
 
 const CreateUserPage = () => {
   return (
-    <main className="mx-auto w-3/4 max-w-xl">
-      <div className="mb-6 flex items-center gap-2">
+    <main className="mx-auto w-full max-w-xl md:w-3/4">
+      <div className="mb-6 flex items-center gap-2 px-6">
         <NavBackButton>
           <ArrowLeft />
         </NavBackButton>
