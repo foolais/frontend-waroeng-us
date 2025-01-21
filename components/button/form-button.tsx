@@ -9,7 +9,7 @@ interface iProps {
   form?: string;
 }
 
-const ActionButton = ({
+const FormButton = ({
   text,
   textLoading,
   className,
@@ -23,4 +23,4 @@ const ActionButton = ({
   );
 };
 
-export default ActionButton;
+export default FormButton;

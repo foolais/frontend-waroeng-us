@@ -51,3 +51,11 @@ export interface iPropsSelect {
   onChange: (value: string) => void;
   isRequired?: boolean;
 }
+
+export type iUserTable = {
+  no: number;
+  name: string;
+  gender: string;
+  email: string;
+  role: string;
+};

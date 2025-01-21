@@ -4,7 +4,7 @@ import { createUser } from "@/lib/actions";
 import { useActionState, useState } from "react";
 import { iFormUser } from "@/types/types";
 import { FormFieldImage, FormFieldInput, FormFieldSelect } from "./form-field";
-import ActionButton from "../button/action-button";
+import FormButton from "../button/form-button";
 
 const defaultValue = {
   firstName: "",
@@ -142,7 +142,7 @@ const FormUser = () => {
           error={state?.error?.confirmPassword}
         />
       </form>
-      <ActionButton
+      <FormButton
         className="mt-4 w-full"
         text="Create User"
         textLoading="Creating..."

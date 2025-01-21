@@ -1,5 +1,8 @@
 import PathHeading from "@/components/header/path-heading";
+import { DataTable } from "@/components/table/data-table";
+import { userDesktopColumns } from "@/components/table/user-column";
 import { Button } from "@/components/ui/button";
+import { userDummyData } from "@/lib/constant";
 import Link from "next/link";
 
 export const metadata = {
@@ -19,6 +22,11 @@ const UserPage = () => {
           <Link href="/admin/user/create">Create New User</Link>
         </Button>
       </div>
+      <DataTable
+        columns={userDesktopColumns}
+        data={userDummyData}
+        className="my-6 rounded-xl"
+      />
     </main>
   );
 };
