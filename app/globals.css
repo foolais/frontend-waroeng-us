@@ -82,8 +82,27 @@ body {
   .text-span {
     @apply text-xs font-semibold text-slate-400 md:text-sm;
   }
-  .overflow-form {
-    @apply primary-scrollbar max-h-[90%] min-h-[90%] overflow-y-scroll px-6;
+  /* * FORM */
+  .form-container {
+    @apply w-full max-w-[800px] sm:w-5/6 lg:w-3/4 xl:w-2/3;
+  }
+  .form-grid {
+    @apply lg:form-field-grid primary-scrollbar grid max-h-[70vh] gap-2 overflow-y-scroll sm:max-h-[80vh] lg:items-center;
+  }
+  .form-field-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-auto-rows: minmax(50px, auto);
+  }
+  .form-field-error {
+    @apply mt-2 text-sm text-red-500;
+  }
+  /* * END FORM */
+
+  .required-field::after {
+    content: "*";
+    color: red;
+    margin-left: 2px;
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;

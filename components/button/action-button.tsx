@@ -6,11 +6,18 @@ interface iProps {
   textLoading: string;
   className?: string;
   pending?: boolean;
+  form?: string;
 }
 
-const ActionButton = ({ text, textLoading, className, pending }: iProps) => {
+const ActionButton = ({
+  text,
+  textLoading,
+  className,
+  pending,
+  form,
+}: iProps) => {
   return (
-    <Button type="submit" className={className} disabled={pending}>
+    <Button type="submit" form={form} className={className} disabled={pending}>
       {pending ? textLoading : text}
     </Button>
   );

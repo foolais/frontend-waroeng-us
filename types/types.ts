@@ -45,6 +45,7 @@ export interface iPropsInput {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string[];
+  isRequired?: boolean;
 }
 
 export interface iPropsSelect {
@@ -54,4 +55,5 @@ export interface iPropsSelect {
   value: string;
   options: { label: string; value: string }[];
   onChange: (value: string) => void;
+  isRequired?: boolean;
 }
