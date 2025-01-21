@@ -1,19 +1,19 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
-const NavBackButton = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
+const NavBackButton = ({
+  children,
+  route,
+}: {
+  children: React.ReactNode;
+  route: string;
+}) => {
   return (
-    <Button
-      size={"sm"}
-      variant={"ghost"}
-      className="w-max rounded-xl"
-      onClick={() => router.back()}
-    >
-      {children}
-    </Button>
+    <Link href={route}>
+      <Button size={"sm"} variant={"secondary"} className="w-max rounded-xl">
+        {children}
+      </Button>
+    </Link>
   );
 };
 

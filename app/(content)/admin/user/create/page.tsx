@@ -12,7 +12,7 @@ const CreateUserPage = () => {
   return (
     <main className="w-full">
       <div className="mb-6 flex items-center gap-2">
-        <NavBackButton>
+        <NavBackButton route="/admin/user">
           <ArrowLeft />
         </NavBackButton>
         <PathHeading
