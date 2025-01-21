@@ -6,12 +6,6 @@ export interface iNavItem {
   icon: LucideIcon;
 }
 
-export interface iHeadingItem {
-  name: string;
-  description: string;
-  routes: string;
-}
-
 export interface iFormUser {
   firstName: string;
   lastName: string;

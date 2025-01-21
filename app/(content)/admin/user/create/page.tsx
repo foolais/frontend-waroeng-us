@@ -1,6 +1,12 @@
 import NavBackButton from "@/components/button/nav-back-button";
 import FormUser from "@/components/form/form-user";
+import PathHeading from "@/components/header/path-heading";
 import { ArrowLeft } from "lucide-react";
+
+export const metadata = {
+  title: "Create User - Waroeng Us",
+  description: "Get a quick overview of how your business is doing",
+};
 
 const CreateUserPage = () => {
   return (
@@ -9,7 +15,10 @@ const CreateUserPage = () => {
         <NavBackButton>
           <ArrowLeft />
         </NavBackButton>
-        <h2 className="text-sub-heading">Create New User</h2>
+        <PathHeading
+          title="Create User"
+          description="Let's add a new member to the team. On this page, you'll easily create a new user account."
+        />
       </div>
       <FormUser />
     </main>

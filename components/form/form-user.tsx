@@ -32,7 +32,11 @@ const FormUser = () => {
 
   return (
     <div className="form-container">
-      <form id="user-form" action={formAction} className="form-grid">
+      <form
+        id="user-form"
+        action={formAction}
+        className="form-grid max-h-[60vh] sm:max-h-[75vh]"
+      >
         <FormFieldImage error={state?.error?.image} />
         <FormFieldInput
           isRequired={true}

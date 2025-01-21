@@ -1,16 +1,14 @@
-"use client";
-
-import { headingItem } from "@/lib/constant";
-import { usePathname } from "next/navigation";
-
-const PathHeading = () => {
-  const path = usePathname();
-  const heading = headingItem.find((item) => path.startsWith(item.routes));
-
+const PathHeading = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => {
   return (
     <div className="flex flex-col">
-      <h1 className="text-heading">{heading?.name}</h1>
-      <span className="text-span hidden md:block">{heading?.description}</span>
+      <h1 className="text-heading">{title}</h1>
+      <span className="text-span">{description}</span>
     </div>
   );
 };

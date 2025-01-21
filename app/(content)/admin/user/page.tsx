@@ -4,13 +4,16 @@ import Link from "next/link";
 
 export const metadata = {
   title: "User - Waroeng Us",
-  description: "Dashboard Waroeng Us",
+  description: "See who's on your team and easily update their information.",
 };
 
 const UserPage = () => {
   return (
     <main className="w-full">
-      <PathHeading />
+      <PathHeading
+        title="Users Page"
+        description="See who's on your team and easily update their information."
+      />
       <div className="flex justify-end">
         <Button className="mt-4 rounded-xl" asChild>
           <Link href="/admin/user/create">Create New User</Link>

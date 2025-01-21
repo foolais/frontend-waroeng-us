@@ -1,12 +1,17 @@
+import PathHeading from "@/components/header/path-heading";
+
 export const metadata = {
   title: "Dashboard - Waroeng Us",
-  description: "Dashboard Waroeng Us",
+  description: "Get a quick overview of how your business is doing",
 };
 
 const DashboardPage = () => {
   return (
     <main>
-      <h2 className="text-sub-heading">Dashboard</h2>
+      <PathHeading
+        title="Dashboard Page"
+        description="Get a quick overview of how your business is doing"
+      />
     </main>
   );
 };
