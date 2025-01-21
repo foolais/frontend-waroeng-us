@@ -19,14 +19,12 @@ const MobileSidebar = () => {
       <SheetTrigger>
         <HamburgerMenuIcon />
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent className="flex flex-col items-center rounded-l-3xl bg-primary">
         <SheetTitle>
           <Title />
         </SheetTitle>
-        <div className="flex-center flex-col gap-4 p-4">
-          <Separator className="w-3/4" />
-          <NavItem isMobile={true} />
-        </div>
+        <Separator className="w-3/4" />
+        <NavItem isMobile={true} />
       </SheetContent>
     </Sheet>
   );
@@ -36,7 +34,7 @@ export default MobileSidebar;
 
 const HamburgerMenuIcon = () => {
   return (
-    <div className="rotate-180 cursor-pointer rounded-full p-1.5 transition hover:bg-background">
+    <div className="cursor-pointer rounded-full p-1.5 transition hover:bg-background">
       <Image src={HamburgerMenu} alt="Hamburger Menu" width={24} height={24} />
     </div>
   );

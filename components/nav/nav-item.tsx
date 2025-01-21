@@ -10,28 +10,25 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
   const path = usePathname();
 
   return (
-    <nav className={cn("px-2 lg:px-4", isMobile ? "w-3/4" : "w-max lg:w-full")}>
-      <ul className="grid gap-4">
+    <nav className={cn(isMobile ? "w-3/4" : "w-max lg:w-full")}>
+      <ul className="grid gap-2">
         {adminNavItem.map(
           ({ name, icon: Icon, routes }: iNavItem, index: number) => (
             <li key={index}>
               <Link
                 href={routes}
                 className={cn(
+                  "flex items-center gap-4 rounded-xl p-2 transition",
                   path?.startsWith(routes)
-                    ? "bg-primary text-white hover:opacity-80"
-                    : "hover:text-primary",
-                  "flex items-center gap-4 rounded-xl px-2 py-2 transition",
+                    ? "bg-secondary text-black hover:opacity-80"
+                    : "hover:bg-background hover:opacity-80",
                   isMobile
                     ? "justify-normal"
                     : "justify-center lg:justify-normal",
                 )}
               >
                 {Icon && (
-                  <Icon
-                    data-testid={`nav-icon-${name}`}
-                    className="h-6 w-6 lg:h-7 lg:w-7"
-                  />
+                  <Icon data-testid={`nav-icon-${name}`} className="h-6 w-6" />
                 )}
                 <span
                   className={cn(

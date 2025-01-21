@@ -12,9 +12,12 @@ const Title = (props: iProps) => {
 
   return (
     <div
-      className={cn("flex-center group gap-3 hover:cursor-pointer", className)}
+      className={cn(
+        "group flex items-center gap-2 hover:cursor-pointer",
+        className,
+      )}
     >
-      <div className="relative h-12 w-12">
+      <div className="relative h-11 w-11">
         <Image
           src={Logo}
           alt="Logo"
@@ -24,7 +27,7 @@ const Title = (props: iProps) => {
       </div>
       <span
         data-testid="title"
-        className={cn("text-2xl font-semibold text-primary", textClassName)}
+        className={cn("text-xl font-bold text-black", textClassName)}
       >
         Waroeng Us
       </span>

@@ -1,8 +1,10 @@
 import NavItem from "@/components/nav/nav-item";
+import Title from "@/components/title/title";
 
 const Sidebar = () => {
   return (
-    <div className="sidebar hidden md:flex md:justify-center">
+    <div className="sidebar">
+      <Title textClassName="hidden lg:block" />
       <NavItem />
     </div>
   );

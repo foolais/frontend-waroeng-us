@@ -7,14 +7,12 @@ interface iProps {
 
 const AdminPage = ({ children }: iProps) => {
   return (
-    <main className="flex min-h-screen flex-col bg-background">
-      <Header />
-      <section className="flex flex-1">
-        <Sidebar />
-        <div className="no-scrollbar mx-8 mb-8 flex max-h-[calc(100vh-150px)] flex-1 overflow-y-hidden rounded-xl bg-white p-8 lg:mb-12 lg:mr-12">
-          {children}
-        </div>
-      </section>
+    <main className="flex h-screen bg-primary">
+      <Sidebar />
+      <div className="flex flex-1 flex-col bg-background p-4 sm:flex-row sm:rounded-l-3xl sm:py-6">
+        <Header />
+        {children}
+      </div>
     </main>
   );
 };
