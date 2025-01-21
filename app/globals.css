@@ -68,10 +68,7 @@ body {
     @apply transition-all duration-300 ease-in-out;
   }
   .sidebar {
-    @apply hidden min-w-20 max-w-20 sm:flex sm:flex-col sm:items-center sm:gap-4 sm:p-4 lg:min-w-60 lg:max-w-60 lg:items-start;
-  }
-  .sidebar-title {
-    @apply min-w-20 max-w-24 md:bg-white lg:min-w-60 lg:max-w-60;
+    @apply hidden sm:flex sm:flex-col sm:items-center sm:gap-4 sm:px-2 sm:py-4 lg:min-w-60 lg:max-w-60 lg:items-start lg:px-4;
   }
   .button-padding {
     @apply px-4 py-2;
