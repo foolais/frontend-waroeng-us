@@ -1,8 +1,8 @@
 import PathHeading from "@/components/header/path-heading";
-import { DataTable } from "@/components/table/data-table";
-import { userDesktopColumns } from "@/components/table/user-column";
+import UserTable from "@/components/table/user/user-table";
 import { Button } from "@/components/ui/button";
-import { userDummyData } from "@/lib/constant";
+import { Plus } from "lucide-react";
+
 import Link from "next/link";
 
 export const metadata = {
@@ -17,16 +17,17 @@ const UserPage = () => {
         title="Users Page"
         description="See who's on your team and easily update their information."
       />
-      <div className="flex justify-end">
-        <Button className="mt-4 rounded-xl" asChild>
-          <Link href="/admin/user/create">Create New User</Link>
-        </Button>
+      <div className="mt-6 rounded-xl bg-white sm:p-6">
+        <div className="flex justify-end">
+          <Button className="mt-4 rounded-xl" asChild>
+            <Link href="/admin/user/create">
+              <Plus />
+              Create New User
+            </Link>
+          </Button>
+        </div>
+        <UserTable />
       </div>
-      <DataTable
-        columns={userDesktopColumns}
-        data={userDummyData}
-        className="my-6 rounded-xl"
-      />
     </main>
   );
 };
