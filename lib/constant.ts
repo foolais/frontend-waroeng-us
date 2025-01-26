@@ -27,14 +27,14 @@ export const userDummyData: iUserTable[] = [
     name: "Jane Smith",
     gender: "Female",
     email: "jane.smith@example.com",
-    role: "Editor",
+    role: "User",
   },
   {
     no: 3,
     name: "Robert Johnson",
     gender: "Male",
     email: "robert.johnson@example.com",
-    role: "Viewer",
+    role: "User",
   },
   {
     no: 4,
@@ -48,6 +48,6 @@ export const userDummyData: iUserTable[] = [
     name: "Michael Brown",
     gender: "Male",
     email: "michael.brown@example.com",
-    role: "Editor",
+    role: "Admin",
   },
 ];

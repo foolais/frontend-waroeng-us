@@ -3,6 +3,7 @@
 import { iUserTable } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionsButton from "@/components/button/actions-button";
+import Badge from "@/components/badge/badge";
 
 export const userDesktopColumns: ColumnDef<iUserTable>[] = [
   {
@@ -17,7 +18,13 @@ export const userDesktopColumns: ColumnDef<iUserTable>[] = [
   },
   {
     accessorKey: "gender",
-    header: "Gender",
+    header: () => {
+      return <div className="text-center">Gender</div>;
+    },
+    cell: ({ row }) => {
+      const gender = row.getValue<string>("gender").toLowerCase();
+      return <Badge text={gender} variant={gender} />;
+    },
   },
   {
     accessorKey: "email",
@@ -25,7 +32,13 @@ export const userDesktopColumns: ColumnDef<iUserTable>[] = [
   },
   {
     accessorKey: "role",
-    header: "Role",
+    header: () => {
+      return <div className="text-center">Role</div>;
+    },
+    cell: ({ row }) => {
+      const role = row.getValue<string>("role").toLowerCase();
+      return <Badge text={role} variant={role} />;
+    },
   },
   {
     id: "actions",
