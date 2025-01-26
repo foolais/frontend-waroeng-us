@@ -1,5 +1,5 @@
 "use server";
-import { CreateUserSchema } from "@/lib/zod";
+import { CreateUserSchema } from "@/lib/zod/userZod";
 import { hashSync } from "bcrypt-ts";
 import { put } from "@vercel/blob";
 import { prisma } from "@/lib/prisma";
@@ -59,4 +59,30 @@ export const createUser = async (prevState: unknown, formData: FormData) => {
 
   revalidatePath("/admin/user");
   redirect("/admin/user");
+};
+
+export const getAllUsers = async () => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        gender: true,
+        email: true,
+        role: true,
+      },
+    });
+    console.log({ users });
+    return users.map((user, index) => ({
+      no: index + 1,
+      name: `${user.firstName} ${user.lastName}`,
+      gender: user.gender ?? "male",
+      email: user.email ?? "",
+      role: user.role ?? "user",
+    }));
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return [];
+  }
 };

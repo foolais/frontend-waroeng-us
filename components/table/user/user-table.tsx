@@ -1,20 +1,14 @@
-"use client";
+"use server";
 
-import { userDummyData } from "@/lib/constant";
 import { DataTable } from "../data-table";
-import { userDesktopColumns, userMobileColumns } from "./user-column";
-import { useWindowSize } from "@/hooks/useWindowsSize";
+import { userColumns } from "./user-column";
+import { getAllUsers } from "@/lib/actions/userActions";
 
-const UserTable = () => {
-  const { width } = useWindowSize();
-  const isMobile = width !== null && width <= 768;
+const UserTable = async () => {
+  const users = await getAllUsers();
 
   return (
-    <DataTable
-      columns={isMobile ? userMobileColumns : userDesktopColumns}
-      data={userDummyData}
-      className="my-6 rounded-xl"
-    />
+    <DataTable columns={userColumns} data={users} className="my-6 rounded-xl" />
   );
 };
 

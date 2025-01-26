@@ -1,11 +1,13 @@
 "use client";
 
-import { iUserTable } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionsButton from "@/components/button/actions-button";
 import Badge from "@/components/badge/badge";
 
-export const userDesktopColumns: ColumnDef<iUserTable>[] = [
+export const userColumns: ColumnDef<
+  { no: number; name: string; gender: string; email: string; role: string },
+  unknown
+>[] = [
   {
     accessorKey: "no",
     header: "No",
@@ -39,27 +41,6 @@ export const userDesktopColumns: ColumnDef<iUserTable>[] = [
       const role = row.getValue<string>("role").toLowerCase();
       return <Badge text={role} variant={role} />;
     },
-  },
-  {
-    id: "actions",
-    cell: () => {
-      return <ActionsButton />;
-    },
-  },
-];
-
-export const userMobileColumns: ColumnDef<iUserTable>[] = [
-  {
-    accessorKey: "no",
-    header: "No",
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-  },
-  {
-    accessorKey: "role",
-    header: "Role",
   },
   {
     id: "actions",

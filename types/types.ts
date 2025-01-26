@@ -55,7 +55,7 @@ export interface iPropsSelect {
 export type iUserTable = {
   no: number;
   name: string;
-  gender: string;
+  gender: "male" | "female";
   email: string;
-  role: string;
+  role: "admin" | "user";
 };

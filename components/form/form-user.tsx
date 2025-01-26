@@ -1,6 +1,6 @@
 "use client";
 
-import { createUser } from "@/lib/actions";
+import { createUser } from "@/lib/actions/userActions";
 import { useActionState, useState } from "react";
 import { iFormUser } from "@/types/types";
 import { FormFieldImage, FormFieldInput, FormFieldSelect } from "./form-field";
