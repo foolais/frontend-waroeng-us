@@ -29,8 +29,7 @@ CREATE TABLE "sessions" (
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
-    "firstName" TEXT,
-    "lastName" TEXT,
+    "name" TEXT,
     "address" TEXT,
     "phone" TEXT,
     "gender" TEXT,

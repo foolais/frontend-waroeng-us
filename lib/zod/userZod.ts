@@ -12,10 +12,7 @@ export const CreateUserSchema = object({
     .refine((file) => file.size <= 5 * 1024 * 1024, {
       message: "Image must be less than 5MB",
     }),
-  firstName: string()
-    .min(2, "Name must be more than 2 character")
-    .max(40, "Name must be less than 40 character"),
-  lastName: string()
+  name: string()
     .min(2, "Name must be more than 2 character")
     .max(40, "Name must be less than 40 character"),
   email: string()
@@ -31,8 +28,8 @@ export const CreateUserSchema = object({
     .max(50, "Address must be less than 50 character")
     .optional()
     .or(z.literal("")),
-  gender: string().default("male"),
-  role: string().default("user"),
+  gender: string(),
+  role: string(),
   password: string()
     .min(3, "Password must be more than 3 character")
     .max(32, "Password must be less than 32 character"),

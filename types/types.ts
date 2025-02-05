@@ -7,8 +7,7 @@ export interface iNavItem {
 }
 
 export interface iFormUser {
-  firstName: string;
-  lastName: string;
+  name: string;
   gender: string;
   address: string;
   phone: string;
@@ -16,12 +15,12 @@ export interface iFormUser {
   role: string;
   password: string;
   confirmPassword: string;
+  image: File | null;
 }
 
 export interface iFormUserState {
   error?: {
-    firstName?: string;
-    lastName?: string;
+    name?: string;
     address?: string;
     phone?: string;
     email?: string[];

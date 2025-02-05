@@ -5,35 +5,39 @@ import { put } from "@vercel/blob";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { iFormUser } from "@/types/types";
 
-export const createUser = async (prevState: unknown, formData: FormData) => {
-  const validatedFields = CreateUserSchema.safeParse(
-    Object.fromEntries(formData.entries()),
-  );
+export const createUser = async (
+  payload: iFormUser,
+  prevState: unknown,
+  formData: FormData,
+) => {
+  if (payload && payload.image) {
+    formData.append("image", payload.image);
+  }
+
+  const form = Object.fromEntries(formData.entries());
+
+  console.log({ formData });
+
+  const validatedFields = CreateUserSchema.safeParse(form);
+  console.log({ validatedFields });
 
   if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten().fieldErrors);
     return {
       error: validatedFields.error.flatten().fieldErrors,
     };
   }
-
-  const {
-    image,
-    firstName,
-    lastName,
-    gender,
-    address,
-    phone,
-    email,
-    role,
-    password,
-  } = validatedFields.data;
+  const { image, name, gender, address, phone, email, role, password } =
+    validatedFields.data;
   const hashedPassword = hashSync(password, 10);
 
   const existingUser = await prisma.user.findUnique({
     where: { email },
   });
   if (existingUser) {
+    console.log("Email is already taken.");
     return { message: "Email is already taken." };
   }
 
@@ -50,8 +54,7 @@ export const createUser = async (prevState: unknown, formData: FormData) => {
     await prisma.user.create({
       data: {
         image: url,
-        firstName,
-        lastName,
+        name,
         gender,
         address,
         phone,
@@ -76,8 +79,7 @@ export const getAllUsers = async () => {
     const users = await prisma.user.findMany({
       select: {
         id: true,
-        firstName: true,
-        lastName: true,
+        name: true,
         gender: true,
         email: true,
         role: true,
@@ -86,7 +88,7 @@ export const getAllUsers = async () => {
     return users.map((user, index) => ({
       id: user.id,
       no: index + 1,
-      name: `${user.firstName} ${user.lastName}`,
+      name: user.name ?? "",
       gender: user.gender ?? "male",
       email: user.email ?? "",
       role: user.role ?? "user",

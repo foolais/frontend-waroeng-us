@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,8 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { iPropsInput, iPropsSelect } from "@/types/types";
+import { iFormUser, iPropsInput, iPropsSelect } from "@/types/types";
 import Image from "next/image";
+import { Upload } from "lucide-react";
 
 export const FormFieldInput = (props: iPropsInput) => {
   const {
@@ -28,7 +29,7 @@ export const FormFieldInput = (props: iPropsInput) => {
       <Label htmlFor={name} className={isRequired ? "required-field" : ""}>
         {label}
       </Label>
-      <div>
+      <div className="mb-1">
         <Input
           type={type}
           id={name}
@@ -56,8 +57,8 @@ export const FormFieldSelect = (props: iPropsSelect) => {
       <Label htmlFor={name} className={isRequired ? "required-field" : ""}>
         {label}
       </Label>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger>
+      <Select name={name} value={value} onValueChange={onChange}>
+        <SelectTrigger className="mb-1">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
@@ -75,11 +76,14 @@ export const FormFieldSelect = (props: iPropsSelect) => {
 export const FormFieldImage = ({
   error,
   isRequired,
+  setFormValues,
 }: {
   error?: string[];
   isRequired?: boolean;
+  setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
 }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -87,7 +91,9 @@ export const FormFieldImage = ({
       // add alert in future
       return alert("Image must be less than 5MB");
     }
+
     if (file && file?.size < 5 * 1024 * 1024) {
+      setFormValues((prev) => ({ ...prev, image: file }));
       const reader = new FileReader();
       reader.onload = () => {
         setImagePreview(reader.result as string);
@@ -95,28 +101,46 @@ export const FormFieldImage = ({
       reader.readAsDataURL(file);
     }
   };
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      (fileInputRef.current as HTMLInputElement).click();
+    }
+  };
+
   return (
     <>
       <Label htmlFor="image" className={isRequired ? "required-field" : ""}>
         Image
       </Label>
-      <div>
-        <Input
-          type="file"
-          id="image"
-          name="image"
-          onChange={handleImageChange}
-        />
-        {imagePreview && (
-          <div className="relative mt-4 flex aspect-square h-60 w-60">
+      <div className="mb-1">
+        <div
+          className="flex-center relative h-60 w-60 cursor-pointer flex-col gap-4 rounded-xl border-2 border-dashed"
+          onClick={handleUploadClick}
+        >
+          {imagePreview ? (
             <Image
               src={imagePreview}
               alt="Preview"
               fill
-              className="object-contain"
+              className="rounded-xl object-cover"
             />
-          </div>
-        )}
+          ) : (
+            <>
+              <Upload size={40} />
+              <p>Upload an image</p>
+            </>
+          )}
+        </div>
+        <Input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="hidden"
+          ref={fileInputRef}
+        />
         {error && (
           <div aria-live="polite" aria-atomic="true">
             <span className="form-field-error">{error.join(" & ")}</span>

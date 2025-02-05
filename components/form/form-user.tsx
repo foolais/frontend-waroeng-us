@@ -6,9 +6,8 @@ import { iFormUser } from "@/types/types";
 import { FormFieldImage, FormFieldInput, FormFieldSelect } from "./form-field";
 import FormButton from "../button/form-button";
 
-const defaultValue = {
-  firstName: "",
-  lastName: "",
+const defaultValue: iFormUser = {
+  name: "",
   address: "",
   phone: "",
   gender: "male",
@@ -16,6 +15,7 @@ const defaultValue = {
   email: "",
   password: "",
   confirmPassword: "",
+  image: null,
 };
 
 interface iFormUserProps {
@@ -27,9 +27,12 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
   const [formValues, setFormValues] = useState<iFormUser>(
     intialValues || defaultValue,
   );
-  const [state, formAction, isPending] = useActionState(createUser, null);
+  const [state, formAction, isPending] = useActionState(
+    createUser.bind(null, formValues),
+    null,
+  );
 
-  const hadleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -44,29 +47,22 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
         action={formAction}
         className="form-grid max-h-[60vh] sm:max-h-[75vh]"
       >
-        <FormFieldImage error={state?.error?.image} />
-        <FormFieldInput
-          isRequired={true}
-          label="First Name"
-          type="text"
-          name="firstName"
-          placeholder="John Doe"
-          value={formValues.firstName}
-          onChange={hadleInputChange}
-          error={state?.error?.firstName}
+        <FormFieldImage
+          error={state?.error?.image}
+          setFormValues={setFormValues}
         />
         <FormFieldInput
-          isRequired={true}
-          label="Last Name"
+          isRequired
+          label="Name"
           type="text"
-          name="lastName"
-          placeholder="Smith"
-          value={formValues.lastName}
-          onChange={hadleInputChange}
-          error={state?.error?.lastName}
+          name="name"
+          placeholder="John Doe"
+          value={formValues.name}
+          onChange={handleInput}
+          error={state?.error?.name}
         />
         <FormFieldSelect
-          isRequired={true}
+          isRequired
           label="Gender"
           name="gender"
           placeholder="Male"
@@ -83,7 +79,7 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
           name="address"
           placeholder="yogyakarta"
           value={formValues.address}
-          onChange={hadleInputChange}
+          onChange={handleInput}
           error={state?.error?.address}
         />
         <FormFieldInput
@@ -92,21 +88,21 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
           name="phone"
           placeholder="0123456789"
           value={formValues.phone}
-          onChange={hadleInputChange}
+          onChange={handleInput}
           error={state?.error?.phone}
         />
         <FormFieldInput
-          isRequired={true}
+          isRequired
           label="Email"
           type="email"
           name="email"
           placeholder="johndoe@me.com"
           value={formValues.email}
-          onChange={hadleInputChange}
+          onChange={handleInput}
           error={state?.error?.email}
         />
         <FormFieldSelect
-          isRequired={true}
+          isRequired
           label="Role"
           name="role"
           placeholder="User"
@@ -115,41 +111,43 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
             { label: "User", value: "user" },
             { label: "Admin", value: "admin" },
           ]}
-          onChange={(value) => handleSelect("user", value)}
+          onChange={(value) => handleSelect("role", value)}
         />
         {type === "create" && (
           <>
             <FormFieldInput
-              isRequired={true}
+              isRequired
               label="Password"
               type="password"
               name="password"
               placeholder="*******"
               value={formValues.password}
-              onChange={hadleInputChange}
+              onChange={handleInput}
               error={state?.error?.password}
             />
 
             <FormFieldInput
-              isRequired={true}
+              isRequired
               label="Confirm Password"
               type="password"
               name="confirmPassword"
               placeholder="*******"
               value={formValues.confirmPassword}
-              onChange={hadleInputChange}
+              onChange={handleInput}
               error={state?.error?.confirmPassword}
             />
           </>
         )}
       </form>
-      <FormButton
-        className="mt-4 w-full"
-        text="Create User"
-        textLoading="Creating..."
-        pending={isPending}
-        form="user-form"
-      />
+      {type !== "detail" && (
+        <FormButton
+          className="mt-4 w-full"
+          text="Create User"
+          textLoading="Creating..."
+          pending={isPending}
+          form="user-form"
+        />
+      )}
     </div>
   );
 };

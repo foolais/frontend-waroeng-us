@@ -44,18 +44,17 @@ model Session {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  firstName String?
-  lastName  String?
-  address   String?
-  phone     String?
-  gender    String?
-  email     String?   @unique
-  image     String?
-  role      String?   @default("user")
-  password  String
-  accounts  Account[]
-  sessions  Session[]
+  id       String    @id @default(cuid())
+  name     String?
+  address  String?
+  phone    String?
+  gender   String?
+  email    String?   @unique
+  image    String?
+  role     String?   @default("user")
+  password String
+  accounts Account[]
+  sessions Session[]
 
   @@map("users")
 }

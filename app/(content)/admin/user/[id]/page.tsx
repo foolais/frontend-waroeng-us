@@ -5,8 +5,8 @@ import { getUserById } from "@/lib/actions/userActions";
 import { ArrowLeft } from "lucide-react";
 
 const UserDetail = async ({ params }: { params: { id: string } }) => {
-  const userId = await params?.id;
-  const user = await getUserById(userId);
+  const { id } = await params;
+  const user = await getUserById(id);
 
   return (
     <main className="content-container w-full">
