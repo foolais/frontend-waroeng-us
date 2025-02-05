@@ -12,12 +12,12 @@ export const metadata = {
 
 const UserPage = () => {
   return (
-    <main className="w-full">
+    <main className="w-full p-4 md:px-6">
       <PathHeading
         title="Users Page"
         description="See who's on your team and easily update their information."
       />
-      <div className="mt-6 rounded-xl bg-white sm:p-6">
+      <div className="mt-6 rounded-xl bg-white p-4">
         <div className="flex justify-end">
           <Button className="mt-4 rounded-xl" asChild>
             <Link href="/admin/user/create">

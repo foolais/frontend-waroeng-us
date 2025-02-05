@@ -10,8 +10,8 @@ const Badge = ({ text, variant = "default" }: BadgeProps) => {
     default: "bg-primary text-white",
     admin: "bg-primary text-white",
     user: "bg-secondary text-white",
-    male: "bg-blue-600 text-white",
-    female: "bg-pink-400 text-white",
+    male: "bg-[#6EACDA] text-foreground",
+    female: "bg-[#EB3678] text-white",
   };
   return (
     <div

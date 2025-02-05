@@ -18,8 +18,15 @@ const defaultValue = {
   confirmPassword: "",
 };
 
-const FormUser = () => {
-  const [formValues, setFormValues] = useState<iFormUser>(defaultValue);
+interface iFormUserProps {
+  type: "create" | "update" | "detail";
+  intialValues?: iFormUser;
+}
+
+const FormUser = ({ type, intialValues }: iFormUserProps) => {
+  const [formValues, setFormValues] = useState<iFormUser>(
+    intialValues || defaultValue,
+  );
   const [state, formAction, isPending] = useActionState(createUser, null);
 
   const hadleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,16 +54,6 @@ const FormUser = () => {
           value={formValues.firstName}
           onChange={hadleInputChange}
           error={state?.error?.firstName}
-        />
-        <FormFieldInput
-          isRequired={true}
-          label="Last Name"
-          type="text"
-          name="lastName"
-          placeholder="Smith"
-          value={formValues.lastName}
-          onChange={hadleInputChange}
-          error={state?.error?.lastName}
         />
         <FormFieldInput
           isRequired={true}
@@ -120,27 +117,31 @@ const FormUser = () => {
           ]}
           onChange={(value) => handleSelect("user", value)}
         />
-        <FormFieldInput
-          isRequired={true}
-          label="Password"
-          type="password"
-          name="password"
-          placeholder="*******"
-          value={formValues.password}
-          onChange={hadleInputChange}
-          error={state?.error?.password}
-        />
+        {type === "create" && (
+          <>
+            <FormFieldInput
+              isRequired={true}
+              label="Password"
+              type="password"
+              name="password"
+              placeholder="*******"
+              value={formValues.password}
+              onChange={hadleInputChange}
+              error={state?.error?.password}
+            />
 
-        <FormFieldInput
-          isRequired={true}
-          label="Confirm Password"
-          type="password"
-          name="confirmPassword"
-          placeholder="*******"
-          value={formValues.confirmPassword}
-          onChange={hadleInputChange}
-          error={state?.error?.confirmPassword}
-        />
+            <FormFieldInput
+              isRequired={true}
+              label="Confirm Password"
+              type="password"
+              name="confirmPassword"
+              placeholder="*******"
+              value={formValues.confirmPassword}
+              onChange={hadleInputChange}
+              error={state?.error?.confirmPassword}
+            />
+          </>
+        )}
       </form>
       <FormButton
         className="mt-4 w-full"

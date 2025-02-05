@@ -7,7 +7,7 @@ export const metadata = {
 
 const DashboardPage = () => {
   return (
-    <main>
+    <main className="content-container">
       <PathHeading
         title="Dashboard Page"
         description="Get a quick overview of how your business is doing"

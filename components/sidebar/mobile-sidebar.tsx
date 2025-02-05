@@ -19,7 +19,7 @@ const MobileSidebar = () => {
       <SheetTrigger>
         <HamburgerMenuIcon />
       </SheetTrigger>
-      <SheetContent className="flex flex-col items-center rounded-l-3xl bg-primary">
+      <SheetContent className="flex flex-col items-center rounded-l-3xl bg-white">
         <SheetTitle>
           <Title />
         </SheetTitle>

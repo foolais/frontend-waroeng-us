@@ -24,11 +24,13 @@ export const CreateUserSchema = object({
   phone: string()
     .min(11, "Phone must be more than 11 character")
     .max(13, "Phone must be less than 13 character")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   address: string()
     .min(2, "Address must be more than 1 character")
     .max(50, "Address must be less than 50 character")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   gender: string().default("male"),
   role: string().default("user"),
   password: string()

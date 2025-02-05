@@ -5,7 +5,14 @@ import ActionsButton from "@/components/button/actions-button";
 import Badge from "@/components/badge/badge";
 
 export const userColumns: ColumnDef<
-  { no: number; name: string; gender: string; email: string; role: string },
+  {
+    no: number;
+    name: string;
+    gender: string;
+    email: string;
+    role: string;
+    id: string;
+  },
   unknown
 >[] = [
   {
@@ -44,8 +51,9 @@ export const userColumns: ColumnDef<
   },
   {
     id: "actions",
-    cell: () => {
-      return <ActionsButton />;
+    cell: ({ row }) => {
+      const userId = row?.original?.id;
+      return <ActionsButton id={userId} />;
     },
   },
 ];

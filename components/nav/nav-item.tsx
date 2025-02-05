@@ -20,7 +20,7 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
                 className={cn(
                   "flex items-center gap-4 rounded-xl p-2 transition",
                   path?.startsWith(routes)
-                    ? "bg-secondary text-black hover:opacity-80"
+                    ? "bg-secondary text-background hover:opacity-80"
                     : "hover:bg-background hover:opacity-80",
                   isMobile
                     ? "justify-normal"
@@ -28,7 +28,7 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
                 )}
               >
                 {Icon && (
-                  <Icon data-testid={`nav-icon-${name}`} className="h-6 w-6" />
+                  <Icon data-testid={`nav-icon-${name}`} className="h-5 w-5" />
                 )}
                 <span
                   className={cn(

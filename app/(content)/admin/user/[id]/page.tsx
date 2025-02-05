@@ -1,14 +1,13 @@
 import NavBackButton from "@/components/button/nav-back-button";
 import FormUser from "@/components/form/form-user";
 import PathHeading from "@/components/header/path-heading";
+import { getUserById } from "@/lib/actions/userActions";
 import { ArrowLeft } from "lucide-react";
 
-export const metadata = {
-  title: "Create User - Waroeng Us",
-  description: "Get a quick overview of how your business is doing",
-};
+const UserDetail = async ({ params }: { params: { id: string } }) => {
+  const userId = await params?.id;
+  const user = await getUserById(userId);
 
-const CreateUserPage = () => {
   return (
     <main className="content-container w-full">
       <div className="mb-6 flex items-center gap-2">
@@ -16,13 +15,13 @@ const CreateUserPage = () => {
           <ArrowLeft />
         </NavBackButton>
         <PathHeading
-          title="Create User"
-          description="Let's add a new member to the team. On this page, you'll easily create a new user account."
+          title="Detail User"
+          description="See who's on your team and easily update their information."
         />
       </div>
-      <FormUser type="create" />
+      <FormUser type="detail" intialValues={user} />
     </main>
   );
 };
 
-export default CreateUserPage;
+export default UserDetail;

@@ -30,9 +30,19 @@ export const createUser = async (prevState: unknown, formData: FormData) => {
   } = validatedFields.data;
   const hashedPassword = hashSync(password, 10);
 
+  const existingUser = await prisma.user.findUnique({
+    where: { email },
+  });
+  if (existingUser) {
+    return { message: "Email is already taken." };
+  }
+
   const { url } = await put(image.name, image, {
     access: "public",
     multipart: true,
+  }).catch((error) => {
+    console.error("Image upload failed", error);
+    throw new Error("Failed to upload image.");
   });
 
   //   insert ke database
@@ -73,8 +83,8 @@ export const getAllUsers = async () => {
         role: true,
       },
     });
-    console.log({ users });
     return users.map((user, index) => ({
+      id: user.id,
       no: index + 1,
       name: `${user.firstName} ${user.lastName}`,
       gender: user.gender ?? "male",
@@ -84,5 +94,17 @@ export const getAllUsers = async () => {
   } catch (error) {
     console.error("Error fetching users:", error);
     return [];
+  }
+};
+
+export const getUserById = async (id: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
+    return user;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
   }
 };

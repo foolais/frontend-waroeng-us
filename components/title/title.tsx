@@ -17,7 +17,7 @@ const Title = (props: iProps) => {
         className,
       )}
     >
-      <div className="relative h-11 w-11">
+      <div className="relative h-10 w-10">
         <Image
           src={Logo}
           alt="Logo"
@@ -27,7 +27,7 @@ const Title = (props: iProps) => {
       </div>
       <span
         data-testid="title"
-        className={cn("text-xl font-bold text-black", textClassName)}
+        className={cn("text-lg font-bold text-foreground", textClassName)}
       >
         Waroeng Us
       </span>
