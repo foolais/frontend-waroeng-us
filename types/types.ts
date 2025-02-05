@@ -9,13 +9,14 @@ export interface iNavItem {
 export interface iFormUser {
   name: string;
   gender: string;
-  address: string;
-  phone: string;
+  address: string | null;
+  phone: string | null;
   email: string;
   role: string;
   password: string;
   confirmPassword: string;
-  image: File | null;
+  image: File | string | null;
+  id?: string;
 }
 
 export interface iFormUserState {
@@ -39,6 +40,7 @@ export interface iPropsInput {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string[];
   isRequired?: boolean;
+  disabled?: boolean;
 }
 
 export interface iPropsSelect {
@@ -49,6 +51,7 @@ export interface iPropsSelect {
   options: { label: string; value: string }[];
   onChange: (value: string) => void;
   isRequired?: boolean;
+  disabled?: boolean;
 }
 
 export type iUserTable = {

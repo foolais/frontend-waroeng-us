@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,6 +11,7 @@ import {
 import { iFormUser, iPropsInput, iPropsSelect } from "@/types/types";
 import Image from "next/image";
 import { Upload } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const FormFieldInput = (props: iPropsInput) => {
   const {
@@ -22,6 +23,7 @@ export const FormFieldInput = (props: iPropsInput) => {
     onChange,
     error,
     isRequired = false,
+    disabled = false,
   } = props;
 
   return (
@@ -37,6 +39,7 @@ export const FormFieldInput = (props: iPropsInput) => {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          disabled={disabled}
         />
         {error && (
           <div aria-live="polite" aria-atomic="true">
@@ -49,8 +52,16 @@ export const FormFieldInput = (props: iPropsInput) => {
 };
 
 export const FormFieldSelect = (props: iPropsSelect) => {
-  const { label, name, placeholder, value, options, onChange, isRequired } =
-    props;
+  const {
+    label,
+    name,
+    placeholder,
+    value,
+    options,
+    onChange,
+    isRequired,
+    disabled,
+  } = props;
 
   return (
     <>
@@ -58,7 +69,7 @@ export const FormFieldSelect = (props: iPropsSelect) => {
         {label}
       </Label>
       <Select name={name} value={value} onValueChange={onChange}>
-        <SelectTrigger className="mb-1">
+        <SelectTrigger className="mb-1" disabled={disabled}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
@@ -77,13 +88,23 @@ export const FormFieldImage = ({
   error,
   isRequired,
   setFormValues,
+  image,
+  disabled,
 }: {
   error?: string[];
   isRequired?: boolean;
   setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
+  image?: File | string | null;
+  disabled?: boolean;
 }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (image && typeof image === "string") {
+      setImagePreview(image);
+    }
+  }, [image]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -115,7 +136,10 @@ export const FormFieldImage = ({
       </Label>
       <div className="mb-1">
         <div
-          className="flex-center relative h-60 w-60 cursor-pointer flex-col gap-4 rounded-xl border-2 border-dashed"
+          className={cn(
+            "flex-center relative h-60 w-60 flex-col gap-4 rounded-xl border-2 border-dashed",
+            !disabled ? "cursor-pointer" : "",
+          )}
           onClick={handleUploadClick}
         >
           {imagePreview ? (
@@ -140,6 +164,7 @@ export const FormFieldImage = ({
           onChange={handleImageChange}
           className="hidden"
           ref={fileInputRef}
+          disabled={disabled}
         />
         {error && (
           <div aria-live="polite" aria-atomic="true">

@@ -18,13 +18,9 @@ export const createUser = async (
 
   const form = Object.fromEntries(formData.entries());
 
-  console.log({ formData });
-
   const validatedFields = CreateUserSchema.safeParse(form);
-  console.log({ validatedFields });
 
   if (!validatedFields.success) {
-    console.log(validatedFields.error.flatten().fieldErrors);
     return {
       error: validatedFields.error.flatten().fieldErrors,
     };
@@ -103,6 +99,9 @@ export const getUserById = async (id: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id },
+      omit: {
+        password: true,
+      },
     });
     return user;
   } catch (error) {

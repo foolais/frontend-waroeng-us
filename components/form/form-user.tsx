@@ -27,6 +27,7 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
   const [formValues, setFormValues] = useState<iFormUser>(
     intialValues || defaultValue,
   );
+
   const [state, formAction, isPending] = useActionState(
     createUser.bind(null, formValues),
     null,
@@ -50,6 +51,8 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
         <FormFieldImage
           error={state?.error?.image}
           setFormValues={setFormValues}
+          image={formValues?.image}
+          disabled={type === "detail"}
         />
         <FormFieldInput
           isRequired
@@ -60,36 +63,40 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
           value={formValues.name}
           onChange={handleInput}
           error={state?.error?.name}
+          disabled={type === "detail"}
         />
         <FormFieldSelect
           isRequired
           label="Gender"
           name="gender"
           placeholder="Male"
-          value={formValues?.gender}
+          value={formValues.gender}
           options={[
             { label: "Male", value: "male" },
             { label: "Female", value: "female" },
           ]}
           onChange={(value) => handleSelect("gender", value)}
+          disabled={type === "detail"}
         />
         <FormFieldInput
           label="Address"
           type="text"
           name="address"
           placeholder="yogyakarta"
-          value={formValues.address}
+          value={formValues.address ?? ""}
           onChange={handleInput}
           error={state?.error?.address}
+          disabled={type === "detail"}
         />
         <FormFieldInput
           label="Phone Number"
           type="number"
           name="phone"
           placeholder="0123456789"
-          value={formValues.phone}
+          value={formValues.phone ?? ""}
           onChange={handleInput}
           error={state?.error?.phone}
+          disabled={type === "detail"}
         />
         <FormFieldInput
           isRequired
@@ -100,6 +107,7 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
           value={formValues.email}
           onChange={handleInput}
           error={state?.error?.email}
+          disabled={type === "detail"}
         />
         <FormFieldSelect
           isRequired
@@ -112,6 +120,7 @@ const FormUser = ({ type, intialValues }: iFormUserProps) => {
             { label: "Admin", value: "admin" },
           ]}
           onChange={(value) => handleSelect("role", value)}
+          disabled={type === "detail"}
         />
         {type === "create" && (
           <>
