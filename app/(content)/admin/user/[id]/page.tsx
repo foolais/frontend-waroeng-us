@@ -1,4 +1,5 @@
 import NavBackButton from "@/components/button/nav-back-button";
+import FormDetailUser from "@/components/form/user/form-detail-user";
 import PathHeading from "@/components/header/path-heading";
 import { getUserById } from "@/lib/actions/userActions";
 import { ArrowLeft } from "lucide-react";
@@ -6,7 +7,6 @@ import { ArrowLeft } from "lucide-react";
 const UserDetail = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
   const user = await getUserById(id);
-  console.log({ user });
 
   return (
     <main className="content-container w-full">
@@ -19,6 +19,7 @@ const UserDetail = async ({ params }: { params: { id: string } }) => {
           description="See who's on your team and easily update their information."
         />
       </div>
+      {user && <FormDetailUser user={user} />}
     </main>
   );
 };

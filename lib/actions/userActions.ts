@@ -18,8 +18,6 @@ export const createUser = async (
 
   const form = Object.fromEntries(formData.entries());
 
-  console.log({ form });
-
   const validatedFields = CreateUserSchema.safeParse(form);
 
   if (!validatedFields.success) {
@@ -27,7 +25,6 @@ export const createUser = async (
       error: validatedFields.error.flatten().fieldErrors,
     };
   }
-  console.log({ validatedFields });
 
   const { image, name, gender, address, phone, email, role, password } =
     validatedFields.data;
@@ -111,11 +108,24 @@ export const getUserById = async (id: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id },
-      omit: {
-        password: true,
-      },
     });
-    return user;
+
+    if (!user) return null;
+
+    const formattedUser = {
+      id: user.id,
+      name: user.name ?? "",
+      gender: user.gender ?? "male",
+      address: user.address ?? "",
+      phone: user.phone ?? "",
+      email: user.email ?? "",
+      role: user.role ?? "user",
+      image: user.image ?? "",
+      password: "",
+      confirmPassword: "",
+    };
+
+    return formattedUser;
   } catch (error) {
     console.error("Error fetching user:", error);
     return null;

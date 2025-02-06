@@ -19,6 +19,16 @@ export interface iFormUser {
   id?: string;
 }
 
+export interface iFormDetailUser {
+  id: string;
+  name: string | null;
+  gender: string | null;
+  address: string | null;
+  phone: string | null;
+  email: string | null;
+  role: string | null;
+}
+
 export interface iFormUserState {
   error?: {
     name?: string[];

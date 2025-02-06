@@ -3,8 +3,8 @@ import { FormFieldImage, FormFieldInput, FormFieldSelect } from "../form-field";
 
 interface iFormFieldUser {
   type: "create" | "update" | "detail";
-  state: iFormUserState | null;
-  setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
+  state?: iFormUserState | null;
+  setFormValues?: React.Dispatch<React.SetStateAction<iFormUser>>;
   formValues: iFormUser;
 }
 
@@ -14,81 +14,83 @@ const FormFieldUser = ({
   setFormValues,
   formValues,
 }: iFormFieldUser) => {
+  const isDetail = type === "detail";
+
   return (
     <>
       <FormFieldImage
         error={state?.error?.image}
-        setFormValues={setFormValues}
+        setFormValues={setFormValues ?? (() => {})}
         image={formValues?.image}
-        disabled={type === "detail"}
+        disabled={isDetail}
       />
       <FormFieldInput
         isRequired
         label="Name"
         type="text"
         name="name"
-        placeholder="John Doe"
+        placeholder={isDetail ? "-" : "John Doe"}
         value={formValues.name}
-        setFormValues={setFormValues}
+        setFormValues={setFormValues ?? (() => {})}
         error={state?.error?.name}
-        disabled={type === "detail"}
+        disabled={isDetail}
       />
       <FormFieldSelect
         isRequired
         label="Gender"
         name="gender"
-        placeholder="Male"
+        placeholder={isDetail ? "-" : "Male"}
         value={formValues.gender}
         options={[
           { label: "Male", value: "male" },
           { label: "Female", value: "female" },
         ]}
-        setFormValues={setFormValues}
-        disabled={type === "detail"}
+        setFormValues={setFormValues ?? (() => {})}
+        disabled={isDetail}
       />
       <FormFieldInput
         label="Address"
         type="text"
         name="address"
-        placeholder="yogyakarta"
+        placeholder={isDetail ? "-" : "Yogyakarta"}
         value={formValues.address ?? ""}
-        setFormValues={setFormValues}
+        setFormValues={setFormValues ?? (() => {})}
         error={state?.error?.address}
-        disabled={type === "detail"}
+        disabled={isDetail}
       />
       <FormFieldInput
         label="Phone Number"
         type="number"
         name="phone"
-        placeholder="0123456789"
+        placeholder={isDetail ? "-" : "081234567891"}
         value={formValues.phone ?? ""}
-        setFormValues={setFormValues}
+        setFormValues={setFormValues ?? (() => {})}
         error={state?.error?.phone}
-        disabled={type === "detail"}
+        disabled={isDetail}
       />
       <FormFieldInput
         isRequired
         label="Email"
         type="email"
         name="email"
-        placeholder="johndoe@me.com"
+        placeholder={isDetail ? "-" : "johndoe@me.com"}
         value={formValues.email}
-        setFormValues={setFormValues}
+        setFormValues={setFormValues ?? (() => {})}
         error={state?.error?.email}
-        disabled={type === "detail"}
+        disabled={isDetail}
       />
       <FormFieldSelect
         isRequired
         label="Role"
         name="role"
-        placeholder="User"
+        placeholder={isDetail ? "-" : "User"}
         value={formValues?.role}
         options={[
           { label: "User", value: "user" },
           { label: "Admin", value: "admin" },
         ]}
-        setFormValues={setFormValues}
-        disabled={type === "detail"}
+        setFormValues={setFormValues ?? (() => {})}
+        disabled={isDetail}
       />
       {type === "create" && (
         <>
@@ -99,7 +101,7 @@ const FormFieldUser = ({
             name="password"
             placeholder="*******"
             value={formValues.password}
-            setFormValues={setFormValues}
+            setFormValues={setFormValues ?? (() => {})}
             error={state?.error?.password}
           />
 
@@ -110,7 +112,7 @@ const FormFieldUser = ({
             name="confirmPassword"
             placeholder="*******"
             value={formValues.confirmPassword}
-            setFormValues={setFormValues}
+            setFormValues={setFormValues ?? (() => {})}
             error={state?.error?.confirmPassword}
           />
         </>
