@@ -18,6 +18,8 @@ export const createUser = async (
 
   const form = Object.fromEntries(formData.entries());
 
+  console.log({ form });
+
   const validatedFields = CreateUserSchema.safeParse(form);
 
   if (!validatedFields.success) {
@@ -25,6 +27,8 @@ export const createUser = async (
       error: validatedFields.error.flatten().fieldErrors,
     };
   }
+  console.log({ validatedFields });
+
   const { image, name, gender, address, phone, email, role, password } =
     validatedFields.data;
   const hashedPassword = hashSync(password, 10);
@@ -68,6 +72,14 @@ export const createUser = async (
 
   revalidatePath("/admin/user");
   redirect("/admin/user");
+};
+
+export const updateUser = async (
+  payload: iFormUser,
+  prevState: unknown,
+  formData: FormData,
+) => {
+  console.log("update", payload, prevState, formData);
 };
 
 export const getAllUsers = async () => {

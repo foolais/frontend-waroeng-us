@@ -21,12 +21,13 @@ export interface iFormUser {
 
 export interface iFormUserState {
   error?: {
-    name?: string;
-    address?: string;
-    phone?: string;
+    name?: string[];
+    address?: string[];
+    phone?: string[];
     email?: string[];
     password?: string[];
     confirmPassword?: string[];
+    image?: string[];
   };
   message?: string;
 }
@@ -37,7 +38,7 @@ export interface iPropsInput {
   name: string;
   placeholder: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
   error?: string[];
   isRequired?: boolean;
   disabled?: boolean;
@@ -49,7 +50,7 @@ export interface iPropsSelect {
   placeholder: string;
   value: string;
   options: { label: string; value: string }[];
-  onChange: (value: string) => void;
+  setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
   isRequired?: boolean;
   disabled?: boolean;
 }

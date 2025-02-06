@@ -20,11 +20,15 @@ export const FormFieldInput = (props: iPropsInput) => {
     name,
     placeholder,
     value,
-    onChange,
+    setFormValues,
     error,
     isRequired = false,
     disabled = false,
   } = props;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues((prev) => ({ ...prev, [name]: e.target.value }));
+  };
 
   return (
     <>
@@ -38,7 +42,7 @@ export const FormFieldInput = (props: iPropsInput) => {
           name={name}
           placeholder={placeholder}
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           disabled={disabled}
         />
         {error && (
@@ -58,17 +62,21 @@ export const FormFieldSelect = (props: iPropsSelect) => {
     placeholder,
     value,
     options,
-    onChange,
+    setFormValues,
     isRequired,
     disabled,
   } = props;
+
+  const handleChange = (value: string) => {
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <>
       <Label htmlFor={name} className={isRequired ? "required-field" : ""}>
         {label}
       </Label>
-      <Select name={name} value={value} onValueChange={onChange}>
+      <Select name={name} value={value} onValueChange={handleChange}>
         <SelectTrigger className="mb-1" disabled={disabled}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -134,10 +142,10 @@ export const FormFieldImage = ({
       <Label htmlFor="image" className={isRequired ? "required-field" : ""}>
         Image
       </Label>
-      <div className="mb-1">
+      <div className="mb-2">
         <div
           className={cn(
-            "flex-center relative h-60 w-60 flex-col gap-4 rounded-xl border-2 border-dashed",
+            "flex-center relative h-[250px] w-[250px] flex-col gap-4 rounded-xl border-2 border-dashed",
             !disabled ? "cursor-pointer" : "",
           )}
           onClick={handleUploadClick}
@@ -146,8 +154,10 @@ export const FormFieldImage = ({
             <Image
               src={imagePreview}
               alt="Preview"
-              fill
-              className="rounded-xl object-cover"
+              className="absolute left-0 top-0 h-full w-full rounded-xl object-cover"
+              width={150}
+              height={150}
+              loading="lazy"
             />
           ) : (
             <>

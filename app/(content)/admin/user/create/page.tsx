@@ -1,5 +1,5 @@
 import NavBackButton from "@/components/button/nav-back-button";
-import FormUser from "@/components/form/form-user";
+import FormCreateUser from "@/components/form/user/form-create-user";
 import PathHeading from "@/components/header/path-heading";
 import { ArrowLeft } from "lucide-react";
 
@@ -20,7 +20,7 @@ const CreateUserPage = () => {
           description="Let's add a new member to the team. On this page, you'll easily create a new user account."
         />
       </div>
-      <FormUser type="create" />
+      <FormCreateUser />
     </main>
   );
 };
