@@ -1,7 +1,7 @@
 "use server";
-import { CreateUserSchema } from "@/lib/zod/userZod";
+import { CreateUserSchema, UpdateUserSchema } from "@/lib/zod/userZod";
 import { hashSync } from "bcrypt-ts";
-import { put } from "@vercel/blob";
+import { del, put } from "@vercel/blob";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -76,7 +76,79 @@ export const updateUser = async (
   prevState: unknown,
   formData: FormData,
 ) => {
-  console.log("update", payload, prevState, formData);
+  if (payload && payload.image) {
+    formData.append("image", payload.image);
+  }
+
+  const form = Object.fromEntries(formData.entries());
+  const { id } = payload;
+
+  const validatedFields = UpdateUserSchema.safeParse(form);
+
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { image, name, gender, address, phone, email, role } =
+    validatedFields.data;
+
+  const data = await getUserById(id as string);
+  if (!data)
+    return {
+      message: "User not found",
+    };
+
+  let imagePath: string | null = data.image ?? null;
+
+  try {
+    if (typeof image === "string") {
+      imagePath = data.image;
+    } else if (image instanceof File && image.size > 0) {
+      if (data.image) {
+        try {
+          await del(data.image);
+        } catch (deleteError) {
+          console.warn("Failed to delete old image:", deleteError);
+        }
+      }
+
+      const { url } = await put(image.name, image, {
+        access: "public",
+        multipart: true,
+      });
+
+      imagePath = url;
+    }
+  } catch (error) {
+    console.error("Error processing image:", error);
+    throw new Error("Failed to process image upload.");
+  }
+
+  try {
+    await prisma.user.update({
+      data: {
+        image: imagePath,
+        name,
+        gender,
+        address,
+        phone,
+        email,
+        role,
+      },
+      where: { id },
+    });
+    await del(data.image);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: "Failed to create user",
+    };
+  }
+
+  revalidatePath("/admin/user");
+  redirect("/admin/user");
 };
 
 export const getAllUsers = async () => {

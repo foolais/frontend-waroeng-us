@@ -13,7 +13,9 @@ const ActionsButton = ({ id }: { id: string }) => {
         </Link>
       </Button>
       <Button asChild size={"icon"} className="bg-transparent" variant={"link"}>
-        <Pencil color="hsl(var(--secondary))" />
+        <Link href={`/admin/user/update/${id}`}>
+          <Pencil color="hsl(var(--secondary))" />
+        </Link>
       </Button>
       <Button asChild size={"icon"} variant={"link"}>
         <Trash2 color="hsl(var(--destructive))" />
