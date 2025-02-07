@@ -52,8 +52,18 @@ export const userColumns: ColumnDef<
   {
     id: "actions",
     cell: ({ row }) => {
-      const userId = row?.original?.id;
-      return <ActionsButton id={userId} />;
+      const user = row?.original;
+      return (
+        <ActionsButton
+          id={user.id}
+          name={user.name}
+          routes={[
+            `/admin/user/${user.id}`,
+            `/admin/user/update/${user.id}`,
+            "",
+          ]}
+        />
+      );
     },
   },
 ];

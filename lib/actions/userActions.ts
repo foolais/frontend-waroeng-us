@@ -203,3 +203,14 @@ export const getUserById = async (id: string) => {
     return null;
   }
 };
+
+export const deleteUser = async (id: string) => {
+  try {
+    await prisma.user.delete({
+      where: { id },
+    });
+    revalidatePath("/admin/user");
+  } catch (error) {
+    console.error("Error deleting user:", error);
+  }
+};
