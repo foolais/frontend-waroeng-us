@@ -21,7 +21,6 @@ const badgeWidth = "w-[70px]";
 const actionWidth = "w-[40px]";
 
 const renderRow = (item: iUserTableData) => {
-  console.log(item.image);
   return (
     <tr
       key={item.id}
@@ -63,8 +62,6 @@ const renderRow = (item: iUserTableData) => {
 
 const UserTable = async () => {
   const users = await getAllUsers();
-
-  console.log({ users });
 
   const columns = [
     {

@@ -1,34 +1,34 @@
 import PathHeading from "@/components/header/path-heading";
-import UserTable from "@/components/table/user/user-table";
+import MenuTable from "@/components/table/menu/menu-table";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "User - Waroeng Us",
-  description: "See who's on your team and easily update their information.",
+  title: "Menu - Waroeng Us",
+  description: "See all the menus and manage your business.",
 };
 
-const UserPage = () => {
+const MenuPage = () => {
   return (
     <main className="w-full p-4 md:px-6">
       <PathHeading
-        title="Users Page"
-        description="See who's on your team and easily update their information."
+        title="Menu Page"
+        description="See all the menus and manage your business."
       />
       <div className="mt-4 rounded-xl bg-white p-6">
         <div className="flex justify-between">
-          <h2 className="text-sub-heading">All Users</h2>
+          <h2 className="text-sub-heading">All Menus</h2>
           <Button size={"icon"} asChild>
-            <Link href="/admin/user/create">
+            <Link href="/admin/menu/create">
               <Plus />
             </Link>
           </Button>
         </div>
-        <UserTable />
+        <MenuTable />
       </div>
     </main>
   );
 };
 
-export default UserPage;
+export default MenuPage;

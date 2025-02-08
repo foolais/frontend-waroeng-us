@@ -11,7 +11,7 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
 
   return (
     <nav className={cn(isMobile ? "w-3/4" : "w-max lg:w-full")}>
-      <ul className="grid gap-2">
+      <ul className="mt-2 grid gap-2">
         {adminNavItem.map(
           ({ name, icon: Icon, routes }: iNavItem, index: number) => (
             <li key={index}>

@@ -1,5 +1,5 @@
 import { iFormUser, iNavItem } from "@/types/types";
-import { LayoutDashboard, Users } from "lucide-react";
+import { LayoutDashboard, NotebookText, Users, Utensils } from "lucide-react";
 
 export const adminNavItem: iNavItem[] = [
   {
@@ -11,6 +11,16 @@ export const adminNavItem: iNavItem[] = [
     name: "User",
     routes: "/admin/user",
     icon: Users,
+  },
+  {
+    name: "Menu",
+    routes: "/admin/menu",
+    icon: Utensils,
+  },
+  {
+    name: "Order",
+    routes: "/admin/order",
+    icon: NotebookText,
   },
 ];
 
