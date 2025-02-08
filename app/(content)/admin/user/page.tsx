@@ -17,12 +17,12 @@ const UserPage = () => {
         title="Users Page"
         description="See who's on your team and easily update their information."
       />
-      <div className="mt-6 rounded-xl bg-white p-4">
-        <div className="flex justify-end">
-          <Button className="mt-4 rounded-xl" asChild>
+      <div className="mt-6 rounded-xl bg-white p-6">
+        <div className="flex justify-between">
+          <h2 className="text-sub-heading">All Users</h2>
+          <Button size={"icon"} asChild>
             <Link href="/admin/user/create">
               <Plus />
-              Create New User
             </Link>
           </Button>
         </div>

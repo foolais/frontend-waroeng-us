@@ -74,10 +74,10 @@ body {
     @apply px-4 py-2;
   }
   .text-heading {
-    @apply text-xl font-bold capitalize md:text-2xl lg:text-2xl;
+    @apply text-xl font-bold capitalize tracking-wide md:text-2xl;
   }
   .text-sub-heading {
-    @apply text-lg font-bold capitalize md:text-xl lg:text-xl;
+    @apply text-lg font-bold capitalize tracking-wide md:text-xl;
   }
   .text-span {
     @apply text-xs font-semibold text-slate-400 md:text-sm;
