@@ -15,7 +15,7 @@ const UserDetail = async ({ params }: { params: { id: string } }) => {
           <ArrowLeft />
         </NavBackButton>
         <PathHeading
-          title="Detail User"
+          title="User Details"
           description="See who's on your team and easily update their information."
         />
       </div>

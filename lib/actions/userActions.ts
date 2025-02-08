@@ -160,6 +160,7 @@ export const getAllUsers = async () => {
         gender: true,
         email: true,
         role: true,
+        image: true,
       },
     });
     return users.map((user, index) => ({
@@ -169,6 +170,7 @@ export const getAllUsers = async () => {
       gender: user.gender ?? "male",
       email: user.email ?? "",
       role: user.role ?? "user",
+      image: user.image ?? "",
     }));
   } catch (error) {
     console.error("Error fetching users:", error);

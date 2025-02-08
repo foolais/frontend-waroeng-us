@@ -3,9 +3,10 @@ import { cn } from "@/lib/utils";
 interface BadgeProps {
   text: string;
   variant?: string;
+  className?: string;
 }
 
-const Badge = ({ text, variant = "default" }: BadgeProps) => {
+const Badge = ({ text, variant = "default", className }: BadgeProps) => {
   const variantStyles: Record<string, string> = {
     default: "bg-primary text-white",
     admin: "bg-primary text-white",
@@ -18,6 +19,7 @@ const Badge = ({ text, variant = "default" }: BadgeProps) => {
       className={cn(
         "flex-center mx-auto max-w-28 rounded-xl p-1 text-sm font-medium capitalize",
         variantStyles[variant],
+        className,
       )}
     >
       {text}
