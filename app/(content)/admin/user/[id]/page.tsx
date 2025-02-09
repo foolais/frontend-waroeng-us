@@ -9,7 +9,7 @@ const UserDetail = async ({ params }: { params: { id: string } }) => {
   const user = await getUserById(id);
 
   return (
-    <main className="content-container w-full">
+    <main className="content-container">
       <div className="mb-6 flex items-center gap-2">
         <NavBackButton route="/admin/user">
           <ArrowLeft />

@@ -9,7 +9,7 @@ export const metadata = {
 
 const CreateMenuPage = () => {
   return (
-    <main className="content-container w-full">
+    <main className="content-container">
       <div className="mb-6 flex items-center gap-2">
         <NavBackButton route="/admin/menu">
           <ArrowLeft />

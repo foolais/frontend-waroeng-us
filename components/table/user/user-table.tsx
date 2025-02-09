@@ -16,16 +16,9 @@ interface iUserTableData {
   role: string;
 }
 
-const genderWidth = "w-[80px]";
-const badgeWidth = "w-[70px]";
-const actionWidth = "w-[40px]";
-
 const renderRow = (item: iUserTableData) => {
   return (
-    <tr
-      key={item.id}
-      className="border-b border-gray-200 even:bg-background hover:bg-muted"
-    >
+    <tr key={item.id} className="table-content">
       <td className="p-2 text-center text-sm">{item.no}</td>
       <td className="p-2">
         <Avatar>
@@ -34,16 +27,12 @@ const renderRow = (item: iUserTableData) => {
         </Avatar>
       </td>
       <td className="p-2 text-sm">{item.name}</td>
-      <td className={`${genderWidth} hidden p-2 text-sm lg:table-cell`}>
-        <Badge
-          text={item.gender}
-          variant={item.gender}
-          className={genderWidth}
-        />
+      <td className="hidden p-2 text-sm lg:table-cell">
+        <Badge text={item.gender} variant={item.gender} />
       </td>
       <td className="hidden p-2 text-sm md:table-cell">{item.email}</td>
-      <td className={` ${badgeWidth} p-2 text-sm`}>
-        <Badge text={item.role} variant={item.role} className={badgeWidth} />
+      <td className="p-2 text-sm">
+        <Badge text={item.role} variant={item.role} />
       </td>
       <td className="p-2">
         <ActionsButton
@@ -64,40 +53,17 @@ const UserTable = async () => {
   const users = await getAllUsers();
 
   const columns = [
-    {
-      header: "No",
-      accessor: "no",
-      className: "w-[40px]",
-    },
-    {
-      header: "Image",
-      accessor: "image",
-      className: "w-[70px]",
-    },
-    {
-      header: "Name",
-      accessor: "name",
-    },
+    { header: "No", accessor: "no", className: "w-[40px]" },
+    { header: "Image", accessor: "image", className: "w-[70px]" },
+    { header: "Name", accessor: "name" },
     {
       header: "Gender",
       accessor: "gender",
-      className: `${genderWidth} hidden lg:table-cell  text-center`,
+      className: `w-[80px] hidden lg:table-cell  text-center`,
     },
-    {
-      header: "Email",
-      accessor: "email",
-      className: "hidden md:table-cell ",
-    },
-    {
-      header: "Role",
-      accessor: "role",
-      className: `${badgeWidth}  text-center`,
-    },
-    {
-      header: "",
-      accessor: "actions",
-      className: `${actionWidth}  text-center`,
-    },
+    { header: "Email", accessor: "email", className: "hidden md:table-cell " },
+    { header: "Role", accessor: "role", className: `w-[70px]  text-center` },
+    { header: "", accessor: "actions", className: `w-[40px]  text-center` },
   ];
 
   return (

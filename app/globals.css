@@ -99,7 +99,7 @@ body {
   }
   /* * END FORM */
   .content-container {
-    @apply p-4 md:px-6;
+    @apply w-full p-4 md:px-6;
   }
 
   .required-field::after {
@@ -126,5 +126,10 @@ body {
   .primary-scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--primary));
     border-radius: 4px;
+  }
+
+  /* Table */
+  .table-content {
+    @apply border-b border-gray-200 even:bg-background hover:bg-muted;
   }
 }

@@ -10,7 +10,7 @@ export const metadata = {
 
 const CreateUserPage = () => {
   return (
-    <main className="content-container w-full">
+    <main className="content-container">
       <div className="mb-6 flex items-center gap-2">
         <NavBackButton route="/admin/user">
           <ArrowLeft />
