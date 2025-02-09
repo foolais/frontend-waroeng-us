@@ -13,7 +13,7 @@ import Image from "next/image";
 import { Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const FormFieldInput = (props: iPropsInput) => {
+export const FormFieldInput = <T,>(props: iPropsInput<T>) => {
   const {
     label,
     type,
@@ -32,14 +32,17 @@ export const FormFieldInput = (props: iPropsInput) => {
 
   return (
     <>
-      <Label htmlFor={name} className={isRequired ? "required-field" : ""}>
+      <Label
+        htmlFor={name as string}
+        className={isRequired ? "required-field" : ""}
+      >
         {label}
       </Label>
       <div className="mb-1">
         <Input
           type={type}
-          id={name}
-          name={name}
+          id={name as string}
+          name={name as string}
           placeholder={placeholder}
           value={value}
           onChange={handleChange}
@@ -55,7 +58,7 @@ export const FormFieldInput = (props: iPropsInput) => {
   );
 };
 
-export const FormFieldSelect = (props: iPropsSelect) => {
+export const FormFieldSelect = <T,>(props: iPropsSelect<T>) => {
   const {
     label,
     name,
@@ -73,10 +76,13 @@ export const FormFieldSelect = (props: iPropsSelect) => {
 
   return (
     <>
-      <Label htmlFor={name} className={isRequired ? "required-field" : ""}>
+      <Label
+        htmlFor={name as string}
+        className={isRequired ? "required-field" : ""}
+      >
         {label}
       </Label>
-      <Select name={name} value={value} onValueChange={handleChange}>
+      <Select name={name as string} value={value} onValueChange={handleChange}>
         <SelectTrigger className="mb-1" disabled={disabled}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

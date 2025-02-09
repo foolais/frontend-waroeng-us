@@ -1,4 +1,4 @@
-import { iFormUser, iNavItem } from "@/types/types";
+import { iFormCategory, iFormUser, iNavItem } from "@/types/types";
 import {
   Layers2,
   LayoutDashboard,
@@ -25,4 +25,11 @@ export const userFormDefaultValue: iFormUser = {
   password: "",
   confirmPassword: "",
   image: null,
+};
+
+export const categoryFormDefaultValue: iFormCategory = {
+  id: "",
+  name: "",
+  type: "",
+  is_avaliable: true,
 };

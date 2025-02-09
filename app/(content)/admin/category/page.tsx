@@ -20,7 +20,7 @@ const CategoryPage = () => {
         <div className="flex justify-between">
           <h2 className="text-sub-heading">All Categories</h2>
           <Button size={"icon"} asChild>
-            <Link href="/admin/menu/create">
+            <Link href="/admin/category/create">
               <Plus />
             </Link>
           </Button>

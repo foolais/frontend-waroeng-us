@@ -24,7 +24,7 @@ const FormFieldUser = ({
         image={formValues?.image}
         disabled={isDetail}
       />
-      <FormFieldInput
+      <FormFieldInput<iFormUser>
         isRequired
         label="Name"
         type="text"
@@ -35,7 +35,7 @@ const FormFieldUser = ({
         error={state?.error?.name}
         disabled={isDetail}
       />
-      <FormFieldSelect
+      <FormFieldSelect<iFormUser>
         isRequired
         label="Gender"
         name="gender"
@@ -48,7 +48,7 @@ const FormFieldUser = ({
         setFormValues={setFormValues ?? (() => {})}
         disabled={isDetail}
       />
-      <FormFieldInput
+      <FormFieldInput<iFormUser>
         label="Address"
         type="text"
         name="address"
@@ -58,7 +58,7 @@ const FormFieldUser = ({
         error={state?.error?.address}
         disabled={isDetail}
       />
-      <FormFieldInput
+      <FormFieldInput<iFormUser>
         label="Phone Number"
         type="number"
         name="phone"
@@ -68,7 +68,7 @@ const FormFieldUser = ({
         error={state?.error?.phone}
         disabled={isDetail}
       />
-      <FormFieldInput
+      <FormFieldInput<iFormUser>
         isRequired
         label="Email"
         type="email"
@@ -79,7 +79,7 @@ const FormFieldUser = ({
         error={state?.error?.email}
         disabled={isDetail}
       />
-      <FormFieldSelect
+      <FormFieldSelect<iFormUser>
         isRequired
         label="Role"
         name="role"
@@ -94,7 +94,7 @@ const FormFieldUser = ({
       />
       {type === "create" && (
         <>
-          <FormFieldInput
+          <FormFieldInput<iFormUser>
             isRequired
             label="Password"
             type="password"
@@ -105,7 +105,7 @@ const FormFieldUser = ({
             error={state?.error?.password}
           />
 
-          <FormFieldInput
+          <FormFieldInput<iFormUser>
             isRequired
             label="Confirm Password"
             type="password"

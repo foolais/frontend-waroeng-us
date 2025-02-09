@@ -6,6 +6,37 @@ export interface iNavItem {
   icon: LucideIcon;
 }
 
+export interface iPropsInput<T> {
+  label: string;
+  type: string;
+  name: keyof T;
+  placeholder: string;
+  value: string;
+  setFormValues: React.Dispatch<React.SetStateAction<T>>;
+  error?: string[];
+  isRequired?: boolean;
+  disabled?: boolean;
+}
+
+export interface iPropsSelect<T> {
+  label: string;
+  name: keyof T;
+  placeholder: string;
+  value: string;
+  options: { label: string; value: string }[];
+  setFormValues: React.Dispatch<React.SetStateAction<T>>;
+  isRequired?: boolean;
+  disabled?: boolean;
+}
+
+export type iUserTable = {
+  no: number;
+  name: string;
+  gender: "male" | "female";
+  email: string;
+  role: "admin" | "user";
+};
+
 export interface iFormUser {
   name: string;
   gender: string;
@@ -42,33 +73,24 @@ export interface iFormUserState {
   message?: string;
 }
 
-export interface iPropsInput {
-  label: string;
+export interface iFormCategory {
+  id: string;
+  name: string;
   type: string;
-  name: string;
-  placeholder: string;
-  value: string;
-  setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
-  error?: string[];
-  isRequired?: boolean;
-  disabled?: boolean;
+  is_avaliable: boolean;
 }
 
-export interface iPropsSelect {
-  label: string;
-  name: string;
-  placeholder: string;
-  value: string;
-  options: { label: string; value: string }[];
-  setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
-  isRequired?: boolean;
-  disabled?: boolean;
+export interface iFormCategoryState {
+  error?: { name?: string[]; type?: string[] };
+  message?: string;
 }
 
-export type iUserTable = {
+export interface iCategoryTableData {
+  id: string;
   no: number;
   name: string;
-  gender: "male" | "female";
-  email: string;
-  role: "admin" | "user";
-};
+  type: string;
+  is_active: boolean;
+  created_by: { id: string; name: string } | null;
+  updated_by: { id: string; name: string } | null;
+}

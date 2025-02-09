@@ -1,21 +1,26 @@
-import React from "react";
-import Table from "../table";
-import ActionsButton from "@/components/button/actions-button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import Badge from "@/components/badge/badge";
+"use server";
 
-const renderRow = () => {
+import { iCategoryTableData } from "@/types/types";
+import Table from "../table";
+import { getAllCategories } from "@/lib/actions/categoryActions";
+import Badge from "@/components/badge/badge";
+import { Switch } from "@/components/ui/switch";
+import ActionsButton from "@/components/button/actions-button";
+import { Label } from "@/components/ui/label";
+
+const renderRow = (item: iCategoryTableData) => {
   return (
-    <tr className="table-content">
-      <td className="p-2 text-center text-sm">1</td>
-      <td className="p-2 text-sm">Makanan</td>
+    <tr key={item.id} className="table-content">
+      <td className="p-2 text-center text-sm">{item.no}</td>
+      <td className="p-2 text-sm">{item.name}</td>
       <td className="p-2 text-sm">
-        <Badge text="Menu" variant="default" />
+        <Badge text={item.type} variant="default" />
       </td>
       <td className="flex-center flex-col gap-2 p-2 text-sm md:flex-row">
-        <Switch id="status-category" checked={true} />
-        <Label htmlFor="status-category">Inactive</Label>
+        <Switch id="status-category" checked={item.is_active} />
+        <Label htmlFor="status-category">
+          {item.is_active ? "Active" : "Inactive"}
+        </Label>
       </td>
       <td className="p-2">
         <ActionsButton
@@ -28,7 +33,9 @@ const renderRow = () => {
   );
 };
 
-const CategoryTable = () => {
+const CategoryTable = async () => {
+  const categories = await getAllCategories();
+
   const columns = [
     { header: "No", accessor: "no", className: "w-[40px]" },
     { header: "Name", accessor: "name" },
@@ -44,7 +51,7 @@ const CategoryTable = () => {
     <Table
       columns={columns}
       renderRow={renderRow as (item: unknown) => React.ReactNode}
-      data={Array.from({ length: 10 }, (_, index) => index + 1)}
+      data={categories as iCategoryTableData[]}
     />
   );
 };
