@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { iFormUser } from "@/types/types";
+import { Gender, Role } from "@prisma/client";
 
 export const createUser = async (
   payload: iFormUser,
@@ -21,30 +22,33 @@ export const createUser = async (
   const validatedFields = CreateUserSchema.safeParse(form);
 
   if (!validatedFields.success) {
-    return {
-      error: validatedFields.error.flatten().fieldErrors,
-    };
+    return { error: validatedFields.error.flatten().fieldErrors };
   }
 
   const { image, name, gender, address, phone, email, role, password } =
     validatedFields.data;
   const hashedPassword = hashSync(password, 10);
 
-  const existingUser = await prisma.user.findUnique({
-    where: { email },
-  });
+  console.log(validatedFields.data);
+
+  const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser) {
     console.log("Email is already taken.");
     return { message: "Email is already taken." };
   }
 
-  const { url } = await put(image.name, image, {
-    access: "public",
-    multipart: true,
-  }).catch((error) => {
+  let url: string | undefined;
+
+  try {
+    const uploadResponse = await put(image.name, image, {
+      access: "public",
+      multipart: true,
+    });
+    url = uploadResponse.url;
+  } catch (error) {
     console.error("Image upload failed", error);
     throw new Error("Failed to upload image.");
-  });
+  }
 
   //   insert ke database
   try {
@@ -52,19 +56,21 @@ export const createUser = async (
       data: {
         image: url,
         name,
-        gender,
+        gender: gender as Gender,
         address,
         phone,
         email,
-        role,
+        role: role as Role,
         password: hashedPassword,
+        created_by_name: name,
       },
     });
   } catch (error) {
+    if (url) {
+      await del(url);
+    }
     console.log(error);
-    return {
-      message: "Failed to create user",
-    };
+    return { message: "Failed to create user" };
   }
 
   revalidatePath("/admin/user");
@@ -86,19 +92,14 @@ export const updateUser = async (
   const validatedFields = UpdateUserSchema.safeParse(form);
 
   if (!validatedFields.success) {
-    return {
-      error: validatedFields.error.flatten().fieldErrors,
-    };
+    return { error: validatedFields.error.flatten().fieldErrors };
   }
 
   const { image, name, gender, address, phone, email, role } =
     validatedFields.data;
 
   const data = await getUserById(id as string);
-  if (!data)
-    return {
-      message: "User not found",
-    };
+  if (!data) return { message: "User not found" };
 
   let imagePath: string | null = data.image ?? null;
 
@@ -131,20 +132,27 @@ export const updateUser = async (
       data: {
         image: imagePath,
         name,
-        gender,
+        gender: gender as Gender,
         address,
         phone,
         email,
-        role,
+        role: role as Role,
+        // get from sessions
+        updated_by_name: name,
       },
       where: { id },
     });
     await del(data.image);
   } catch (error) {
+    if (imagePath) {
+      try {
+        await del(imagePath);
+      } catch (deleteError) {
+        console.warn("Failed to delete old image:", deleteError);
+      }
+    }
     console.log(error);
-    return {
-      message: "Failed to create user",
-    };
+    return { message: "Failed to create user" };
   }
 
   revalidatePath("/admin/user");
@@ -180,9 +188,7 @@ export const getAllUsers = async () => {
 
 export const getUserById = async (id: string) => {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id },
-    });
+    const user = await prisma.user.findUnique({ where: { id } });
 
     if (!user) return null;
 
@@ -208,9 +214,7 @@ export const getUserById = async (id: string) => {
 
 export const deleteUser = async (id: string) => {
   try {
-    await prisma.user.delete({
-      where: { id },
-    });
+    await prisma.user.delete({ where: { id } });
     revalidatePath("/admin/user");
   } catch (error) {
     console.error("Error deleting user:", error);
