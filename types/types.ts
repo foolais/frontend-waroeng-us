@@ -37,6 +37,36 @@ export type iUserTable = {
   role: "admin" | "user";
 };
 
+export interface iFormRegister {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface iFormRegisterState {
+  error?: {
+    name?: string[];
+    email?: string[];
+    password?: string[];
+    confirmPassword?: string[];
+  };
+  message?: string;
+}
+
+export interface iFormLogin {
+  email: string;
+  password: string;
+}
+
+export interface iFormLoginState {
+  error?: {
+    email?: string[];
+    password?: string[];
+  };
+  message?: string;
+}
+
 export interface iFormUser {
   name: string;
   gender: string;

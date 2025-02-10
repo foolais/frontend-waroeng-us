@@ -38,7 +38,7 @@ export const FormFieldInput = <T,>(props: iPropsInput<T>) => {
       >
         {label}
       </Label>
-      <div className="mb-1">
+      <div className="mb-2">
         <Input
           type={type}
           id={name as string}
@@ -83,7 +83,7 @@ export const FormFieldSelect = <T,>(props: iPropsSelect<T>) => {
         {label}
       </Label>
       <Select name={name as string} value={value} onValueChange={handleChange}>
-        <SelectTrigger className="mb-1" disabled={disabled}>
+        <SelectTrigger className="mb-2" disabled={disabled}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
