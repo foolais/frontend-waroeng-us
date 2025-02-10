@@ -1,12 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
 import HamburgerMenu from "@/public/hamburger-menu.png";
 import Title from "@/components/title/title";
 import { useWindowSize } from "@/hooks/useWindowsSize";
 import NavItem from "@/components/nav/nav-item";
 import { Separator } from "@/components/ui/separator";
+import LogoutButton from "../button/logout-button";
 
 const MobileSidebar = () => {
   const { width } = useWindowSize();
@@ -25,6 +32,9 @@ const MobileSidebar = () => {
         </SheetTitle>
         <Separator className="w-3/4" />
         <NavItem isMobile={true} />
+        <SheetFooter className="mb-4 mt-auto w-3/4">
+          <LogoutButton isMobile={isMobile} />
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

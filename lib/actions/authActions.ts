@@ -1,9 +1,15 @@
 "use server";
+
 import { hashSync } from "bcrypt-ts";
 import { LoginSchema, RegisterSchema } from "../zod/authZod";
 import { prisma } from "@/lib/prisma";
+import { signIn, signOut } from "@/auth";
+import { AuthError } from "next-auth";
 
-export const register = async (prevState: unknown, formData: FormData) => {
+export const registerCredentials = async (
+  prevState: unknown,
+  formData: FormData,
+) => {
   const form = Object.fromEntries(formData.entries());
 
   const validatedFields = RegisterSchema.safeParse(form);
@@ -30,7 +36,10 @@ export const register = async (prevState: unknown, formData: FormData) => {
   console.log(payload);
 };
 
-export const login = async (prevState: unknown, formData: FormData) => {
+export const loginCredentials = async (
+  prevState: unknown,
+  formData: FormData,
+) => {
   const form = Object.fromEntries(formData.entries());
 
   const validatedFields = LoginSchema.safeParse(form);
@@ -40,12 +49,33 @@ export const login = async (prevState: unknown, formData: FormData) => {
   }
 
   const { email, password } = validatedFields.data;
-  const hashedPassword = hashSync(password, 10);
+  const user = await prisma.user.findUnique({ where: { email } });
 
-  const payload = {
-    email,
-    password: hashedPassword,
-  };
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: user?.role === "admin" ? "/admin/dashboard" : "/dashboard",
+    });
+  } catch (error) {
+    console.log(error);
+    if (error instanceof AuthError) {
+      console.error(error.type);
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { message: "Invalid email or password" };
+        default:
+          return { message: "Authentication failed" };
+      }
+    }
+    throw error;
+  }
+};
 
-  console.log(payload);
+export const logoutCredentials = async () => {
+  try {
+    await signOut();
+  } catch (error) {
+    console.log(error);
+  }
 };

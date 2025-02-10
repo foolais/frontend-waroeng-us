@@ -2,7 +2,6 @@
 
 import FormLogin from "@/components/form/auth/form-login";
 import FormRegister from "@/components/form/auth/form-register";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const AuthPage = () => {
@@ -16,16 +15,17 @@ const AuthPage = () => {
       <div className="mx-auto w-3/4 md:w-5/6 lg:w-4/5 xl:w-1/2">
         {isLogin ? <FormLogin /> : <FormRegister />}
       </div>
-      <p className="mt-4 text-sm">
-        {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-        <Button
-          variant="link"
-          className="text-primary"
+      <div className="flex-center mt-4 gap-1 text-sm">
+        <p>
+          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+        </p>
+        <p
+          className="cursor-pointer text-primary"
           onClick={() => setIsLogin(!isLogin)}
         >
           {isLogin ? "Sign up" : "Sign in"}
-        </Button>
-      </p>
+        </p>
+      </div>
     </div>
   );
 };

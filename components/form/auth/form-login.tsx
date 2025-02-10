@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/lib/actions/authActions";
+import { loginCredentials } from "@/lib/actions/authActions";
 import { iFormLogin } from "@/types/types";
 import { useActionState, useState } from "react";
 import FormFieldAuth from "./form-field-auth";
@@ -12,10 +12,15 @@ const FormLogin = () => {
     password: "",
   });
 
-  const [state, formAction, isPending] = useActionState(login, null);
+  const [state, formAction, isPending] = useActionState(loginCredentials, null);
 
   return (
     <form action={formAction}>
+      {state?.message ? (
+        <div className="mb-4 bg-red-100 p-4 text-sm text-red-800" role="alert">
+          <span className="font-medium">{state?.message}</span>
+        </div>
+      ) : null}
       <FormFieldAuth
         type="login"
         state={state}

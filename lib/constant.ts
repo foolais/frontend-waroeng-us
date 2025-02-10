@@ -33,3 +33,5 @@ export const categoryFormDefaultValue: iFormCategory = {
   type: "",
   is_avaliable: true,
 };
+
+export const ProtectedRoutes = ["/admin", "/dashboard"];

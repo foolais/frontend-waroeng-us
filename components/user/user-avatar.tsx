@@ -1,16 +1,20 @@
+import { auth } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import User from "@/public/user.png";
 
-const UserAvatar = () => {
+const UserAvatar = async () => {
+  const session = await auth();
+
   return (
-    <div className="flex-center gap-3">
+    <div className="flex-center gap-2">
       <Avatar>
-        <AvatarImage src={User.src} alt="Avatar" />
-        <AvatarFallback>WU</AvatarFallback>
+        <AvatarImage src={session?.user?.image ?? ""} alt="Avatar" />
+        <AvatarFallback>WS</AvatarFallback>
       </Avatar>
-      <div className="hidden flex-col md:flex">
-        <p className="text-base font-semibold lg:text-lg">Waroeng Us</p>
-        <p className="text-span">Admin</p>
+      <div className="hidden flex-col sm:flex">
+        <p className="text-sm font-semibold capitalize text-gray-600">
+          {session?.user?.name}
+        </p>
+        <p className="text-span capitalize">{session?.user?.role}</p>
       </div>
     </div>
   );

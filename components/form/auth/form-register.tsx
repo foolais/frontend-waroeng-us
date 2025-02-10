@@ -1,6 +1,6 @@
 "use client";
 
-import { register } from "@/lib/actions/authActions";
+import { registerCredentials } from "@/lib/actions/authActions";
 import { iFormRegister } from "@/types/types";
 import { useActionState, useState } from "react";
 import FormFieldAuth from "./form-field-auth";
@@ -14,7 +14,10 @@ const FormRegister = () => {
     confirmPassword: "",
   });
 
-  const [state, formAction, isPending] = useActionState(register, null);
+  const [state, formAction, isPending] = useActionState(
+    registerCredentials,
+    null,
+  );
 
   return (
     <form action={formAction}>

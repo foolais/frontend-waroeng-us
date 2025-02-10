@@ -12,7 +12,7 @@ export const CreateUserSchema = object({
     .optional(),
   name: string()
     .min(2, "Name must be more than 2 character")
-    .max(40, "Name must be less than 40 character"),
+    .max(20, "Name must be less than 20 character"),
   email: string()
     .min(2, "Email must be more than 1 character")
     .email("Invalid email"),
@@ -55,7 +55,7 @@ export const UpdateUserSchema = object({
     .optional(),
   name: string()
     .min(2, "Name must be more than 2 character")
-    .max(40, "Name must be less than 40 character"),
+    .max(20, "Name must be less than 20 character"),
   email: string()
     .min(2, "Email must be more than 1 character")
     .email("Invalid email"),

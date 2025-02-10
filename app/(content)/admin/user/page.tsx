@@ -1,7 +1,7 @@
 import PathHeading from "@/components/header/path-heading";
 import UserTable from "@/components/table/user/user-table";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import UserAvatar from "@/components/user/user-avatar";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
@@ -18,9 +18,7 @@ const UserPage = () => {
           title="Users Page"
           description="See who's on your team and easily update their information."
         />
-        <Avatar>
-          <AvatarFallback>WS</AvatarFallback>
-        </Avatar>
+        <UserAvatar />
       </div>
       <div className="mt-4 rounded-xl bg-white p-6">
         <div className="flex justify-between">
