@@ -3,15 +3,13 @@ import { object, string, z } from "zod";
 export const CreateUserSchema = object({
   image: z
     .instanceof(File)
-    .refine((file) => file.size > 0, {
-      message: "Image is required",
-    })
     .refine((file) => file.size === 0 || file.type.startsWith("image/"), {
       message: "Only image files are allowed",
     })
     .refine((file) => file.size <= 5 * 1024 * 1024, {
       message: "Image must be less than 5MB",
-    }),
+    })
+    .optional(),
   name: string()
     .min(2, "Name must be more than 2 character")
     .max(40, "Name must be less than 40 character"),

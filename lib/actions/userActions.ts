@@ -9,12 +9,12 @@ import { iFormUser } from "@/types/types";
 import { Gender, Role } from "@prisma/client";
 
 export const createUser = async (
-  payload: iFormUser,
+  stateForm: iFormUser,
   prevState: unknown,
   formData: FormData,
 ) => {
-  if (payload && payload.image) {
-    formData.append("image", payload.image);
+  if (stateForm && stateForm.image && stateForm.image !== null) {
+    formData.append("image", stateForm.image);
   }
 
   const form = Object.fromEntries(formData.entries());
@@ -29,8 +29,6 @@ export const createUser = async (
     validatedFields.data;
   const hashedPassword = hashSync(password, 10);
 
-  console.log(validatedFields.data);
-
   const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser) {
     console.log("Email is already taken.");
@@ -39,36 +37,37 @@ export const createUser = async (
 
   let url: string | undefined;
 
-  try {
-    const uploadResponse = await put(image.name, image, {
-      access: "public",
-      multipart: true,
-    });
-    url = uploadResponse.url;
-  } catch (error) {
-    console.error("Image upload failed", error);
-    throw new Error("Failed to upload image.");
+  if (image && image.size > 0) {
+    try {
+      const uploadResponse = await put(image.name, image, {
+        access: "public",
+        multipart: true,
+      });
+      url = uploadResponse.url;
+    } catch (error) {
+      console.error("Image upload failed", error);
+      throw new Error("Failed to upload image.");
+    }
   }
+
+  const payload = {
+    image: url ?? null,
+    name,
+    gender: gender as Gender,
+    address,
+    phone,
+    email,
+    role: role as Role,
+    password: hashedPassword,
+    created_by_name: name,
+  };
 
   //   insert ke database
   try {
     await prisma.user.create({
-      data: {
-        image: url,
-        name,
-        gender: gender as Gender,
-        address,
-        phone,
-        email,
-        role: role as Role,
-        password: hashedPassword,
-        created_by_name: name,
-      },
+      data: payload,
     });
   } catch (error) {
-    if (url) {
-      await del(url);
-    }
     console.log(error);
     return { message: "Failed to create user" };
   }
@@ -105,11 +104,15 @@ export const updateUser = async (
 
   try {
     if (typeof image === "string") {
+      console.log("String");
       imagePath = data.image;
     } else if (image instanceof File && image.size > 0) {
+      console.log("File");
       if (data.image) {
+        console.log("Attempting to delete old image : ", data.image);
         try {
           await del(data.image);
+          console.log("old images deleted");
         } catch (deleteError) {
           console.warn("Failed to delete old image:", deleteError);
         }
@@ -127,6 +130,8 @@ export const updateUser = async (
     throw new Error("Failed to process image upload.");
   }
 
+  console.log(imagePath);
+
   try {
     await prisma.user.update({
       data: {
@@ -142,7 +147,6 @@ export const updateUser = async (
       },
       where: { id },
     });
-    await del(data.image);
   } catch (error) {
     if (imagePath) {
       try {
