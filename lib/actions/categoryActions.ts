@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { createCategorySchema } from "../zod/categoryZod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
 export const createCategory = async (
   prevState: unknown,
@@ -28,9 +29,11 @@ export const createCategory = async (
     return { message: "Category is already taken." };
   }
 
+  const session = await auth();
+
   try {
     await prisma.category.create({
-      data: { name, type, created_by_id: "cm6xw92to0008tkh8u3no1rmn" },
+      data: { name, type, created_by_id: session?.user.id },
     });
   } catch (error) {
     console.log(error);
@@ -50,9 +53,12 @@ export const getAllCategories = async () => {
         type: true,
         is_active: true,
         created_by: { select: { id: true, name: true } },
+        created_at: true,
         updated_by: { select: { id: true, name: true } },
+        updated_at: true,
       },
     });
+    console.log(categories);
     return categories.map((category, index) => ({
       no: index + 1,
       ...category,

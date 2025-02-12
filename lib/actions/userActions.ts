@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { iFormUser } from "@/types/types";
 import { Gender, Role } from "@prisma/client";
+import { auth } from "@/auth";
 
 export const createUser = async (
   stateForm: iFormUser,
@@ -104,10 +105,8 @@ export const updateUser = async (
 
   try {
     if (typeof image === "string") {
-      console.log("String");
       imagePath = data.image;
     } else if (image instanceof File && image.size > 0) {
-      console.log("File");
       if (data.image) {
         console.log("Attempting to delete old image : ", data.image);
         try {
@@ -130,7 +129,7 @@ export const updateUser = async (
     throw new Error("Failed to process image upload.");
   }
 
-  console.log(imagePath);
+  const session = await auth();
 
   try {
     await prisma.user.update({
@@ -143,7 +142,7 @@ export const updateUser = async (
         email,
         role: role as Role,
         // get from sessions
-        updated_by_name: name,
+        updated_by_name: session?.user?.name,
       },
       where: { id },
     });
