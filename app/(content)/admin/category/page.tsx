@@ -1,20 +1,23 @@
 import ContentHeader from "@/components/header/content-header";
 import CategoryTable from "@/components/table/category/category-table";
 import { Button } from "@/components/ui/button";
+import { metaDataConfig } from "@/lib/constant";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Category - Waroeng Us",
-  description: "Here you can manage your categories",
+  title: metaDataConfig.category.title + " - Waroeng Us",
+  description: metaDataConfig.category.description,
 };
 
 const CategoryPage = () => {
+  const { category: categoryConfig } = metaDataConfig;
+
   return (
     <main className="content-container">
       <ContentHeader
-        title="Category Page"
-        description="Here you can manage your categories"
+        title={categoryConfig.title}
+        description={categoryConfig.description}
       />
       <div className="mt-4 rounded-xl bg-white p-6">
         <div className="flex justify-between">

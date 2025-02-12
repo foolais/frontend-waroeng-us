@@ -1,16 +1,24 @@
 import NavBackButton from "@/components/button/nav-back-button";
-import FormCreateCategory from "@/components/form/category/form-create-category";
+import FormUpdateCategory from "@/components/form/category/form-update-category";
 import PathHeading from "@/components/header/path-heading";
-import { ArrowLeft } from "lucide-react";
+import { getCategoryById } from "@/lib/actions/categoryActions";
 import { metaDataConfig } from "@/lib/constant";
+import { ArrowLeft } from "lucide-react";
+import { notFound } from "next/navigation";
 
 export const metadata = {
-  title: metaDataConfig.category.create + " - Waroeng Us",
+  title: metaDataConfig.category.update + " - Waroeng Us",
   description: metaDataConfig.category.description,
 };
 
-const CreateUserPage = () => {
+const CategoryDetail = async ({ params }: { params: { id: string } }) => {
+  const { id } = await params;
+  const category = await getCategoryById(id);
+
+  if (!category) notFound();
+
   const { category: categoryConfig } = metaDataConfig;
+
   return (
     <main className="content-container">
       <div className="mb-6 flex items-center gap-2">
@@ -18,13 +26,13 @@ const CreateUserPage = () => {
           <ArrowLeft />
         </NavBackButton>
         <PathHeading
-          title={categoryConfig.create}
+          title={categoryConfig.update}
           description={categoryConfig.description}
         />
       </div>
-      <FormCreateCategory />
+      {category && <FormUpdateCategory category={category} />}
     </main>
   );
 };
 
-export default CreateUserPage;
+export default CategoryDetail;

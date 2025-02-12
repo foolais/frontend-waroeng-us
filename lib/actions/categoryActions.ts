@@ -25,8 +25,11 @@ export const createCategory = async (
   });
 
   if (existingCategory) {
-    console.log("Category is already taken.");
-    return { message: "Category is already taken." };
+    return {
+      success: false,
+      message: "Category is already taken.",
+      error: { name: ["Category is already taken."] },
+    };
   }
 
   const session = await auth();
@@ -37,7 +40,59 @@ export const createCategory = async (
     });
   } catch (error) {
     console.log(error);
-    return { message: "Failed to create category" };
+    return { success: false, message: "Failed to create category" };
+  }
+
+  revalidatePath("/admin/category");
+  redirect("/admin/category");
+};
+
+export const updateCategory = async (
+  id: string,
+  prevState: unknown,
+  formData: FormData,
+) => {
+  const form = Object.fromEntries(formData.entries());
+  const validatedFields = createCategorySchema.safeParse(form);
+
+  if (!validatedFields.success) {
+    return { error: validatedFields.error.flatten().fieldErrors };
+  }
+
+  const { name, type } = validatedFields.data;
+
+  const data = await getCategoryById(id);
+  if (!data) return { success: false, message: "Category not found" };
+
+  const existingCategory = await prisma.category.findFirst({
+    where: { name, type },
+  });
+
+  // Validate fields by existing data
+  if (existingCategory && existingCategory.name === data.name)
+    return {
+      success: false,
+      message: "Category cannot be the same",
+      error: { name: ["Category cannot be the same."] },
+    };
+  else if (existingCategory) {
+    return {
+      success: false,
+      message: "Category is already taken.",
+      error: { name: ["Category is already taken."] },
+    };
+  }
+
+  const session = await auth();
+
+  try {
+    await prisma.category.update({
+      data: { name, type, updated_by_id: session?.user.id },
+      where: { id },
+    });
+  } catch (error) {
+    console.log(error);
+    return { success: false, message: "Failed to update category" };
   }
 
   revalidatePath("/admin/category");
@@ -58,7 +113,6 @@ export const getAllCategories = async () => {
         updated_at: true,
       },
     });
-    console.log(categories);
     return categories.map((category, index) => ({
       no: index + 1,
       ...category,

@@ -22,6 +22,7 @@ const FormUpdateUser = ({ user }: { user: iFormUser }) => {
         className="form-grid max-h-[60vh] sm:max-h-[77vh]"
       >
         <FormFieldUser
+          state={state}
           type="update"
           formValues={formValues}
           setFormValues={setFormValues}

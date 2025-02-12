@@ -6,6 +6,11 @@ import { metaDataConfig } from "@/lib/constant";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 
+export const metadata = {
+  title: metaDataConfig.category.detail + " - Waroeng Us",
+  description: metaDataConfig.category.description,
+};
+
 const CategoryDetail = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
   const category = await getCategoryById(id);
@@ -21,7 +26,7 @@ const CategoryDetail = async ({ params }: { params: { id: string } }) => {
           <ArrowLeft />
         </NavBackButton>
         <PathHeading
-          title={`${categoryConfig.title} Details`}
+          title={categoryConfig.detail}
           description={categoryConfig.description}
         />
       </div>

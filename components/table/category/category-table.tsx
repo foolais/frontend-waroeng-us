@@ -29,7 +29,7 @@ const renderRow = (item: iCategoryTableData) => {
           name={item.name}
           routes={[
             `/admin/category/${item.id}`,
-            `/admin/user/update/${""}`,
+            `/admin/category/update/${item.id}`,
             "",
           ]}
         />

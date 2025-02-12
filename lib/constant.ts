@@ -39,6 +39,9 @@ export const ProtectedRoutes = ["/admin", "/dashboard"];
 export const metaDataConfig = {
   category: {
     title: "Category",
+    detail: "Detail Category",
+    create: "Create Category",
+    update: "Update Category",
     description: "Here you can manage your categories",
   },
 };
