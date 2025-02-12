@@ -52,6 +52,7 @@ export interface iFormRegisterState {
     confirmPassword?: string[];
   };
   message?: string;
+  success?: boolean;
 }
 
 export interface iFormLogin {
@@ -65,6 +66,7 @@ export interface iFormLoginState {
     password?: string[];
   };
   message?: string;
+  success?: boolean;
 }
 
 export interface iFormUser {

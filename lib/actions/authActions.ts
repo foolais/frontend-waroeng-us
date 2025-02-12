@@ -23,17 +23,27 @@ export const registerCredentials = async (
 
   const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser) {
-    console.log("Email is already taken.");
-    return { message: "Email is already taken." };
+    return {
+      message: "Email is already taken.",
+      error: { email: ["Email is already taken."] },
+    };
   }
 
   const payload = {
     name,
     email,
     password: hashedPassword,
+    created_by_name: name,
   };
 
-  console.log(payload);
+  try {
+    await prisma.user.create({
+      data: payload,
+    });
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const loginCredentials = async (

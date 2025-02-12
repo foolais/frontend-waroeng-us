@@ -3,6 +3,7 @@
 import FormLogin from "@/components/form/auth/form-login";
 import FormRegister from "@/components/form/auth/form-register";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -13,7 +14,16 @@ const AuthPage = () => {
         {isLogin ? "Welcome Back" : "Create an Account"}
       </h2>
       <div className="mx-auto w-3/4 md:w-5/6 lg:w-4/5 xl:w-1/2">
-        {isLogin ? <FormLogin /> : <FormRegister />}
+        {isLogin ? (
+          <FormLogin />
+        ) : (
+          <FormRegister
+            onSuccess={() => {
+              setIsLogin(!isLogin);
+              toast.success("Account created successfully");
+            }}
+          />
+        )}
       </div>
       <div className="flex-center mt-4 gap-1 text-sm">
         <p>
