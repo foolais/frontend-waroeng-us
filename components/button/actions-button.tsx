@@ -21,18 +21,31 @@ import {
   AlertDialogTitle,
 } from "../ui/alert-dialog";
 import { deleteUser } from "@/lib/actions/userActions";
+import { toast } from "sonner";
+
+type EntityType = "user" | "category" | "menu";
 
 interface iProps {
   id: string;
   name: string;
   routes: [string, string, string];
+  type: EntityType;
 }
 
-const ActionsButton = ({ id, name, routes }: iProps) => {
+const ActionsButton = ({ id, name, routes, type }: iProps) => {
   const router = useRouter();
 
   const handleDelete = async () => {
-    await deleteUser(id);
+    try {
+      if (type === "user") {
+        await deleteUser(id);
+        toast.success("User Deleted successfully");
+      } else {
+        toast.warning("Delete function not implemented");
+      }
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
   };
 
   return (
@@ -62,9 +75,7 @@ const ActionsButton = ({ id, name, routes }: iProps) => {
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>
-                  Are you sure delete user {name}?
-                </AlertDialogTitle>
+                <AlertDialogTitle>Are you sure delete {name}?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete
                   your account

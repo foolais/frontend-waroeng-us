@@ -36,6 +36,7 @@ const renderRow = (item: iUserTableData) => {
       </td>
       <td className="p-2">
         <ActionsButton
+          type="user"
           id={item.id}
           name={item.name}
           routes={[

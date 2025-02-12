@@ -216,10 +216,14 @@ export const getUserById = async (id: string) => {
 };
 
 export const deleteUser = async (id: string) => {
+  const session = await auth();
+  if (session?.user?.id === id) throw new Error("You can't delete yourself");
+
   try {
     await prisma.user.delete({ where: { id } });
     revalidatePath("/admin/user");
   } catch (error) {
     console.error("Error deleting user:", error);
+    throw new Error("Something went wrong");
   }
 };
