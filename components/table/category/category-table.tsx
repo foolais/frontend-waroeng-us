@@ -26,7 +26,11 @@ const renderRow = (item: iCategoryTableData) => {
         <ActionsButton
           id=""
           name="Categories"
-          routes={[`/admin/user/${""}`, `/admin/user/update/${""}`, ""]}
+          routes={[
+            `/admin/category/${item.id}`,
+            `/admin/user/update/${""}`,
+            "",
+          ]}
         />
       </td>
     </tr>

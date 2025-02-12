@@ -109,7 +109,7 @@ export interface iFormCategory {
   id: string;
   name: string;
   type: string;
-  is_avaliable: boolean;
+  is_active: boolean;
 }
 
 export interface iFormCategoryState {

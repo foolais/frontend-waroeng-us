@@ -67,3 +67,28 @@ export const getAllCategories = async () => {
     console.log(error);
   }
 };
+
+export const getCategoryById = async (id: string) => {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        type: true,
+        is_active: true,
+        created_by: { select: { id: true, name: true } },
+        created_at: true,
+        updated_by: { select: { id: true, name: true } },
+        updated_at: true,
+      },
+    });
+
+    if (!category) return null;
+
+    return category;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
+};

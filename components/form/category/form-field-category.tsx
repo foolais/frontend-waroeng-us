@@ -26,6 +26,7 @@ const FormFieldCategory = ({
         value={formValues.name}
         setFormValues={setFormValues ?? (() => {})}
         error={state?.error?.name}
+        disabled={isDetail}
       />
       <FormFieldSelect<iFormCategory>
         isRequired
