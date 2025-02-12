@@ -22,6 +22,7 @@ import {
 } from "../ui/alert-dialog";
 import { deleteUser } from "@/lib/actions/userActions";
 import { toast } from "sonner";
+import { deleteCategory } from "@/lib/actions/categoryActions";
 
 type EntityType = "user" | "category" | "menu";
 
@@ -40,6 +41,9 @@ const ActionsButton = ({ id, name, routes, type }: iProps) => {
       if (type === "user") {
         await deleteUser(id);
         toast.success("User Deleted successfully");
+      } else if (type === "category") {
+        await deleteCategory(id);
+        toast.success("Category Deleted successfully");
       } else {
         toast.warning("Delete function not implemented");
       }

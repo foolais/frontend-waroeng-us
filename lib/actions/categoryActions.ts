@@ -146,3 +146,13 @@ export const getCategoryById = async (id: string) => {
     return null;
   }
 };
+
+export const deleteCategory = async (id: string) => {
+  try {
+    await prisma.category.delete({ where: { id } });
+    revalidatePath("/admin/category");
+  } catch (error) {
+    console.error("Error deleting category:", error);
+    throw new Error("Something went wrong");
+  }
+};
