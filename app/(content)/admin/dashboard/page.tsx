@@ -1,4 +1,4 @@
-import PathHeading from "@/components/header/path-heading";
+import ContentHeader from "@/components/header/content-header";
 
 export const metadata = {
   title: "Dashboard - Waroeng Us",
@@ -8,7 +8,7 @@ export const metadata = {
 const DashboardPage = () => {
   return (
     <main className="content-container">
-      <PathHeading
+      <ContentHeader
         title="Dashboard Page"
         description="Get a quick overview of how your business is doing"
       />

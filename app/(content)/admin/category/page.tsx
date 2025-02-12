@@ -1,4 +1,4 @@
-import PathHeading from "@/components/header/path-heading";
+import ContentHeader from "@/components/header/content-header";
 import CategoryTable from "@/components/table/category/category-table";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -6,15 +6,15 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Category - Waroeng Us",
-  description: "Get a quick overview of how your business is doing",
+  description: "Here you can manage your categories",
 };
 
 const CategoryPage = () => {
   return (
     <main className="content-container">
-      <PathHeading
+      <ContentHeader
         title="Category Page"
-        description="Get a quick overview of how your business is doing"
+        description="Here you can manage your categories"
       />
       <div className="mt-4 rounded-xl bg-white p-6">
         <div className="flex justify-between">

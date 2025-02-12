@@ -1,7 +1,6 @@
-import PathHeading from "@/components/header/path-heading";
+import ContentHeader from "@/components/header/content-header";
 import UserTable from "@/components/table/user/user-table";
 import { Button } from "@/components/ui/button";
-import UserAvatar from "@/components/user/user-avatar";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
@@ -13,13 +12,10 @@ export const metadata = {
 const UserPage = () => {
   return (
     <main className="w-full p-4 md:px-6">
-      <div className="flex items-center justify-between">
-        <PathHeading
-          title="Users Page"
-          description="See who's on your team and easily update their information."
-        />
-        <UserAvatar />
-      </div>
+      <ContentHeader
+        title="Users Page"
+        description="See who's on your team and easily update their information."
+      />
       <div className="mt-4 rounded-xl bg-white p-6">
         <div className="flex justify-between">
           <h2 className="text-sub-heading">All Users</h2>
