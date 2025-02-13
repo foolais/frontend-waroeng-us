@@ -1,8 +1,6 @@
 import ContentHeader from "@/components/header/content-header";
+import TableHeader from "@/components/table/table-header";
 import UserTable from "@/components/table/user/user-table";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import Link from "next/link";
 
 export const metadata = {
   title: "User - Waroeng Us",
@@ -16,17 +14,9 @@ const UserPage = () => {
         title="Users Page"
         description="See who's on your team and easily update their information."
       />
-      <div className="mt-4 rounded-xl bg-white p-6">
-        <div className="flex justify-between">
-          <h2 className="text-sub-heading">All Users</h2>
-          <Button size={"icon"} asChild>
-            <Link href="/admin/user/create">
-              <Plus />
-            </Link>
-          </Button>
-        </div>
+      <TableHeader title="All Users" routes={["/admin/user/create"]}>
         <UserTable />
-      </div>
+      </TableHeader>
     </main>
   );
 };
