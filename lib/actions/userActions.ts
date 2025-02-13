@@ -141,7 +141,6 @@ export const updateUser = async (
         phone,
         email,
         role: role as Role,
-        // get from sessions
         updated_by_name: session?.user?.name,
       },
       where: { id },

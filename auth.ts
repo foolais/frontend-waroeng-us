@@ -23,7 +23,7 @@ declare module "next-auth" {
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 12 * 60 * 60 },
   providers: [
     CredentialsProvider({
       credentials: {

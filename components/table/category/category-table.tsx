@@ -16,7 +16,7 @@ const renderRow = (item: iCategoryTableData) => {
       <td className="p-2 text-sm">
         <Badge text={item.type} variant="default" />
       </td>
-      <td className="flex-center flex-col gap-2 p-2 text-sm md:flex-row">
+      <td className="flex-center h-12 flex-col gap-2 text-sm md:flex-row">
         <Switch id="status-category" checked={item.is_active} />
         <Label htmlFor="status-category">
           {item.is_active ? "Active" : "Inactive"}
