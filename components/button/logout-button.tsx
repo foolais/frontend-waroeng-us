@@ -12,6 +12,7 @@ const LogoutButton = ({ isMobile = false }: { isMobile?: boolean }) => {
     <button
       onClick={() => logoutCredentials().then(() => router.push("/auth"))}
       className="flex w-full items-center gap-4 rounded-xl p-2 transition hover:bg-background hover:opacity-80"
+      aria-label="logout"
     >
       <LogOut className="h-5 w-5" color="hsl(var(--destructive))" />
       <span

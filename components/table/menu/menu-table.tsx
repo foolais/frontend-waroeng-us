@@ -26,7 +26,11 @@ const renderRow = (item: iMenuTableData) => {
       </td>
       <td className="p-2 text-sm">{item.price}</td>
       <td className="flex-center h-14 flex-col gap-2 text-sm md:flex-row">
-        <Switch id="status-category" checked={item.is_available} />
+        <Switch
+          id="status-category"
+          checked={item.is_available}
+          aria-label="switch"
+        />
         <Label htmlFor="status-category">
           {item.is_available ? "Available" : "Empty"}
         </Label>

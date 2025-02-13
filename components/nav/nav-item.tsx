@@ -17,6 +17,7 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
             <li key={index}>
               <Link
                 href={routes}
+                aria-label={name}
                 className={cn(
                   "flex items-center gap-4 rounded-xl p-2 transition",
                   path?.startsWith(routes)

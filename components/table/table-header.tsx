@@ -17,7 +17,7 @@ const TableHeader = ({
       <div className="flex justify-between">
         <h2 className="text-sub-heading">{title}</h2>
         <Button size={"icon"} asChild>
-          <Link href={routes[0]}>
+          <Link href={routes[0]} aria-label="add">
             <Plus />
           </Link>
         </Button>
