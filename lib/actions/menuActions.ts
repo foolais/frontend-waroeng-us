@@ -89,3 +89,30 @@ export const getAllMenu = async () => {
     console.error(error);
   }
 };
+
+export const getMenuById = async (id: string) => {
+  try {
+    const menu = await prisma.menu.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        image: true,
+        name: true,
+        price: true,
+        category: { select: { id: true, name: true } },
+        created_by: { select: { id: true, name: true } },
+        created_at: true,
+        updated_by: { select: { id: true, name: true } },
+        updated_at: true,
+        is_available: true,
+      },
+    });
+
+    if (!menu) return null;
+
+    return menu;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
