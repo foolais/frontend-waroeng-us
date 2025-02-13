@@ -156,3 +156,20 @@ export const deleteCategory = async (id: string) => {
     throw new Error("Something went wrong");
   }
 };
+
+export const getCategoryByType = async (type: string) => {
+  try {
+    const categories = await prisma.category.findMany({
+      where: { type, is_active: true },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    return categories;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};

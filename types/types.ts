@@ -126,3 +126,27 @@ export interface iCategoryTableData {
   created_by: { id: string; name: string } | null;
   updated_by: { id: string; name: string } | null;
 }
+
+export interface iListCategories {
+  id: string;
+  name: string;
+}
+
+export interface iFormMenu {
+  id: string;
+  name: string;
+  price: string;
+  category: string | null;
+  image: File | string | null;
+}
+
+export interface iFormMenuState {
+  success?: boolean;
+  error?: {
+    name?: string[];
+    price?: string[];
+    category?: string[];
+    image?: string[];
+  };
+  message?: string;
+}

@@ -1,21 +1,23 @@
-import NavBackButton from "@/components/button/nav-back-button";
-import PathHeading from "@/components/header/path-heading";
-import { ArrowLeft } from "lucide-react";
+import FormCreateMenu from "@/components/form/menu/form-create-menu";
+import ContentHeader from "@/components/header/content-header";
+import { metaDataConfig } from "@/lib/constant";
+
+const { menu: menuConfig } = metaDataConfig;
 
 export const metadata = {
-  title: "Create Menu - Waroeng Us",
-  description: "Create a new menu",
+  title: menuConfig.create + " - Waroeng Us",
+  description: menuConfig.description,
 };
 
 const CreateMenuPage = () => {
   return (
     <main className="content-container">
-      <div className="mb-6 flex items-center gap-2">
-        <NavBackButton route="/admin/menu">
-          <ArrowLeft />
-        </NavBackButton>
-        <PathHeading title="Create Menu" description="Create a new menu" />
-      </div>
+      <ContentHeader
+        title={menuConfig.create}
+        description={menuConfig.description}
+        routesBack="/admin/menu"
+      />
+      <FormCreateMenu />
     </main>
   );
 };

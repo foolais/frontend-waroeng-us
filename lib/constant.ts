@@ -1,4 +1,4 @@
-import { iFormCategory, iFormUser, iNavItem } from "@/types/types";
+import { iFormCategory, iFormMenu, iFormUser, iNavItem } from "@/types/types";
 import {
   Layers2,
   LayoutDashboard,
@@ -32,6 +32,14 @@ export const categoryFormDefaultValue: iFormCategory = {
   name: "",
   type: "",
   is_active: true,
+};
+
+export const menuFormDefaultValue: iFormMenu = {
+  id: "",
+  name: "",
+  price: "",
+  category: null,
+  image: null,
 };
 
 export const ProtectedRoutes = ["/admin", "/dashboard"];

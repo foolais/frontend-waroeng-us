@@ -18,7 +18,7 @@ const FormFieldUser = ({
 
   return (
     <>
-      <FormFieldImage
+      <FormFieldImage<iFormUser>
         error={state?.error?.image}
         setFormValues={setFormValues ?? (() => {})}
         image={formValues?.image}

@@ -8,10 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { iFormUser, iPropsInput, iPropsSelect } from "@/types/types";
+import { iPropsInput, iPropsSelect } from "@/types/types";
 import Image from "next/image";
 import { Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export const FormFieldInput = <T,>(props: iPropsInput<T>) => {
   const {
@@ -98,7 +99,7 @@ export const FormFieldSelect = <T,>(props: iPropsSelect<T>) => {
   );
 };
 
-export const FormFieldImage = ({
+export const FormFieldImage = <T,>({
   error,
   isRequired,
   setFormValues,
@@ -107,7 +108,7 @@ export const FormFieldImage = ({
 }: {
   error?: string[];
   isRequired?: boolean;
-  setFormValues: React.Dispatch<React.SetStateAction<iFormUser>>;
+  setFormValues: React.Dispatch<React.SetStateAction<T>>;
   image?: File | string | null;
   disabled?: boolean;
 }) => {
@@ -123,11 +124,14 @@ export const FormFieldImage = ({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file?.size > 5 * 1024 * 1024) {
-      // add alert in future
-      return alert("Image must be less than 5MB");
-    }
+      toast.warning("Image must be less than 5MB");
 
-    if (file && file?.size < 5 * 1024 * 1024) {
+      // set file input value to empty
+      if (fileInputRef.current)
+        (fileInputRef.current as HTMLInputElement).value = "";
+
+      return;
+    } else if (file && file?.size < 5 * 1024 * 1024) {
       setFormValues((prev) => ({ ...prev, image: file }));
       const reader = new FileReader();
       reader.onload = () => {
