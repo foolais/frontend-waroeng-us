@@ -44,4 +44,11 @@ export const metaDataConfig = {
     update: "Update Category",
     description: "Here you can manage your categories",
   },
+  menu: {
+    title: "Menu",
+    detail: "Detail Menu",
+    create: "Create Menu",
+    update: "Update Menu",
+    description: "Here you can manage your menus",
+  },
 };

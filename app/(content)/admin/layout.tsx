@@ -7,9 +7,9 @@ interface iProps {
 
 const AdminPage = ({ children }: iProps) => {
   return (
-    <main className="max-w-screen flex h-screen max-h-screen w-screen overflow-hidden">
+    <main className="flex h-screen w-full overflow-hidden">
       <Sidebar />
-      <div className="primary-scrollbar flex flex-1 flex-col overflow-scroll bg-background sm:flex-row">
+      <div className="flex flex-1 flex-col bg-background sm:flex-row">
         <Header />
         {children}
       </div>

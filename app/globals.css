@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 @layer base {
@@ -99,7 +104,7 @@ body {
   }
   /* * END FORM */
   .content-container {
-    @apply w-full p-4 md:px-6;
+    @apply primary-scrollbar h-full w-full overflow-y-scroll p-4 md:px-6;
   }
 
   .required-field::after {

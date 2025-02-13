@@ -14,8 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <main>{children}</main>
+      <body className="flex h-screen max-h-screen overflow-hidden">
+        <main className="flex-1 overflow-y-auto">{children}</main>
         <Toaster />
       </body>
     </html>
