@@ -2,7 +2,15 @@ import NavBackButton from "@/components/button/nav-back-button";
 import FormDetailUser from "@/components/form/user/form-detail-user";
 import PathHeading from "@/components/header/path-heading";
 import { getUserById } from "@/lib/actions/userActions";
+import { metaDataConfig } from "@/lib/constant";
 import { ArrowLeft } from "lucide-react";
+
+const { user: userConfig } = metaDataConfig;
+
+export const metadata = {
+  title: userConfig.title + " - Waroeng Us",
+  description: userConfig.description,
+};
 
 const UserDetail = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
@@ -15,8 +23,8 @@ const UserDetail = async ({ params }: { params: { id: string } }) => {
           <ArrowLeft />
         </NavBackButton>
         <PathHeading
-          title="User Details"
-          description="See who's on your team and easily update their information."
+          title={userConfig.detail}
+          description={userConfig.description}
         />
       </div>
       {user && <FormDetailUser user={user} />}

@@ -37,6 +37,13 @@ export const categoryFormDefaultValue: iFormCategory = {
 export const ProtectedRoutes = ["/admin", "/dashboard"];
 
 export const metaDataConfig = {
+  user: {
+    title: "User",
+    detail: "Detail User",
+    create: "Create User",
+    update: "Update User",
+    description: "Here you can manage your users",
+  },
   category: {
     title: "Category",
     detail: "Detail Category",
