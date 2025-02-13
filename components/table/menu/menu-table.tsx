@@ -1,48 +1,55 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+"use server";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Table from "../table";
 import Badge from "@/components/badge/badge";
 import ActionsButton from "@/components/button/actions-button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { getAllMenu } from "@/lib/actions/menuActions";
+import { iMenuTableData } from "@/types/types";
 
-const availabilityWidth = "w-[80px]";
-const categoryWidth = "w-[100px]";
-const actionWidth = "w-[40px]";
-
-const renderRow = () => {
+const renderRow = (item: iMenuTableData) => {
   return (
-    <tr className="table-content">
-      <td className="p-2 text-center text-sm">100</td>
+    <tr key={item.id} className="table-content">
+      <td className="p-2 text-center text-sm">{item.no}</td>
       <td className="p-2">
         <Avatar>
-          {/* <AvatarImage src={item.image} alt="Avatar" /> */}
+          <AvatarImage src={item.image ?? ""} alt="Avatar" />
           <AvatarFallback>WS</AvatarFallback>
         </Avatar>
       </td>
-      <td className="p-2 text-sm">Nama</td>
+      <td className="p-2 text-sm">{item.name}</td>
 
-      <td className={`${categoryWidth} hidden p-2 text-sm lg:table-cell`}>
-        <Badge text="Makanan" variant="default" className={categoryWidth} />
+      <td className="hidden p-2 text-sm lg:table-cell">
+        <Badge text={item.category.name} variant="default" />
       </td>
-      <td className="p-2 text-sm">2000</td>
-      <td
-        className={`${availabilityWidth} flex-center flex-col gap-2 p-2 text-sm md:flex-row`}
-      >
-        <Switch id="status-category" checked={true} />
-        <Label htmlFor="status-category">Empty</Label>
+      <td className="p-2 text-sm">{item.price}</td>
+      <td className="flex-center h-14 flex-col gap-2 text-sm md:flex-row">
+        <Switch id="status-category" checked={item.is_available} />
+        <Label htmlFor="status-category">
+          {item.is_available ? "Available" : "Empty"}
+        </Label>
       </td>
       <td className="p-2">
         <ActionsButton
-          id=""
+          type="menu"
+          id={item.id}
           name="Menus"
-          routes={[`/admin/user/${""}`, `/admin/user/update/${""}`, ""]}
+          routes={[
+            `/admin/menu/${item.id}`,
+            `/admin/menu/update/${item.id}`,
+            "",
+          ]}
         />
       </td>
     </tr>
   );
 };
 
-const MenuTable = () => {
+const MenuTable = async () => {
+  const menus = await getAllMenu();
+
   const columns = [
     { header: "No", accessor: "no", className: "w-[40px]" },
     { header: "Image", accessor: "image", className: "w-[70px]" },
@@ -51,18 +58,18 @@ const MenuTable = () => {
     {
       header: "Category",
       accessor: "category",
-      className: `${categoryWidth} hidden lg:table-cell  text-center`,
+      className: "w-[100px] hidden lg:table-cell  text-center",
     },
     { header: "Price", accessor: "price" },
     {
       header: "Availability",
       accessor: "availability",
-      className: `${availabilityWidth} text-center`,
+      className: "w-[100px] text-center",
     },
     {
       header: "",
       accessor: "actions",
-      className: `${actionWidth}  text-center`,
+      className: "w-[40px] text-center",
     },
   ];
 
@@ -70,7 +77,7 @@ const MenuTable = () => {
     <Table
       columns={columns}
       renderRow={renderRow as (item: unknown) => React.ReactNode}
-      data={Array.from({ length: 10 }, (_, index) => index + 1)}
+      data={menus as iMenuTableData[]}
     />
   );
 };

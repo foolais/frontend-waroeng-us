@@ -56,9 +56,36 @@ export const createMenu = async (
     await prisma.menu.create({ data: payload });
   } catch (error) {
     console.error(error);
-    return { success: false, message: "Failed to upload image." };
+    return { success: false, message: "Something went wrong" };
   }
 
   revalidatePath("/admin/menu");
   redirect("/admin/menu");
+};
+
+export const getAllMenu = async () => {
+  try {
+    const menus = await prisma.menu.findMany({
+      select: {
+        id: true,
+        image: true,
+        name: true,
+        price: true,
+        category: { select: { id: true, name: true } },
+        created_by: { select: { id: true, name: true } },
+        created_at: true,
+        updated_by: { select: { id: true, name: true } },
+        updated_at: true,
+        is_available: true,
+      },
+    });
+    const data = menus.map((menu, index) => ({
+      no: index + 1,
+      ...menu,
+      price: menu.price.toString(),
+    }));
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 };

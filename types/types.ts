@@ -150,3 +150,15 @@ export interface iFormMenuState {
   };
   message?: string;
 }
+
+export interface iMenuTableData {
+  id: string;
+  no: number;
+  name: string;
+  price: string;
+  category: { id: string; name: string };
+  is_available: boolean;
+  image: string | null;
+  created_by: { id: string; name: string } | null;
+  updated_by: { id: string; name: string } | null;
+}
