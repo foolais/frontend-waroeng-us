@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { getAllMenu } from "@/lib/actions/menuActions";
 import { iMenuTableData } from "@/types/types";
+import EmptyTable from "../empty-table";
 
 const renderRow = (item: iMenuTableData) => {
   return (
@@ -76,6 +77,9 @@ const MenuTable = async () => {
       className: "w-[40px] text-center",
     },
   ];
+
+  if (menus && menus.length == 0)
+    return <EmptyTable text="No menu items available." />;
 
   return (
     <Table

@@ -7,6 +7,7 @@ import Badge from "@/components/badge/badge";
 import { Switch } from "@/components/ui/switch";
 import ActionsButton from "@/components/button/actions-button";
 import { Label } from "@/components/ui/label";
+import EmptyTable from "../empty-table";
 
 const renderRow = (item: iCategoryTableData) => {
   return (
@@ -52,6 +53,10 @@ const CategoryTable = async () => {
     },
     { header: "", accessor: "action", className: "w-[40px]" },
   ];
+
+  if (categories && categories.length == 0)
+    return <EmptyTable text="No category items available." />;
+
   return (
     <Table
       columns={columns}

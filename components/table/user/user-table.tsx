@@ -5,6 +5,7 @@ import Table from "../table";
 import { getAllUsers } from "@/lib/actions/userActions";
 import Badge from "@/components/badge/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import EmptyTable from "../empty-table";
 
 interface iUserTableData {
   id: string;
@@ -66,6 +67,9 @@ const UserTable = async () => {
     { header: "Role", accessor: "role", className: `w-[70px]  text-center` },
     { header: "", accessor: "actions", className: `w-[40px]  text-center` },
   ];
+
+  if (users && users.length == 0)
+    return <EmptyTable text="No user items available." />;
 
   return (
     <Table
