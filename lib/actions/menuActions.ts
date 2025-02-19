@@ -196,3 +196,13 @@ export const getMenuById = async (id: string) => {
     return null;
   }
 };
+
+export const deleteMenu = async (id: string) => {
+  try {
+    await prisma.menu.delete({ where: { id } });
+    revalidatePath("/admin/menu");
+  } catch (error) {
+    console.error("Error deleting category", error);
+    throw new Error("Something went wrong");
+  }
+};

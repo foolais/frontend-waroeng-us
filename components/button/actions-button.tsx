@@ -23,6 +23,7 @@ import {
 import { deleteUser } from "@/lib/actions/userActions";
 import { toast } from "sonner";
 import { deleteCategory } from "@/lib/actions/categoryActions";
+import { deleteMenu } from "@/lib/actions/menuActions";
 
 type EntityType = "user" | "category" | "menu";
 
@@ -44,6 +45,9 @@ const ActionsButton = ({ id, name, routes, type }: iProps) => {
       } else if (type === "category") {
         await deleteCategory(id);
         toast.success("Category Deleted successfully");
+      } else if (type === "menu") {
+        await deleteMenu(id);
+        toast.success("Menu Deleted successfully");
       } else {
         toast.warning("Delete function not implemented");
       }
