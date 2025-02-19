@@ -24,11 +24,7 @@ const FormCreateMenu = () => {
 
   return (
     <div className="form-container mt-4">
-      <form
-        id="menu-form"
-        action={formAction}
-        className="form-grid max-h-[70vh] sm:max-h-[77vh]"
-      >
+      <form id="menu-form" action={formAction} className="form-menu-container">
         <FormFieldMenu
           state={state}
           setFormValues={setFormValues}

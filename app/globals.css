@@ -102,6 +102,10 @@ body {
   .form-field-error {
     @apply mt-2 text-sm text-red-500;
   }
+
+  .form-menu-container {
+    @apply form-grid max-h-[70vh] sm:max-h-[77vh];
+  }
   /* * END FORM */
   .content-container {
     @apply primary-scrollbar h-full w-full overflow-y-scroll p-4 md:px-6;

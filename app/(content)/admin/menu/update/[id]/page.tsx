@@ -24,7 +24,7 @@ const UpdateMenuPage = async ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <main className="content-container">
+    <main className="content-container mt-4">
       <ContentHeader
         title={menuConfig.update}
         description={menuConfig.description}

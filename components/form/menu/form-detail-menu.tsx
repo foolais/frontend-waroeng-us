@@ -9,7 +9,7 @@ const FormDetailMenu = ({ menu }: { menu: iFormMenu }) => {
 
   return (
     <div className="form-container mt-4">
-      <form id="menu-form" className="form-grid max-h-[70vh] sm:max-h-[77vh]">
+      <form id="menu-form" className="form-menu-container">
         <FormFieldMenu
           setFormValues={setFormValues}
           type="detail"
