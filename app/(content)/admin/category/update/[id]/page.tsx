@@ -1,14 +1,14 @@
-import NavBackButton from "@/components/button/nav-back-button";
 import FormUpdateCategory from "@/components/form/category/form-update-category";
-import PathHeading from "@/components/header/path-heading";
+import ContentHeader from "@/components/header/content-header";
 import { getCategoryById } from "@/lib/actions/categoryActions";
 import { metaDataConfig } from "@/lib/constant";
-import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 
+const { category: categoryConfig } = metaDataConfig;
+
 export const metadata = {
-  title: metaDataConfig.category.update + " - Waroeng Us",
-  description: metaDataConfig.category.description,
+  title: categoryConfig.update + " - Waroeng Us",
+  description: categoryConfig.description,
 };
 
 const CategoryDetail = async ({ params }: { params: { id: string } }) => {
@@ -21,15 +21,12 @@ const CategoryDetail = async ({ params }: { params: { id: string } }) => {
 
   return (
     <main className="content-container">
-      <div className="mb-6 flex items-center gap-2">
-        <NavBackButton route="/admin/category">
-          <ArrowLeft />
-        </NavBackButton>
-        <PathHeading
-          title={categoryConfig.update}
-          description={categoryConfig.description}
-        />
-      </div>
+      <ContentHeader
+        title={categoryConfig.update}
+        description={categoryConfig.description}
+        routesBack="/admin/category"
+      />
+
       {category && <FormUpdateCategory category={category} />}
     </main>
   );

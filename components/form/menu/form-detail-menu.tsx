@@ -8,7 +8,7 @@ const FormDetailMenu = ({ menu }: { menu: iFormMenu }) => {
   const [formValues, setFormValues] = useState<iFormMenu>(menu);
 
   return (
-    <div className="form-container mt-4">
+    <div className="form-container">
       <form id="menu-form" className="form-menu-container">
         <FormFieldMenu
           setFormValues={setFormValues}

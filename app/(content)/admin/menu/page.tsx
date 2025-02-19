@@ -3,14 +3,14 @@ import MenuTable from "@/components/table/menu/menu-table";
 import TableHeader from "@/components/table/table-header";
 import { metaDataConfig } from "@/lib/constant";
 
+const { menu: menuConfig } = metaDataConfig;
+
 export const metadata = {
-  title: metaDataConfig.menu.title + " - Waroeng Us",
-  description: metaDataConfig.menu.description,
+  title: menuConfig.title + " - Waroeng Us",
+  description: menuConfig.description,
 };
 
 const MenuPage = () => {
-  const { menu: menuConfig } = metaDataConfig;
-
   return (
     <main className="content-container">
       <ContentHeader

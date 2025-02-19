@@ -8,11 +8,8 @@ const FormDetailCategory = ({ category }: { category: iFormCategory }) => {
   const [formValues, setFormValues] = useState<iFormCategory>(category);
 
   return (
-    <div>
-      <form
-        id="category-form"
-        className="form-grid max-h-[60vh] sm:max-h-[77vh]"
-      >
+    <div className="form-container">
+      <form id="category-form" className="form-category-container">
         <FormFieldCategory
           setFormValues={setFormValues}
           type="detail"

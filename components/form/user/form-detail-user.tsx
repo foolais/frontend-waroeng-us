@@ -8,8 +8,8 @@ const FormDetailUser = ({ user }: { user: iFormUser }) => {
   const [formValues, setFormValues] = useState<iFormUser>(user);
 
   return (
-    <div>
-      <form id="user-form" className="form-grid max-h-[60vh] sm:max-h-[77vh]">
+    <div className="form-container">
+      <form id="user-form" className="form-user-container">
         <FormFieldUser
           type="detail"
           formValues={formValues}

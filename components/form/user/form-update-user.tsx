@@ -15,12 +15,8 @@ const FormUpdateUser = ({ user }: { user: iFormUser }) => {
   );
 
   return (
-    <div>
-      <form
-        id="user-form"
-        action={formAction}
-        className="form-grid max-h-[60vh] sm:max-h-[77vh]"
-      >
+    <div className="form-container">
+      <form id="user-form" action={formAction} className="form-user-container">
         <FormFieldUser
           state={state}
           type="update"

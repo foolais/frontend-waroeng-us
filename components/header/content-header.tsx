@@ -16,7 +16,7 @@ const ContentHeader = ({
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         {routesBack && (
-          <NavBackButton route="/admin/menu">
+          <NavBackButton route={routesBack}>
             <ArrowLeft />
           </NavBackButton>
         )}

@@ -3,14 +3,14 @@ import CategoryTable from "@/components/table/category/category-table";
 import TableHeader from "@/components/table/table-header";
 import { metaDataConfig } from "@/lib/constant";
 
+const { category: categoryConfig } = metaDataConfig;
+
 export const metadata = {
-  title: metaDataConfig.category.title + " - Waroeng Us",
-  description: metaDataConfig.category.description,
+  title: categoryConfig.title + " - Waroeng Us",
+  description: categoryConfig.description,
 };
 
 const CategoryPage = () => {
-  const { category: categoryConfig } = metaDataConfig;
-
   return (
     <main className="content-container">
       <ContentHeader

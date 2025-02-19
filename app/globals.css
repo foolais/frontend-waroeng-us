@@ -89,7 +89,7 @@ body {
   }
   /* * FORM */
   .form-container {
-    @apply w-full max-w-[800px] sm:w-5/6 lg:w-3/4 xl:w-2/3;
+    @apply mt-4 w-full max-w-[800px] sm:w-5/6 lg:w-3/4 xl:w-2/3;
   }
   .form-grid {
     @apply lg:form-field-grid primary-scrollbar grid gap-2 overflow-y-scroll pr-4 lg:items-center;
@@ -102,7 +102,12 @@ body {
   .form-field-error {
     @apply mt-2 text-sm text-red-500;
   }
-
+  .form-user-container {
+    @apply form-grid max-h-[60vh] sm:max-h-[77vh];
+  }
+  .form-category-container {
+    @apply form-grid max-h-[60vh] sm:max-h-[77vh];
+  }
   .form-menu-container {
     @apply form-grid max-h-[70vh] sm:max-h-[77vh];
   }

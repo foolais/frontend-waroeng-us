@@ -26,7 +26,7 @@ const FormUpdateCategory = ({ category }: { category: iFormCategory }) => {
       <form
         id="category-form"
         action={formAction}
-        className="form-grid max-h-[60vh] sm:max-h-[77vh]"
+        className="form-category-container"
       >
         <FormFieldCategory
           state={state}
