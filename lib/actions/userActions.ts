@@ -154,7 +154,7 @@ export const updateUser = async (
       }
     }
     console.log(error);
-    return { message: "Failed to create user" };
+    return { message: "Failed to update user" };
   }
 
   revalidatePath("/admin/user");

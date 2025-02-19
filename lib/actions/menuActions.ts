@@ -1,8 +1,8 @@
 "use server";
 
 import { iFormMenu } from "@/types/types";
-import { CreateMenuSchema } from "../zod/menuZod";
-import { put } from "@vercel/blob";
+import { CreateMenuSchema, UpdateMenuSchema } from "../zod/menuZod";
+import { del, put } from "@vercel/blob";
 import { auth } from "@/auth";
 import { prisma } from "../prisma";
 import { revalidatePath } from "next/cache";
@@ -57,6 +57,86 @@ export const createMenu = async (
   } catch (error) {
     console.error(error);
     return { success: false, message: "Something went wrong" };
+  }
+
+  revalidatePath("/admin/menu");
+  redirect("/admin/menu");
+};
+
+export const updateMenu = async (
+  payload: iFormMenu,
+  prevState: unknown,
+  formData: FormData,
+) => {
+  if (payload && payload.image) {
+    formData.append("image", payload.image);
+  }
+
+  const form = Object.fromEntries(formData.entries());
+  const { id } = payload;
+
+  const validatedFields = UpdateMenuSchema.safeParse(form);
+
+  if (!validatedFields.success) {
+    return { error: validatedFields.error.flatten().fieldErrors };
+  }
+
+  const { image, name, price, category } = validatedFields.data;
+
+  const data = await getMenuById(id as string);
+  if (!data) return { message: "User not found" };
+
+  let imagePath: string | null = data.image ?? null;
+
+  try {
+    if (typeof image === "string") {
+      imagePath = data.image;
+    } else if (image instanceof File && image.size > 0) {
+      if (data.image) {
+        console.log("Attempting to delete old image : ", data.image);
+        try {
+          await del(data.image);
+          console.log("old images deleted");
+        } catch (deleteError) {
+          console.warn("Failed to delete old image:", deleteError);
+        }
+      }
+
+      const { url } = await put(image.name, image, {
+        access: "public",
+        multipart: true,
+      });
+
+      imagePath = url;
+    }
+  } catch (error) {
+    console.error("Error processing image:", error);
+    throw new Error("Failed to process image upload.");
+  }
+
+  const session = await auth();
+
+  try {
+    await prisma.menu.update({
+      data: {
+        image: imagePath,
+        name,
+        price: +price,
+        category_id: category,
+        updated_by_id: session?.user.id ?? "",
+      },
+      where: { id },
+    });
+  } catch (error) {
+    if (imagePath) {
+      try {
+        await del(imagePath);
+      } catch (deleteError) {
+        console.warn("Failed to delete old image:", deleteError);
+      }
+    }
+    console.log(error);
+    return { message: "Failed to update menu" };
   }
 
   revalidatePath("/admin/menu");
