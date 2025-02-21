@@ -27,7 +27,7 @@ const MenuTable = async () => {
     {
       header: "Availability",
       accessor: "availability",
-      className: "w-[100px] text-center",
+      className: "w-[120px] text-center",
     },
     {
       header: "",

@@ -206,3 +206,25 @@ export const deleteMenu = async (id: string) => {
     throw new Error("Something went wrong");
   }
 };
+
+export const toggleMenuAvailability = async (id: string) => {
+  try {
+    const session = await auth();
+    if (!session) return null;
+
+    const menu = await prisma.menu.findUnique({ where: { id } });
+    if (!menu) return null;
+
+    await prisma.menu.update({
+      where: { id },
+      data: {
+        is_available: !menu.is_available,
+        updated_by_id: session.user.id,
+      },
+    });
+    revalidatePath("/admin/menu");
+  } catch (error) {
+    console.error("Error toggling menu availability", error);
+    throw new Error("Something went wrong");
+  }
+};
