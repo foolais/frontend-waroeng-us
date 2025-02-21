@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Logo from "@/public/logo.png";
 import { cn } from "@/lib/utils";
@@ -5,19 +7,20 @@ import { cn } from "@/lib/utils";
 interface iProps {
   className?: string;
   textClassName?: string;
+  onClick?: () => void;
 }
 
 const Title = (props: iProps) => {
-  const { className, textClassName } = props;
+  const { className, textClassName, onClick } = props;
 
   return (
     <div
       className={cn(
-        "group flex items-center gap-2 hover:cursor-pointer",
+        "group flex w-max items-center gap-2 hover:cursor-pointer",
         className,
       )}
     >
-      <div className="relative h-10 w-10">
+      <div className="relative h-10 w-10" onClick={onClick}>
         <Image
           src={Logo}
           alt="Logo"

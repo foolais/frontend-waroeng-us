@@ -8,11 +8,11 @@ import {
 } from "lucide-react";
 
 export const adminNavItem: iNavItem[] = [
-  { name: "Dashboard", routes: "/admin/dashboard", icon: LayoutDashboard },
-  { name: "User", routes: "/admin/user", icon: Users },
-  { name: "Category", routes: "/admin/category", icon: Layers2 },
-  { name: "Menu", routes: "/admin/menu", icon: Utensils },
-  { name: "Order", routes: "/admin/order", icon: NotebookText },
+  { title: "Dashboard", url: "/admin/dashboard", icon: LayoutDashboard },
+  { title: "User", url: "/admin/user", icon: Users },
+  { title: "Category", url: "/admin/category", icon: Layers2 },
+  { title: "Menu", url: "/admin/menu", icon: Utensils },
+  { title: "Order", url: "/admin/order", icon: NotebookText },
 ];
 
 export const userFormDefaultValue: iFormUser = {

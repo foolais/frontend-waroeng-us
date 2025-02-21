@@ -1,9 +1,10 @@
 import { LucideIcon } from "lucide-react";
 
 export interface iNavItem {
-  name: string;
-  routes: string;
+  title: string;
+  url: string;
   icon: LucideIcon;
+  isActive?: boolean;
 }
 
 export interface iPropsInput<T> {

@@ -10,17 +10,11 @@ import {
 } from "../ui/sheet";
 import HamburgerMenu from "@/public/hamburger-menu.png";
 import Title from "@/components/title/title";
-import { useWindowSize } from "@/hooks/useWindowsSize";
 import NavItem from "@/components/nav/nav-item";
 import { Separator } from "@/components/ui/separator";
 import LogoutButton from "../button/logout-button";
 
-const MobileSidebar = () => {
-  const { width } = useWindowSize();
-  const isMobile = width !== null && width <= 768;
-
-  if (!isMobile) return <></>;
-
+const MobileSidebar = ({ isMobile }: { isMobile: boolean }) => {
   return (
     <Sheet>
       <SheetTrigger>

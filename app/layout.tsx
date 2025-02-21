@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex h-screen max-h-screen overflow-hidden">
-        <main className="flex-1 overflow-y-auto">{children}</main>
-        <Toaster />
+        <SidebarProvider>
+          <main className="flex-1 overflow-y-auto">{children}</main>
+          <Toaster />
+        </SidebarProvider>
       </body>
     </html>
   );

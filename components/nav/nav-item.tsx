@@ -13,15 +13,15 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
     <nav className={cn(isMobile ? "w-3/4" : "w-max lg:w-full")}>
       <ul className="mt-2 grid gap-2">
         {adminNavItem.map(
-          ({ name, icon: Icon, routes }: iNavItem, index: number) => (
+          ({ title, icon: Icon, url }: iNavItem, index: number) => (
             <li key={index}>
               <Link
-                href={routes}
-                aria-label={name}
+                href={url}
+                aria-label={title}
                 className={cn(
                   "flex items-center gap-4 rounded-xl p-2 transition",
-                  path?.startsWith(routes)
-                    ? "bg-secondary text-background hover:opacity-80"
+                  path?.startsWith(url)
+                    ? "bg-primary text-background hover:opacity-80"
                     : "hover:bg-background hover:opacity-80",
                   isMobile
                     ? "justify-normal"
@@ -29,7 +29,7 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
                 )}
               >
                 {Icon && (
-                  <Icon data-testid={`nav-icon-${name}`} className="h-5 w-5" />
+                  <Icon data-testid={`nav-icon-${title}`} className="h-5 w-5" />
                 )}
                 <span
                   className={cn(
@@ -37,7 +37,7 @@ const NavItem = ({ isMobile = false }: { isMobile?: boolean }) => {
                     isMobile ? "block" : "",
                   )}
                 >
-                  {name}
+                  {title}
                 </span>
               </Link>
             </li>
