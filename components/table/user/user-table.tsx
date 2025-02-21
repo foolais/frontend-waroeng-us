@@ -1,54 +1,13 @@
 "use server";
 
-import ActionsButton from "@/components/button/actions-button";
 import Table from "../table";
 import { getAllUsers } from "@/lib/actions/userActions";
-import Badge from "@/components/badge/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import EmptyTable from "../empty-table";
-
-interface iUserTableData {
-  id: string;
-  no: number;
-  image: string;
-  name: string;
-  gender: string;
-  email: string;
-  role: string;
-}
+import { iUserTableData } from "@/types/types";
+import UserRow from "./user-row";
 
 const renderRow = (item: iUserTableData) => {
-  return (
-    <tr key={item.id} className="table-content">
-      <td className="p-2 text-center text-sm">{item.no}</td>
-      <td className="p-2">
-        <Avatar>
-          <AvatarImage src={item.image} alt="Avatar" />
-          <AvatarFallback>WS</AvatarFallback>
-        </Avatar>
-      </td>
-      <td className="p-2 text-sm">{item.name}</td>
-      <td className="hidden p-2 text-sm lg:table-cell">
-        <Badge text={item.gender} variant={item.gender} />
-      </td>
-      <td className="hidden p-2 text-sm md:table-cell">{item.email}</td>
-      <td className="p-2 text-sm">
-        <Badge text={item.role} variant={item.role} />
-      </td>
-      <td className="p-2">
-        <ActionsButton
-          type="user"
-          id={item.id}
-          name={item.name}
-          routes={[
-            `/admin/user/${item.id}`,
-            `/admin/user/update/${item.id}`,
-            "",
-          ]}
-        />
-      </td>
-    </tr>
-  );
+  return <UserRow {...item} />;
 };
 
 const UserTable = async () => {

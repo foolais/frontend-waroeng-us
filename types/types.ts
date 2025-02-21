@@ -163,3 +163,13 @@ export interface iMenuTableData {
   created_by: { id: string; name: string } | null;
   updated_by: { id: string; name: string } | null;
 }
+
+export interface iUserTableData {
+  id: string;
+  no: number;
+  image: string;
+  name: string;
+  gender: string;
+  email: string;
+  role: string;
+}
