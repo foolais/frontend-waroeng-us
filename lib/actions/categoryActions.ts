@@ -173,3 +173,25 @@ export const getCategoryByType = async (type: string) => {
     throw new Error("Something went wrong");
   }
 };
+
+export const toggleCategoryStatus = async (id: string) => {
+  try {
+    const session = await auth();
+    if (!session) return null;
+
+    const category = await prisma.category.findUnique({ where: { id } });
+    if (!category) return null;
+
+    await prisma.category.update({
+      where: { id },
+      data: {
+        is_active: !category.is_active,
+        updated_by_id: session.user.id,
+      },
+    });
+    revalidatePath("/admin/category");
+  } catch (error) {
+    console.error("Error toggling category availability", error);
+    throw new Error("Something went wrong");
+  }
+};
