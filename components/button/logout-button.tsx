@@ -16,7 +16,13 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 
-const LogoutButton = ({ isMobile = false }: { isMobile?: boolean }) => {
+const LogoutButton = ({
+  isMobile = false,
+  isPopOver = false,
+}: {
+  isMobile?: boolean;
+  isPopOver?: boolean;
+}) => {
   const router = useRouter();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
@@ -28,10 +34,14 @@ const LogoutButton = ({ isMobile = false }: { isMobile?: boolean }) => {
           className="flex w-full items-center gap-4 rounded-xl p-2 transition hover:bg-background hover:opacity-80"
           aria-label="logout"
         >
-          <LogOut className="h-5 w-5" color="hsl(var(--destructive))" />
+          <LogOut
+            className={cn(isPopOver ? "h-3 w-3" : "h-5 w-5")}
+            color="hsl(var(--destructive))"
+          />
           <span
             className={cn(
               "text-sm font-semibold transition-all duration-300 ease-in-out",
+              isPopOver ? "text-sm" : "",
               isMobile
                 ? "block"
                 : isCollapsed

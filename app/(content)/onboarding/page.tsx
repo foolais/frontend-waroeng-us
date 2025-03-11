@@ -7,7 +7,7 @@ import UserAvatar from "@/components/user/user-avatar";
 const OnboardingPage = () => {
   return (
     <div className="h-screen w-screen bg-background">
-      <div className="flex h-20 justify-between px-6">
+      <div className="flex justify-between p-6">
         <Title />
         <UserAvatar />
       </div>
