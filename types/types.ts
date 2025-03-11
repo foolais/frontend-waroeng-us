@@ -17,6 +17,7 @@ export interface iPropsInput<T> {
   error?: string[];
   isRequired?: boolean;
   disabled?: boolean;
+  className?: string;
 }
 
 export interface iPropsSelect<T> {

@@ -25,6 +25,7 @@ export const FormFieldInput = <T,>(props: iPropsInput<T>) => {
     error,
     isRequired = false,
     disabled = false,
+    className,
   } = props;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +49,7 @@ export const FormFieldInput = <T,>(props: iPropsInput<T>) => {
           value={value}
           onChange={handleChange}
           disabled={disabled}
+          className={className}
         />
         {error && (
           <div aria-live="polite" aria-atomic="true">
