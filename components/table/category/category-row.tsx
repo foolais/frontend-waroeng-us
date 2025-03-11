@@ -39,7 +39,7 @@ const CategoryRow = (item: iCategoryTableData) => {
       <td className="p-2 text-center text-sm">{item.no}</td>
       <td className="p-2 text-sm">{item.name}</td>
       <td className="p-2 text-sm">
-        <Badge text={item.type} variant="default" />
+        <Badge text={item.type} variant="default" className="w-fit" />
       </td>
       <td className="flex-center h-12 flex-col gap-2 text-sm md:flex-row">
         <AlertDialog>

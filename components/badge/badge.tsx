@@ -17,7 +17,7 @@ const Badge = ({ text, variant = "default", className }: BadgeProps) => {
   return (
     <div
       className={cn(
-        "flex-center mx-auto max-w-28 rounded-xl p-1 text-sm font-medium capitalize",
+        "flex-center mx-auto rounded-xl px-2 py-1 text-sm font-medium capitalize",
         variantStyles[variant],
         className,
       )}
