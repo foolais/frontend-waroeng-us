@@ -11,7 +11,7 @@ declare module "next-auth" {
     user: {
       id: string;
       role?: string;
-      store?: string;
+      store_id?: string;
     } & DefaultSession["user"];
   }
 
@@ -55,11 +55,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update") {
+        return { ...token, ...session.user };
+      }
       if (user) {
         token.id = user.id;
         token.role = (user as AdapterUser & { role?: string }).role;
-        token.store = (user as AdapterUser & { store?: string }).store;
+        token.store_id = (user as AdapterUser & { store_id?: string }).store_id;
       }
       return token;
     },
@@ -67,16 +70,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string | undefined;
-        session.user.store = token.store as string | undefined;
+        session.user.store_id = token.store_id as string | undefined;
       }
       return session;
     },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isHaveStore = !!auth?.user?.store;
+      const storeId = "abc";
+      const isHaveStore = !!auth?.user?.store_id;
       const pathnameSegments = nextUrl.pathname.split("/").filter(Boolean);
 
-      const storeId = "abc";
       const isAdminPage = pathnameSegments[1] === "admin";
       const isDashboardPage = pathnameSegments[1] === "dashboard";
       const isOnboardingPage = nextUrl.pathname.startsWith("/onboarding");

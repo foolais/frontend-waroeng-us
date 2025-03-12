@@ -53,20 +53,23 @@ export const loginCredentials = async (
   const form = Object.fromEntries(formData.entries());
 
   const validatedFields = LoginSchema.safeParse(form);
-
   if (!validatedFields.success) {
     return { error: validatedFields.error.flatten().fieldErrors };
   }
 
   const { email, password } = validatedFields.data;
   const user = await prisma.user.findUnique({ where: { email } });
+  const storeId = user?.store_id;
 
   try {
     await signIn("credentials", {
       email,
       password,
-      redirectTo:
-        user?.role === "admin" ? "/abc/admin/dashboard" : "/abc/dashboard",
+      redirectTo: !storeId
+        ? "/onboarding"
+        : user?.role === "admin"
+          ? `/${storeId ?? "waroeng"}/admin/dashboard`
+          : `/${storeId ?? "waroeng"}/dashboard`,
     });
   } catch (error) {
     console.log(error);
