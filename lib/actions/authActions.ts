@@ -66,7 +66,7 @@ export const loginCredentials = async (
       email,
       password,
       redirectTo:
-        user?.role === "admin" ? "abc/admin/dashboard" : "abc/dashboard",
+        user?.role === "admin" ? "/abc/admin/dashboard" : "/abc/dashboard",
     });
   } catch (error) {
     console.log(error);

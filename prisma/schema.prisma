@@ -39,7 +39,6 @@ model Session {
 enum Gender {
   male
   female
-  other
 }
 
 enum Role {
@@ -47,26 +46,82 @@ enum Role {
   admin
 }
 
+enum RequestStatus {
+  pending
+  accepted
+  rejected
+  canceled
+}
+
+model Store {
+  id              String         @id @default(cuid())
+  name            String
+  users           User[]         @relation("Store-Users")
+  menus           Menu[]
+  categories      Category[]
+  invitation_code String         @unique
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  created_by_id   String
+  created_by      User           @relation("Store-Created", fields: [created_by_id], references: [id])
+  updated_by_id   String?
+  updated_by      User?          @relation("Store-Updated", fields: [updated_by_id], references: [id])
+  StoreRequest    StoreRequest[]
+  User            User?          @relation(fields: [userId], references: [id])
+  userId          String?
+
+  @@map("stores")
+}
+
+model StoreRequest {
+  id            String        @id @default(cuid())
+  user_id       String
+  store_id      String
+  status        RequestStatus @default(pending)
+  user          User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  store         Store         @relation(fields: [store_id], references: [id], onDelete: Cascade)
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  created_by_id String
+  created_by    User          @relation("Store-Request-Creator", fields: [created_by_id], references: [id])
+  updated_by_id String?
+  updated_by    User?         @relation("Store-Request-Updater", fields: [updated_by_id], references: [id])
+
+  @@unique([user_id, store_id])
+  @@map("store-request")
+}
+
 model User {
-  id               String     @id @default(cuid())
-  name             String
-  address          String?    @default("")
-  phone            String?    @default("")
-  gender           Gender?    @default(male)
-  email            String     @unique
-  image            String?    @default("")
-  role             Role       @default(user)
-  password         String
-  accounts         Account[]
-  sessions         Session[]
-  menu_created     Menu[]     @relation("Menu-Created")
-  menu_updated     Menu[]     @relation("Menu-Updated")
-  category_created Category[] @relation("Category-Created")
-  category_updated Category[] @relation("Category-Updated")
-  created_at       DateTime   @default(now())
-  updated_at       DateTime   @updatedAt
-  created_by_name  String
-  updated_by_name  String?
+  id       String    @id @default(cuid())
+  name     String
+  address  String?   @default("")
+  phone    String?   @default("")
+  gender   Gender?   @default(male)
+  email    String    @unique
+  image    String?   @default("")
+  role     Role      @default(user)
+  password String
+  accounts Account[]
+  sessions Session[]
+  store_id String?
+  store    Store?    @relation("Store-Users", fields: [store_id], references: [id], onDelete: SetNull)
+
+  menu_created          Menu[]         @relation("Menu-Created")
+  menu_updated          Menu[]         @relation("Menu-Updated")
+  category_created      Category[]     @relation("Category-Created")
+  category_updated      Category[]     @relation("Category-Updated")
+  store_created         Store[]        @relation("Store-Created")
+  store_updated         Store[]        @relation("Store-Updated")
+  store_request_creator StoreRequest[] @relation("Store-Request-Creator")
+  store_request_updater StoreRequest[] @relation("Store-Request-Updater")
+
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  created_by_name String
+  updated_by_name String?
+  updated_by_id   String?
+  StoreRequest    StoreRequest[]
+  Store           Store[]
 
   @@map("users")
 }
@@ -78,6 +133,8 @@ model Menu {
   price         Int
   is_available  Boolean   @default(true)
   category      Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+  store_id      String
+  store         Store     @relation(fields: [store_id], references: [id], onDelete: Cascade)
   category_id   String?
   created_by_id String
   created_by    User?     @relation("Menu-Created", fields: [created_by_id], references: [id])
@@ -95,6 +152,8 @@ model Category {
   type          String
   Menu          Menu[]
   is_active     Boolean  @default(true)
+  store_id      String
+  store         Store    @relation(fields: [store_id], references: [id], onDelete: Cascade)
   created_by_id String
   created_by    User?    @relation("Category-Created", fields: [created_by_id], references: [id])
   updated_by_id String?
