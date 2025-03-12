@@ -44,7 +44,7 @@ export const createCategory = async (
   }
 
   revalidatePath("/admin/category");
-  redirect("/admin/category");
+  redirect("/abc/admin/category");
 };
 
 export const updateCategory = async (
@@ -96,7 +96,7 @@ export const updateCategory = async (
   }
 
   revalidatePath("/admin/category");
-  redirect("/admin/category");
+  redirect("/abc/admin/category");
 };
 
 export const getAllCategories = async () => {

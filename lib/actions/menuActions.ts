@@ -60,7 +60,7 @@ export const createMenu = async (
   }
 
   revalidatePath("/admin/menu");
-  redirect("/admin/menu");
+  redirect("/abc/admin/menu");
 };
 
 export const updateMenu = async (
@@ -140,7 +140,7 @@ export const updateMenu = async (
   }
 
   revalidatePath("/admin/menu");
-  redirect("/admin/menu");
+  redirect("/abc/admin/menu");
 };
 
 export const getAllMenu = async () => {

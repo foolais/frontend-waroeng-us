@@ -74,7 +74,7 @@ export const createUser = async (
   }
 
   revalidatePath("/admin/user");
-  redirect("/admin/user");
+  redirect("/abc/admin/user");
 };
 
 export const updateUser = async (
@@ -158,7 +158,7 @@ export const updateUser = async (
   }
 
   revalidatePath("/admin/user");
-  redirect("/admin/user");
+  redirect("/abc/admin/user");
 };
 
 export const getAllUsers = async () => {

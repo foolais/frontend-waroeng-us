@@ -42,7 +42,7 @@ export const menuFormDefaultValue: iFormMenu = {
   image: null,
 };
 
-export const ProtectedRoutes = ["/admin", "/dashboard"];
+export const ProtectedRoutes = ["/admin", "/dashboard", "/onboarding"];
 
 export const metaDataConfig = {
   user: {

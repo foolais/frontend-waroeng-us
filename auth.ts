@@ -5,19 +5,20 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { LoginSchema } from "./lib/zod/authZod";
 import { compareSync } from "bcrypt-ts";
 import { type AdapterUser } from "next-auth/adapters";
-import { ProtectedRoutes } from "./lib/constant";
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       role?: string;
+      store?: string;
     } & DefaultSession["user"];
   }
 
   interface JWT {
     id: string;
     role?: string;
+    store?: string;
   }
 }
 
@@ -49,7 +50,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (!isMatchedPassword) throw new Error("Invalid email or password");
 
-        return user;
+        return { ...user, password: undefined };
       },
     }),
   ],
@@ -58,6 +59,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = (user as AdapterUser & { role?: string }).role;
+        token.store = (user as AdapterUser & { store?: string }).store;
       }
       return token;
     },
@@ -65,32 +67,54 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string | undefined;
+        session.user.store = token.store as string | undefined;
       }
       return session;
     },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isProtected = ProtectedRoutes.some((route) =>
-        nextUrl.pathname.startsWith(route),
-      );
+      const isHaveStore = !!auth?.user?.store;
+      const pathnameSegments = nextUrl.pathname.split("/").filter(Boolean);
 
-      // Public Protected Routes
-      if (!isLoggedIn && isProtected) {
+      const storeId = "abc";
+      const isAdminPage = pathnameSegments[1] === "admin";
+      const isDashboardPage = pathnameSegments[1] === "dashboard";
+      const isOnboardingPage = nextUrl.pathname.startsWith("/onboarding");
+      const isAuthPage = nextUrl.pathname.startsWith("/auth");
+
+      // 🚀 If user is NOT logged in and tries to access a store-based protected route → Redirect to /auth
+      if (!isLoggedIn && (isAdminPage || isDashboardPage || isOnboardingPage)) {
         return Response.redirect(new URL("/auth", nextUrl));
       }
 
-      // Protected Routes LoggedIn User try to access auth pages
-      if (isLoggedIn && nextUrl.pathname.startsWith("/auth")) {
-        if (auth?.user.role === "admin")
-          return Response.redirect(new URL("/admin/dashboard", nextUrl));
-        else if (auth?.user.role === "user")
-          return Response.redirect(new URL("/dashboard", nextUrl));
+      // 🚀 If logged-in user tries to access `/auth`, redirect based on role
+      if (isLoggedIn && isAuthPage) {
+        if (auth?.user.role === "admin") {
+          return Response.redirect(
+            new URL(`/${storeId}/admin/dashboard`, nextUrl),
+          );
+        } else if (auth?.user.role === "user") {
+          return Response.redirect(new URL(`/${storeId}/dashboard`, nextUrl));
+        }
       }
 
-      // Protected Routes User NoN Admin
-      if (isLoggedIn && nextUrl.pathname.startsWith("/admin")) {
-        if (auth?.user.role !== "admin")
-          return Response.redirect(new URL("/dashboard", nextUrl));
+      // 🚀 If user in Admin Page
+      if (isLoggedIn && isAdminPage) {
+        // 🚀 If user didnt have STORE redirect to Onboarding Page
+        if (!isHaveStore) {
+          return Response.redirect(new URL("/onboarding", nextUrl));
+        } else if (auth?.user.role !== "admin") {
+          // 🚀 If user not admin try to reacth Admin page redirect to dashboard
+          return Response.redirect(new URL(`/${storeId}/dashboard`, nextUrl));
+        }
+      }
+
+      // 🚀 If user in Dashboard Page
+      if (isLoggedIn && isDashboardPage) {
+        // 🚀 If user didnt have STORE redirect to Onboarding Page
+        if (!isHaveStore) {
+          return Response.redirect(new URL("/onboarding", nextUrl));
+        }
       }
 
       return true;

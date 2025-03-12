@@ -65,7 +65,8 @@ export const loginCredentials = async (
     await signIn("credentials", {
       email,
       password,
-      redirectTo: user?.role === "admin" ? "/admin/dashboard" : "/dashboard",
+      redirectTo:
+        user?.role === "admin" ? "abc/admin/dashboard" : "abc/dashboard",
     });
   } catch (error) {
     console.log(error);

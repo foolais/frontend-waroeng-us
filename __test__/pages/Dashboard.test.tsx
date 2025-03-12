@@ -1,4 +1,4 @@
-import DashboardPage from "@/app/(content)/admin/dashboard/page";
+import DashboardPage from "@/app/(content)/[storeId]/admin/dashboard/page";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 

@@ -4,6 +4,11 @@ import Title from "@/components/title/title";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserAvatar from "@/components/user/user-avatar";
 
+export const metadata = {
+  title: " Onboarding - Waroeng Us",
+  description: "Welcome to Waroeng Us",
+};
+
 const OnboardingPage = () => {
   return (
     <div className="h-screen w-screen bg-background">
@@ -12,7 +17,7 @@ const OnboardingPage = () => {
         <UserAvatar />
       </div>
       <div className="flex-center flex h-4/5">
-        <div className="mx-auto h-[350px] w-max gap-4 rounded-xl bg-white p-6">
+        <div className="flex-center mx-auto h-[400px] w-max flex-col gap-4 rounded-xl bg-white p-6">
           <h1 className="text-heading text-center text-primary">
             Let’s Get Started
           </h1>
