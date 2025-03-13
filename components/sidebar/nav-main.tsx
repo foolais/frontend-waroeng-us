@@ -7,8 +7,9 @@ import {
   SidebarMenuItem,
 } from "../ui/sidebar";
 import Link from "next/link";
+import { auth } from "@/auth";
 
-const NavMain = ({
+const NavMain = async ({
   items,
 }: {
   items: {
@@ -17,13 +18,16 @@ const NavMain = ({
     icon?: LucideIcon;
   }[];
 }) => {
+  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
+
   return (
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => {
           return (
             <SidebarMenuItem key={item.title}>
-              <Link href={item.url}>
+              <Link href={`/${storeId}/${item.url}`}>
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>

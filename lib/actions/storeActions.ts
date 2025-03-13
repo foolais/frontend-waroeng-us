@@ -43,8 +43,6 @@ export const createStore = async (prevState: unknown, formData: FormData) => {
   } catch (error) {
     console.error(error);
     return { error: "Failed to create store" };
-  } finally {
-    console.log({ session });
   }
 };
 
@@ -57,4 +55,14 @@ export const requestJoinStore = async (code: string) => {
   };
 
   console.log({ payload });
+};
+
+export const getStoreById = async (id: string) => {
+  try {
+    const store = await prisma.store.findUnique({ where: { id } });
+    return store;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong");
+  }
 };
