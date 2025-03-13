@@ -76,7 +76,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const storeId = "abc";
+      const storeId = auth?.user?.store_id;
       const isHaveStore = !!auth?.user?.store_id;
       const pathnameSegments = nextUrl.pathname.split("/").filter(Boolean);
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
@@ -24,29 +25,39 @@ const CardCreateStore = () => {
   const { data: session, update } = useSession();
   const router = useRouter();
 
+  // 🚀 Refresh session on mounting
+  useEffect(() => {
+    const refreshSession = async () => {
+      await update();
+    };
+
+    refreshSession();
+  }, []);
+
+  // 🚀 when got notification state from successfully create form
   useEffect(() => {
     const updateSession = async () => {
-      if (session && state?.success && session?.user?.store_id === null) {
+      if (
+        session &&
+        state &&
+        "success" in state &&
+        state.success &&
+        session?.user?.store_id === null
+      ) {
         setIsLoading(true);
         state.success = false;
         await update({
           ...session,
           user: {
             ...session?.user,
-            store_id: state.store.id,
+            store_id: state?.store?.id,
+            role: "admin",
           },
         });
       }
     };
 
     updateSession();
-
-    if (session?.user.store_id !== null && state?.store?.name !== "") {
-      setIsLoading(false);
-      toast.success(`Successfully Create ${state?.store?.name}`);
-      router.push(`/${session?.user.store_id}/admin/dashboard`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     state,
     state?.success,
@@ -55,6 +66,17 @@ const CardCreateStore = () => {
     session,
     state?.store?.id,
   ]);
+
+  // 🚀 when there was a change on session data
+  useEffect(() => {
+    if (!session) return;
+
+    if (session?.user?.store_id !== null && state?.store?.name !== "") {
+      setIsLoading(false);
+      toast.success(`Successfully Created ${state?.store?.name}`);
+      router.push(`/${session?.user.store_id}/admin/dashboard`);
+    }
+  }, [session, state]);
 
   return (
     <Card className="p-6">
