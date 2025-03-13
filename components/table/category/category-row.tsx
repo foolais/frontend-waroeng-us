@@ -17,11 +17,14 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toggleCategoryStatus } from "@/lib/actions/categoryActions";
 import { iCategoryTableData } from "@/types/types";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 const CategoryRow = (item: iCategoryTableData) => {
   const [isChecked, setChecked] = useState(item.is_active);
+  const { data: session } = useSession();
+  const storeId = session?.user?.store_id;
 
   const handleChange = async (id: string) => {
     try {
@@ -79,8 +82,8 @@ const CategoryRow = (item: iCategoryTableData) => {
           id={item.id}
           name={item.name}
           routes={[
-            `/admin/category/${item.id}`,
-            `/admin/category/update/${item.id}`,
+            `/${storeId}/admin/category/${item.id}`,
+            `/${storeId}/admin/category/update/${item.id}`,
             "",
           ]}
         />

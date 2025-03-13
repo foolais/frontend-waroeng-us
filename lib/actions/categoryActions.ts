@@ -10,10 +10,11 @@ export const createCategory = async (
   prevState: unknown,
   formData: FormData,
 ) => {
+  const session = await auth();
+  if (!session) return { message: "You are not logged in." };
+
   const form = Object.fromEntries(formData.entries());
-
   const validatedFields = createCategorySchema.safeParse(form);
-
   if (!validatedFields.success) {
     return { error: validatedFields.error.flatten().fieldErrors };
   }
@@ -32,19 +33,19 @@ export const createCategory = async (
     };
   }
 
-  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
 
   try {
     await prisma.category.create({
-      data: { name, type, created_by_id: session?.user.id },
+      data: { name, type, created_by_id: session?.user.id, store_id: storeId },
     });
   } catch (error) {
     console.log(error);
     return { success: false, message: "Failed to create category" };
   }
 
-  revalidatePath("/admin/category");
-  redirect("/abc/admin/category");
+  revalidatePath(`/${storeId}/admin/category`);
+  redirect(`/${storeId}/admin/category`);
 };
 
 export const updateCategory = async (
@@ -52,24 +53,29 @@ export const updateCategory = async (
   prevState: unknown,
   formData: FormData,
 ) => {
+  const session = await auth();
+  if (!session) return { message: "You are not logged in." };
+
   const form = Object.fromEntries(formData.entries());
   const validatedFields = createCategorySchema.safeParse(form);
-
   if (!validatedFields.success) {
     return { error: validatedFields.error.flatten().fieldErrors };
   }
 
+  const storeId = session?.user?.store_id ?? "";
   const { name, type } = validatedFields.data;
 
   const data = await getCategoryById(id);
   if (!data) return { success: false, message: "Category not found" };
 
+  const categoryData = data as { name: string; type: string };
+
   const existingCategory = await prisma.category.findFirst({
-    where: { name, type },
+    where: { name, type, store_id: storeId },
   });
 
   // Validate fields by existing data
-  if (existingCategory && existingCategory.name === data.name)
+  if (existingCategory && existingCategory.name === categoryData.name)
     return {
       success: false,
       message: "Category cannot be the same",
@@ -83,25 +89,27 @@ export const updateCategory = async (
     };
   }
 
-  const session = await auth();
-
   try {
     await prisma.category.update({
       data: { name, type, updated_by_id: session?.user.id },
-      where: { id },
+      where: { id, store_id: storeId },
     });
   } catch (error) {
     console.log(error);
     return { success: false, message: "Failed to update category" };
   }
 
-  revalidatePath("/admin/category");
-  redirect("/abc/admin/category");
+  revalidatePath(`/${storeId}/admin/category`);
+  redirect(`/${storeId}/admin/category`);
 };
 
 export const getAllCategories = async () => {
   try {
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
     const categories = await prisma.category.findMany({
+      where: { store_id: session?.user?.store_id },
       select: {
         id: true,
         name: true,
@@ -124,8 +132,11 @@ export const getAllCategories = async () => {
 
 export const getCategoryById = async (id: string) => {
   try {
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
     const category = await prisma.category.findUnique({
-      where: { id },
+      where: { id, store_id: session?.user?.store_id },
       select: {
         id: true,
         name: true,
@@ -149,8 +160,14 @@ export const getCategoryById = async (id: string) => {
 
 export const deleteCategory = async (id: string) => {
   try {
-    await prisma.category.delete({ where: { id } });
-    revalidatePath("/admin/category");
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
+    await prisma.category.delete({
+      where: { id, store_id: session?.user?.store_id },
+    });
+
+    revalidatePath(`/${session?.user?.store_id}/admin/category`);
   } catch (error) {
     console.error("Error deleting category:", error);
     throw new Error("Something went wrong");
@@ -159,8 +176,11 @@ export const deleteCategory = async (id: string) => {
 
 export const getCategoryByType = async (type: string) => {
   try {
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
     const categories = await prisma.category.findMany({
-      where: { type, is_active: true },
+      where: { type, is_active: true, store_id: session?.user?.store_id },
       select: {
         id: true,
         name: true,
@@ -177,19 +197,21 @@ export const getCategoryByType = async (type: string) => {
 export const toggleCategoryStatus = async (id: string) => {
   try {
     const session = await auth();
-    if (!session) return null;
+    if (!session) return { message: "You are not logged in." };
+
+    const storeId = session?.user?.store_id;
 
     const category = await prisma.category.findUnique({ where: { id } });
     if (!category) return null;
 
     await prisma.category.update({
-      where: { id },
+      where: { id, store_id: storeId },
       data: {
         is_active: !category.is_active,
         updated_by_id: session.user.id,
       },
     });
-    revalidatePath("/admin/category");
+    revalidatePath(`/${storeId}/admin/category`);
   } catch (error) {
     console.error("Error toggling category availability", error);
     throw new Error("Something went wrong");

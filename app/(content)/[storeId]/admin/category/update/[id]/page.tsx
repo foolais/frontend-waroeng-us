@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import FormUpdateCategory from "@/components/form/category/form-update-category";
 import ContentHeader from "@/components/header/content-header";
 import { getCategoryById } from "@/lib/actions/categoryActions";
@@ -14,8 +15,10 @@ export const metadata = {
 const CategoryDetail = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
   const category = await getCategoryById(id);
+  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
 
-  if (!category) notFound();
+  if (!category || !session) notFound();
 
   const { category: categoryConfig } = metaDataConfig;
 
@@ -24,7 +27,7 @@ const CategoryDetail = async ({ params }: { params: { id: string } }) => {
       <ContentHeader
         title={categoryConfig.update}
         description={categoryConfig.description}
-        routesBack="/admin/category"
+        routesBack={`/${storeId}/admin/category`}
       />
 
       {category && <FormUpdateCategory category={category} />}

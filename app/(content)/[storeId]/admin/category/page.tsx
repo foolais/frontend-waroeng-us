@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import ContentHeader from "@/components/header/content-header";
 import CategoryTable from "@/components/table/category/category-table";
 import TableHeader from "@/components/table/table-header";
@@ -10,14 +11,20 @@ export const metadata = {
   description: categoryConfig.description,
 };
 
-const CategoryPage = () => {
+const CategoryPage = async () => {
+  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
+
   return (
     <main className="content-container">
       <ContentHeader
         title={categoryConfig.title}
         description={categoryConfig.description}
       />
-      <TableHeader title="All Categories" routes={["/admin/category/create"]}>
+      <TableHeader
+        title="All Categories"
+        routes={[`/${storeId}/admin/category/create`]}
+      >
         <CategoryTable />
       </TableHeader>
     </main>
