@@ -110,16 +110,18 @@ export const updateUser = async (
   const data = await getUserById(id as string);
   if (!data) return { message: "User not found" };
 
-  let imagePath: string | null = data.image ?? null;
+  const userData = data as { image: string };
+
+  let imagePath: string | null = userData.image ?? null;
 
   try {
     if (typeof image === "string") {
-      imagePath = data.image;
+      imagePath = userData.image;
     } else if (image instanceof File && image.size > 0) {
-      if (data.image) {
-        console.log("Attempting to delete old image : ", data.image);
+      if (userData.image) {
+        console.log("Attempting to delete old image : ", userData.image);
         try {
-          await del(data.image);
+          await del(userData.image);
           console.log("old images deleted");
         } catch (deleteError) {
           console.warn("Failed to delete old image:", deleteError);
@@ -150,7 +152,7 @@ export const updateUser = async (
         role: role as Role,
         updated_by_name: session?.user?.name,
       },
-      where: { id },
+      where: { id, store_id: storeId },
     });
   } catch (error) {
     if (imagePath) {
@@ -174,6 +176,7 @@ export const getAllUsers = async () => {
 
   try {
     const users = await prisma.user.findMany({
+      where: { store_id: session?.user?.store_id },
       select: {
         id: true,
         name: true,
@@ -200,7 +203,12 @@ export const getAllUsers = async () => {
 
 export const getUserById = async (id: string) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id } });
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
+    const user = await prisma.user.findUnique({
+      where: { id, store_id: session?.user?.store_id },
+    });
     if (!user) return null;
 
     const formattedUser = {
@@ -231,7 +239,7 @@ export const deleteUser = async (id: string) => {
   const storeId = session?.user?.store_id;
 
   try {
-    await prisma.user.delete({ where: { id } });
+    await prisma.user.delete({ where: { id, store_id: storeId } });
     revalidatePath(`/${storeId}/admin/user`);
   } catch (error) {
     console.error("Error deleting user:", error);

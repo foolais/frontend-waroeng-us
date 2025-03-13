@@ -8,8 +8,6 @@ import { UserRound } from "lucide-react";
 const UserAvatar = async () => {
   const session = await auth();
 
-  console.log({ session });
-
   return (
     <Popover>
       <PopoverTrigger asChild>
