@@ -21,6 +21,8 @@ export const createUser = async (
   const session = await auth();
   if (!session) return { message: "You are not logged in." };
 
+  const storeId = session?.user?.store_id;
+
   const form = Object.fromEntries(formData.entries());
   const validatedFields = CreateUserSchema.safeParse(form);
 
@@ -62,7 +64,7 @@ export const createUser = async (
     role: role as Role,
     password: hashedPassword,
     created_by_name: name,
-    store_id: session?.user?.store_id,
+    store_id: storeId,
   };
 
   //   insert ke database
@@ -75,8 +77,8 @@ export const createUser = async (
     return { message: "Failed to create user" };
   }
 
-  revalidatePath("/admin/user");
-  redirect("/abc/admin/user");
+  revalidatePath(`/${storeId}/admin/user`);
+  redirect(`/${storeId}/admin/user`);
 };
 
 export const updateUser = async (
@@ -90,6 +92,8 @@ export const updateUser = async (
 
   const session = await auth();
   if (!session) return { message: "You are not logged in." };
+
+  const storeId = session?.user?.store_id;
 
   const form = Object.fromEntries(formData.entries());
   const { id } = payload;
@@ -160,8 +164,8 @@ export const updateUser = async (
     return { message: "Failed to update user" };
   }
 
-  revalidatePath("/admin/user");
-  redirect("/abc/admin/user");
+  revalidatePath(`/${storeId}/admin/user`);
+  redirect(`/${storeId}/admin/user`);
 };
 
 export const getAllUsers = async () => {
@@ -221,11 +225,14 @@ export const getUserById = async (id: string) => {
 
 export const deleteUser = async (id: string) => {
   const session = await auth();
+  if (!session) return { message: "You are not logged in." };
   if (session?.user?.id === id) throw new Error("You can't delete yourself");
+
+  const storeId = session?.user?.store_id;
 
   try {
     await prisma.user.delete({ where: { id } });
-    revalidatePath("/admin/user");
+    revalidatePath(`/${storeId}/admin/user`);
   } catch (error) {
     console.error("Error deleting user:", error);
     throw new Error("Something went wrong");

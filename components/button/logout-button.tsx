@@ -41,12 +41,13 @@ const LogoutButton = ({
           <span
             className={cn(
               "text-sm font-semibold transition-all duration-300 ease-in-out",
-              isPopOver ? "text-sm" : "",
-              isMobile
-                ? "block"
-                : isCollapsed
-                  ? "hidden overflow-hidden opacity-0"
-                  : "w-auto opacity-100",
+              isPopOver
+                ? "text-sm"
+                : isMobile
+                  ? "block"
+                  : isCollapsed
+                    ? "hidden overflow-hidden opacity-0"
+                    : "w-auto opacity-100",
             )}
           >
             Logout

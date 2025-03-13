@@ -22,7 +22,9 @@ const ContentHeader = ({
         )}
         <PathHeading title={title} description={description} />
       </div>
-      <UserAvatar />
+      <div className="mr-4">
+        <UserAvatar />
+      </div>
     </div>
   );
 };
