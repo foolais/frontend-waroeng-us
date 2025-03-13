@@ -18,8 +18,10 @@ export const createUser = async (
     formData.append("image", stateForm.image);
   }
 
-  const form = Object.fromEntries(formData.entries());
+  const session = await auth();
+  if (!session) return { message: "You are not logged in." };
 
+  const form = Object.fromEntries(formData.entries());
   const validatedFields = CreateUserSchema.safeParse(form);
 
   if (!validatedFields.success) {
@@ -37,7 +39,6 @@ export const createUser = async (
   }
 
   let url: string | undefined;
-
   if (image && image.size > 0) {
     try {
       const uploadResponse = await put(image.name, image, {
@@ -61,6 +62,7 @@ export const createUser = async (
     role: role as Role,
     password: hashedPassword,
     created_by_name: name,
+    store_id: session?.user?.store_id,
   };
 
   //   insert ke database
@@ -85,6 +87,9 @@ export const updateUser = async (
   if (payload && payload.image) {
     formData.append("image", payload.image);
   }
+
+  const session = await auth();
+  if (!session) return { message: "You are not logged in." };
 
   const form = Object.fromEntries(formData.entries());
   const { id } = payload;
@@ -129,8 +134,6 @@ export const updateUser = async (
     throw new Error("Failed to process image upload.");
   }
 
-  const session = await auth();
-
   try {
     await prisma.user.update({
       data: {
@@ -162,6 +165,9 @@ export const updateUser = async (
 };
 
 export const getAllUsers = async () => {
+  const session = await auth();
+  if (!session) return { message: "You are not logged in." };
+
   try {
     const users = await prisma.user.findMany({
       select: {
@@ -191,7 +197,6 @@ export const getAllUsers = async () => {
 export const getUserById = async (id: string) => {
   try {
     const user = await prisma.user.findUnique({ where: { id } });
-
     if (!user) return null;
 
     const formattedUser = {

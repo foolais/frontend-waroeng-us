@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import FormCreateUser from "@/components/form/user/form-create-user";
 import ContentHeader from "@/components/header/content-header";
 import { metaDataConfig } from "@/lib/constant";
@@ -9,13 +10,16 @@ export const metadata = {
   description: userConfig.description,
 };
 
-const CreateUserPage = () => {
+const CreateUserPage = async () => {
+  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
+
   return (
     <main className="content-container">
       <ContentHeader
         title={userConfig.create}
         description={userConfig.description}
-        routesBack="/admin/user"
+        routesBack={`/${storeId}/admin/user`}
       />
       <FormCreateUser />
     </main>

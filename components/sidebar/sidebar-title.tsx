@@ -9,7 +9,7 @@ const SidebarTitle = () => {
   const isCollapsed = state === "collapsed";
 
   return (
-    <div className="flex flex-row items-center justify-between pt-4">
+    <div className="flex flex-row items-center justify-between pt-2">
       <Title
         textClassName={cn(
           "transition-all duration-300 delay-150 ease-in-out",

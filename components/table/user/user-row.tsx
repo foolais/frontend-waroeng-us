@@ -1,9 +1,13 @@
+import { auth } from "@/auth";
 import Badge from "@/components/badge/badge";
 import ActionsButton from "@/components/button/actions-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { iUserTableData } from "@/types/types";
 
-const UserRow = (item: iUserTableData) => {
+const UserRow = async (item: iUserTableData) => {
+  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
+
   return (
     <tr key={item.id} className="table-content">
       <td className="p-2 text-center text-sm">{item.no}</td>
@@ -27,8 +31,8 @@ const UserRow = (item: iUserTableData) => {
           id={item.id}
           name={item.name}
           routes={[
-            `/admin/user/${item.id}`,
-            `/admin/user/update/${item.id}`,
+            `/${storeId}/admin/user/${item.id}`,
+            `/${storeId}/admin/user/update/${item.id}`,
             "",
           ]}
         />

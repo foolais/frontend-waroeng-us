@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import FormUpdateUser from "@/components/form/user/form-update-user";
 import ContentHeader from "@/components/header/content-header";
 import { getUserById } from "@/lib/actions/userActions";
@@ -14,13 +15,15 @@ export const metadata = {
 const UpdateUserPage = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
   const user = await getUserById(id);
+  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
 
   return (
     <main className="content-container">
       <ContentHeader
         title={userConfig.update}
         description={userConfig.description}
-        routesBack="/admin/user"
+        routesBack={`/${storeId}/admin/user`}
       />
       {user && <FormUpdateUser user={user} />}
     </main>
