@@ -16,21 +16,19 @@ export const createMenu = async (
   if (stateForm && stateForm.image && stateForm.image !== null) {
     formData.append("image", stateForm.image);
   }
+  const session = await auth();
+  if (!session) return { message: "You are not logged in." };
 
   const form = Object.fromEntries(formData.entries());
-
   const validatedFields = CreateMenuSchema.safeParse(form);
-
   if (!validatedFields.success) {
     return { error: validatedFields.error.flatten().fieldErrors };
   }
 
   const { image, name, price, category } = validatedFields.data;
+  const storeId = session?.user?.store_id ?? "";
 
   let url: string | undefined;
-
-  const session = await auth();
-
   if (image && image.size > 0) {
     try {
       const uploadResponse = await put(image.name, image, {
@@ -50,6 +48,7 @@ export const createMenu = async (
     price: +price,
     category_id: category,
     created_by_id: session?.user.id ?? "",
+    store_id: storeId,
   };
 
   try {
@@ -59,8 +58,8 @@ export const createMenu = async (
     return { success: false, message: "Something went wrong" };
   }
 
-  revalidatePath("/admin/menu");
-  redirect("/abc/admin/menu");
+  revalidatePath(`/${storeId}/admin/menu`);
+  redirect(`/${storeId}/admin/menu`);
 };
 
 export const updateMenu = async (
@@ -71,31 +70,34 @@ export const updateMenu = async (
   if (payload && payload.image) {
     formData.append("image", payload.image);
   }
+  const session = await auth();
+  if (!session) return { message: "You are not logged in." };
 
   const form = Object.fromEntries(formData.entries());
   const { id } = payload;
 
   const validatedFields = UpdateMenuSchema.safeParse(form);
-
   if (!validatedFields.success) {
     return { error: validatedFields.error.flatten().fieldErrors };
   }
 
   const { image, name, price, category } = validatedFields.data;
+  const storeId = session?.user?.store_id ?? "";
 
   const data = await getMenuById(id as string);
   if (!data) return { message: "User not found" };
+  const menuData = data as { image: string };
 
-  let imagePath: string | null = data.image ?? null;
+  let imagePath: string | null = menuData.image ?? null;
 
   try {
     if (typeof image === "string") {
-      imagePath = data.image;
+      imagePath = menuData.image;
     } else if (image instanceof File && image.size > 0) {
-      if (data.image) {
-        console.log("Attempting to delete old image : ", data.image);
+      if (menuData.image) {
+        console.log("Attempting to delete old image : ", menuData.image);
         try {
-          await del(data.image);
+          await del(menuData.image);
           console.log("old images deleted");
         } catch (deleteError) {
           console.warn("Failed to delete old image:", deleteError);
@@ -114,8 +116,6 @@ export const updateMenu = async (
     throw new Error("Failed to process image upload.");
   }
 
-  const session = await auth();
-
   try {
     await prisma.menu.update({
       data: {
@@ -125,7 +125,7 @@ export const updateMenu = async (
         category_id: category,
         updated_by_id: session?.user.id ?? "",
       },
-      where: { id },
+      where: { id, store_id: storeId },
     });
   } catch (error) {
     if (imagePath) {
@@ -139,13 +139,17 @@ export const updateMenu = async (
     return { message: "Failed to update menu" };
   }
 
-  revalidatePath("/admin/menu");
-  redirect("/abc/admin/menu");
+  revalidatePath(`/${storeId}/admin/menu`);
+  redirect(`/${storeId}/admin/menu`);
 };
 
 export const getAllMenu = async () => {
   try {
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
     const menus = await prisma.menu.findMany({
+      where: { store_id: session?.user?.store_id },
       select: {
         id: true,
         image: true,
@@ -172,8 +176,11 @@ export const getAllMenu = async () => {
 
 export const getMenuById = async (id: string) => {
   try {
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
     const menu = await prisma.menu.findUnique({
-      where: { id },
+      where: { id, store_id: session?.user?.store_id },
       select: {
         id: true,
         image: true,
@@ -199,30 +206,47 @@ export const getMenuById = async (id: string) => {
 
 export const deleteMenu = async (id: string) => {
   try {
-    await prisma.menu.delete({ where: { id } });
-    revalidatePath("/admin/menu");
+    const session = await auth();
+    if (!session) return { message: "You are not logged in." };
+
+    const menu = await prisma.menu.findUnique({ where: { id } });
+    if (!menu) return null;
+
+    const { image } = menu;
+
+    try {
+      await del(image as string);
+    } catch (error) {
+      console.error("Error deleting image", error);
+      throw new Error("Error deleting menu");
+    }
+
+    await prisma.menu.delete({
+      where: { id, store_id: session?.user?.store_id },
+    });
+    revalidatePath(`/${session?.user?.store_id}/admin/menu`);
   } catch (error) {
     console.error("Error deleting category", error);
-    throw new Error("Something went wrong");
+    throw new Error("Something went menu");
   }
 };
 
 export const toggleMenuAvailability = async (id: string) => {
   try {
     const session = await auth();
-    if (!session) return null;
+    if (!session) return { message: "You are not logged in." };
 
     const menu = await prisma.menu.findUnique({ where: { id } });
     if (!menu) return null;
 
     await prisma.menu.update({
-      where: { id },
+      where: { id, store_id: session?.user?.store_id },
       data: {
         is_available: !menu.is_available,
         updated_by_id: session.user.id,
       },
     });
-    revalidatePath("/admin/menu");
+    revalidatePath(`/${session?.user?.store_id}/admin/menu`);
   } catch (error) {
     console.error("Error toggling menu availability", error);
     throw new Error("Something went wrong");

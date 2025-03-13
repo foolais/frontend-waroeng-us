@@ -1,7 +1,10 @@
+import { auth } from "@/auth";
 import FormUpdateMenu from "@/components/form/menu/form-update-menu";
 import ContentHeader from "@/components/header/content-header";
 import { getMenuById } from "@/lib/actions/menuActions";
 import { metaDataConfig } from "@/lib/constant";
+import { IMenu } from "@/types/types";
+import { notFound } from "next/navigation";
 
 const { menu: menuConfig } = metaDataConfig;
 
@@ -12,7 +15,11 @@ export const metadata = {
 
 const UpdateMenuPage = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
-  const menu = await getMenuById(id);
+  const menu = (await getMenuById(id)) as IMenu;
+  const session = await auth();
+  const storeId = session?.user?.store_id ?? "";
+
+  if (!menu || !session) return notFound();
 
   const menuForm = {
     ...menu,
@@ -28,7 +35,7 @@ const UpdateMenuPage = async ({ params }: { params: { id: string } }) => {
       <ContentHeader
         title={menuConfig.update}
         description={menuConfig.description}
-        routesBack="/admin/menu"
+        routesBack={`/${storeId}/admin/menu`}
       />
       {menu && <FormUpdateMenu menu={menuForm} />}
     </main>

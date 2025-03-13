@@ -4,6 +4,7 @@ import { iFormMenu, iFormMenuState, iListCategories } from "@/types/types";
 import { FormFieldImage, FormFieldInput, FormFieldSelect } from "../form-field";
 import { useEffect, useState } from "react";
 import { getCategoryByType } from "@/lib/actions/categoryActions";
+import { toast } from "sonner";
 
 interface iFormFieldMenu {
   type: "create" | "update" | "detail";
@@ -26,15 +27,22 @@ const FormFieldMenu = ({
     const fetchCategories = async () => {
       try {
         const categoryData = await getCategoryByType("menu");
-        setCategories(categoryData);
 
-        if (
-          categoryData.length > 0 &&
-          !formValues.category &&
-          type === "create" &&
-          setFormValues
-        ) {
-          setFormValues((prev) => ({ ...prev, category: categoryData[0].id }));
+        if (Array.isArray(categoryData)) {
+          setCategories(categoryData);
+          if (categoryData.length === 0) toast.warning("No category found");
+
+          if (
+            categoryData.length > 0 &&
+            !formValues.category &&
+            type === "create" &&
+            setFormValues
+          ) {
+            setFormValues((prev) => ({
+              ...prev,
+              category: categoryData[0].id,
+            }));
+          }
         }
       } catch (error) {
         console.log("Failed to fetch categories", error);

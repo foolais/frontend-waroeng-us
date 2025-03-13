@@ -18,11 +18,14 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toggleMenuAvailability } from "@/lib/actions/menuActions";
 import { iMenuTableData } from "@/types/types";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 const MenuRow = (item: iMenuTableData) => {
   const [isChecked, setChecked] = useState(item.is_available);
+  const { data: session } = useSession();
+  const storeId = session?.user?.store_id;
 
   const handleChange = async (id: string) => {
     try {
@@ -92,8 +95,8 @@ const MenuRow = (item: iMenuTableData) => {
           id={item.id}
           name="Menus"
           routes={[
-            `/admin/menu/${item.id}`,
-            `/admin/menu/update/${item.id}`,
+            `/${storeId}/admin/menu/${item.id}`,
+            `/${storeId}/admin/menu/update/${item.id}`,
             "",
           ]}
         />

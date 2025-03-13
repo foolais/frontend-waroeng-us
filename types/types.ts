@@ -134,6 +134,19 @@ export interface iListCategories {
   name: string;
 }
 
+// *🚀🚀 MENU 🚀🚀
+export interface IMenu {
+  id: string;
+  name: string;
+  image: string | null;
+  created_at: Date;
+  updated_at: Date;
+  price: number;
+  is_available: boolean;
+  category: { id: string; name: string } | null;
+  created_by?: { id: string; name: string } | null;
+  updated_by?: { id: string; name: string } | null;
+}
 export interface iFormMenu {
   id: string;
   name: string;
@@ -164,6 +177,7 @@ export interface iMenuTableData {
   created_by: { id: string; name: string } | null;
   updated_by: { id: string; name: string } | null;
 }
+// *🚀🚀 MENU 🚀🚀
 
 export interface iUserTableData {
   id: string;
