@@ -6,8 +6,10 @@ import { createStoreSchema } from "../zod/storeZod";
 import { prisma } from "../prisma";
 
 export const createStore = async (prevState: unknown, formData: FormData) => {
-  const form = Object.fromEntries(formData.entries());
+  const session = await auth();
+  if (!session) return { error: "Unauthorized" };
 
+  const form = Object.fromEntries(formData.entries());
   const validatedFields = createStoreSchema.safeParse(form);
   if (!validatedFields.success) {
     return { error: validatedFields.error.flatten().fieldErrors };
@@ -15,10 +17,6 @@ export const createStore = async (prevState: unknown, formData: FormData) => {
 
   const { name } = validatedFields.data;
   const invitationCode = generateInvitationCode();
-
-  const session = await auth();
-  if (!session?.user?.id) return { error: "Unauthorized" };
-
   const userId = session.user.id;
 
   try {
@@ -47,14 +45,36 @@ export const createStore = async (prevState: unknown, formData: FormData) => {
 };
 
 export const requestJoinStore = async (code: string) => {
-  const session = await auth();
+  try {
+    const session = await auth();
+    if (!session) return { error: "Unauthorized" };
 
-  const payload = {
-    user_id: session?.user.id,
-    invitation_code: code,
-  };
+    // 🚀 validation invitation code
+    const store = await prisma.store.findUnique({
+      where: { invitation_code: code },
+    });
+    if (!store) throw new Error("Invalid invitation code");
 
-  console.log({ payload });
+    // 🚀 validation double request
+    const existingRequest = await prisma.storeRequest.findFirst({
+      where: { store_id: store.id, user_id: session.user.id },
+    });
+    if (existingRequest) throw new Error("You have already requested to join");
+
+    // 🚀 create store request
+    await prisma.storeRequest.create({
+      data: {
+        store_id: store.id,
+        user_id: session.user.id,
+        status: "pending",
+        created_by_id: session.user.id,
+      },
+    });
+
+    return { success: true, message: "Request sent successfully" };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getStoreById = async (id: string) => {

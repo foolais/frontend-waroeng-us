@@ -27,7 +27,9 @@ const DashboardPage = async () => {
           <h1 className="text-heading mt-2 text-primary">
             Hi, {session.user.name}
           </h1>
-          <h2 className="text-sub-heading">{store.name}</h2>
+          <h2 className="text-sub-heading">
+            {store.name} - {store.invitation_code}
+          </h2>
         </>
       )}
     </main>
