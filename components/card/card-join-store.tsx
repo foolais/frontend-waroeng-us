@@ -36,12 +36,12 @@ const CardJoinStore = () => {
   };
 
   return (
-    <Card className="p-6">
-      <CardTitle className="text-sub-heading mb-4 text-center">
+    <Card className="h-[220px] p-6">
+      <CardTitle className="text-sub-heading text-center">
         Join a Store
       </CardTitle>
       <form onSubmit={handleSubmit}>
-        <div className="flex-center mb-4 flex-col">
+        <div className="flex-center my-6 flex-col">
           <InputOTP
             maxLength={6}
             value={values}

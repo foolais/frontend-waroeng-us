@@ -79,7 +79,7 @@ const CardCreateStore = () => {
   }, [session, state]);
 
   return (
-    <Card className="p-6">
+    <Card className="h-[220px] p-6">
       <CardTitle className="text-sub-heading mb-4 text-center">
         Create your own Store
       </CardTitle>
@@ -103,7 +103,6 @@ const CardCreateStore = () => {
           pending={isPending || isLoading}
         />
       </form>
-      <button onClick={() => console.log(session)}>tes</button>
     </Card>
   );
 };

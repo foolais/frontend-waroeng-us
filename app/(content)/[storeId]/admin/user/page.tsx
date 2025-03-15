@@ -3,6 +3,7 @@ import ContentHeader from "@/components/header/content-header";
 import TableHeader from "@/components/table/table-header";
 import UserTable from "@/components/table/user/user-table";
 import { metaDataConfig } from "@/lib/constant";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const { user: userConfig } = metaDataConfig;
 
@@ -21,9 +22,29 @@ const UserPage = async () => {
         title={userConfig.title}
         description={userConfig.description}
       />
-      <TableHeader title="All Users" routes={[`/${storeId}/admin/user/create`]}>
-        <UserTable />
-      </TableHeader>
+      <Tabs defaultValue="all" className="my-6 w-full">
+        <TabsList className="w-full">
+          <TabsTrigger value="all" className="w-1/2">
+            All Users
+          </TabsTrigger>
+          <TabsTrigger value="request" className="w-1/2">
+            Requested Users
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="all">
+          <TableHeader
+            title="All Users"
+            routes={[`/${storeId}/admin/user/create`]}
+          >
+            <UserTable />
+          </TableHeader>
+        </TabsContent>
+        <TabsContent value="request">
+          <TableHeader title="Requested Users" routes={[""]} isBtnHidden>
+            <UserTable />
+          </TableHeader>
+        </TabsContent>
+      </Tabs>
     </main>
   );
 };
