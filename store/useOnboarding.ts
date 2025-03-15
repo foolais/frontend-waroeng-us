@@ -1,6 +1,5 @@
+import { RequestType } from "@/types/types";
 import { create } from "zustand";
-
-export type RequestType = "pending" | "accepted" | "rejected" | "canceled";
 
 interface IOnboardingState {
   isRequestedJoin: boolean;

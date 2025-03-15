@@ -188,3 +188,5 @@ export interface iUserTableData {
   email: string;
   role: string;
 }
+
+export type RequestType = "pending" | "accepted" | "rejected" | "canceled";
